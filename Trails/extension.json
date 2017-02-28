@@ -1,0 +1,36 @@
+{
+  "name": "trails",
+  "title": "Trails",
+  "version": "0.0.1",
+  "description": "Trails information",
+  "platform": "1.0.*",
+  "shortcuts": [
+    {
+      "title": "Trails",
+      "description": "Browse trough available trails",
+      "name": "openTrailsList",
+      "screen": "@.TrailsList",
+	  "adminPages": [{
+      "page": "shoutem.cms.CmsPage",
+      "title": "Trails",
+      "parameters": {
+        "schema": "@.Trails"
+      }
+    }]
+    }
+  ],
+  "screens": [
+    {
+      "name": "TrailsList"
+    },
+    {
+      "name": "TrailDetails"
+    }
+  ],
+  "dataSchemas": [
+    {
+      "name": "Trails",
+      "path": "server/data-schemas/Trails.json"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "title": "Trails",
+  "properties": {
+    "title": {
+      "format": "single-line",
+      "title": "Title",
+      "type": "string",
+	  "maxLength": 50,
+	  "required": true
+    },
+	"header": {
+      "format": "single-line",
+      "title": "Header (max. 100)",
+      "type": "string",
+	  "maxLength": 100,
+	  "required": true
+    },
+    "description": {
+      "format": "multi-line",
+      "title": "Description (max. 1000)",
+      "type": "string",
+	  "maxLength": 1000,
+	  "required": true
+    },
+	"start": {
+      "format": "single-line",
+      "title": "Start / Finish",
+      "type": "string",
+	  "maxLength": 50,
+	  "required": true
+    },
+	"via": {
+      "format": "single-line",
+      "title": "Via",
+      "type": "string",
+	  "maxLength": 50,
+	  "required": true
+    },
+	"location": {
+      "format": "single-line",
+      "title": "Location",
+      "type": "string",
+	  "maxLength": 50,
+	  "required": true
+    },
+	"length": {
+      "format": "number",
+      "title": "Length (km)",
+      "type": "number",
+	  "minimum": 1,
+	  "required": true
+    },
+	"altitude": {
+      "format": "number",
+      "title": "Altitude (m)",
+      "type": "number",
+	  "minimum": 1,
+	  "maximum": 4000,
+	  "required": true
+    },
+	"phydiff": {
+      "format": "number",
+      "title": "Physical difficulty (1 = Easy, 2 = Medium, 3 = Hard)",
+      "type": "number",
+	  "minimum": 1,
+	  "maximum": 3,
+	  "required": true
+    },
+	"techdiff": {
+      "format": "number",
+      "title": "Technical difficulty (1 = Novice, 2 = Experienced, 3 = Pro)",
+      "type": "number",
+	  "minimum": 1,
+	  "maximum": 3,
+	  "required": true
+    },
+    "gps": {
+      "format": "uri",
+      "title": "GPS URL",
+      "type": "string",
+	  "maxLength": 256,
+	  "required": true
+    },
+    "image": {
+      "format": "attachment",
+      "title": "Image",
+      "type": "object",
+      "referencedSchema": "shoutem.core.image-attachments",
+	  "required": true
+    }
+  },
+  "titleProperty": "title",
+  "type": "object"
+}
