@@ -18,7 +18,7 @@ import {
   Image,
   Divider,
   Overlay,
-  Tile,
+  Tile
 } from '@shoutem/ui';
 
 import styles from '../style/style';
