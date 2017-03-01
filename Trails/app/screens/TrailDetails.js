@@ -12,6 +12,7 @@ import {
   Button,
   Row,
   Subtitle,
+  Caption,
   Text,
   Title,
   View,
@@ -21,12 +22,20 @@ import {
   Tile
 } from '@shoutem/ui';
 
-import styles from '../style/style';
+import {
+  InlineMap
+} from '@shoutem/ui-addons';
 
 
 export default class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
+	
+	const marker = {
+		latitude: parseFloat(43.14258),
+		longitude: parseFloat(16.1276),
+		title: trail.title
+	};
 
     return (
       <ScrollView style={{marginTop: -70}}>
@@ -37,6 +46,26 @@ export default class TrailDetails extends Component {
             <Subtitle>{trail.header}</Subtitle>
           </Overlay>
         </Image>
+		
+		<Divider styleName="section-header">
+			<Caption>MAP</Caption>
+		</Divider>
+		
+		<Row>
+			<InlineMap
+				initialRegion={{
+					longitude: marker.longitude,
+					latitude: marker.latitude,
+					latitudeDelta: 0.03,
+					longitudeDelta: 0.03
+				}}
+				markers={[marker]}
+				selectedMarker={marker}
+				style={{height: 160}}
+			/>
+        </Row>
+
+        <Divider styleName="line" />
 
         <Row>
           <Text>{trail.description}</Text>
@@ -46,7 +75,7 @@ export default class TrailDetails extends Component {
 		
 		<Row>
           <Icon name="pin" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Location</Subtitle>
 			</View>
@@ -60,7 +89,7 @@ export default class TrailDetails extends Component {
 
         <Row>
           <Icon name="pin" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Start / Finish</Subtitle>
 			</View>
@@ -74,7 +103,7 @@ export default class TrailDetails extends Component {
 		
 		<Row>
           <Icon name="pin" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Via</Subtitle>
 			</View>
@@ -87,8 +116,8 @@ export default class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="ic_about" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <Icon name="about" />
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Altitude</Subtitle>
 			</View>
@@ -101,8 +130,8 @@ export default class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="ic_about" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <Icon name="about" />
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Length</Subtitle>
 			</View>
@@ -115,8 +144,8 @@ export default class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="ic_about" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <Icon name="about" />
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Physical difficulty</Subtitle>
 			</View>
@@ -129,8 +158,8 @@ export default class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="ic_about" />
-          <View styleName="horizontal" style={styles.flexView}>
+          <Icon name="about" />
+          <View styleName="horizontal">
 			<View style={{flex: 0.5}}>
 				<Subtitle>Technical difficulty</Subtitle>
 			</View>

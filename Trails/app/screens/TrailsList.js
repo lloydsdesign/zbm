@@ -29,8 +29,6 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 import { connect } from 'react-redux';
 
-import styles from '../style/style';
-
 
 class TrailsList extends Component {
 	componentDidMount() {
