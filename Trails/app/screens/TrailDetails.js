@@ -35,7 +35,7 @@ export default class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
 	
-	const markers = [
+	const marker = [
 		{
 			latitude: parseFloat(43),
 			longitude: parseFloat(16),
@@ -60,7 +60,7 @@ export default class TrailDetails extends Component {
 	
 	const openMap = () => navigateTo({
 		screen: ext('Map'),
-		props: {markers[0], title: trail.title}
+		props: {marker: markers[0], title: trail.title }
 	});
 
     return (
