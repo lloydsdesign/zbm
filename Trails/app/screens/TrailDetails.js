@@ -4,7 +4,8 @@ import React, {
 
 import {
   ScrollView,
-  Linking
+  Linking,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -26,16 +27,41 @@ import {
   InlineMap
 } from '@shoutem/ui-addons';
 
+import { navigateTo } from '@shoutem/core/navigation';
+import { ext } from '../const';
+
 
 export default class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
 	
-	const marker = {
-		latitude: parseFloat(43.14258),
-		longitude: parseFloat(16.1276),
-		title: trail.title
-	};
+	const markers = [
+		{
+			latitude: parseFloat(43),
+			longitude: parseFloat(16),
+			title: trail.title
+		},
+		{
+			latitude: parseFloat(44),
+			longitude: parseFloat(17),
+			title: trail.title
+		},
+		{
+			latitude: parseFloat(43.14258),
+			longitude: parseFloat(17),
+			title: trail.title
+		},
+		{
+			latitude: parseFloat(44),
+			longitude: parseFloat(16),
+			title: trail.title
+		}
+	];
+	
+	const openMap = () => navigateTo({
+		screen: ext('Map'),
+		props: {markers[0], title: trail.title}
+	});
 
     return (
       <ScrollView style={{marginTop: -70}}>
@@ -52,17 +78,21 @@ export default class TrailDetails extends Component {
 		</Divider>
 		
 		<Row>
-			<InlineMap
-				initialRegion={{
-					longitude: marker.longitude,
-					latitude: marker.latitude,
-					latitudeDelta: 0.03,
-					longitudeDelta: 0.03
-				}}
-				markers={[marker]}
-				selectedMarker={marker}
-				style={{height: 160}}
-			/>
+			<View styleName="collapsed">
+				<TouchableOpacity onPress={openMap}>
+					<InlineMap
+						initialRegion={{
+							longitude: markers[0].longitude,
+							latitude: markers[0].latitude,
+							latitudeDelta: 0.03,
+							longitudeDelta: 0.03
+						}}
+						markers={markers}
+						selectedMarker={markers[0]}
+						style={{height: 240}}
+					/>
+				</TouchableOpacity>
+			</View>
         </Row>
 
         <Divider styleName="line" />

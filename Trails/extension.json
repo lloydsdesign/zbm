@@ -24,7 +24,13 @@
       "name": "TrailsList"
     },
     {
-      "name": "TrailDetails"
+      "name": "TrailDetails",
+	  "navigatesTo": [
+			"@.Map"
+		]
+    },
+	{
+      "name": "Map"
     }
   ],
   "dataSchemas": [

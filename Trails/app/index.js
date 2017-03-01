@@ -4,10 +4,12 @@
 import reducer from './reducers';
 import TrailsList from './screens/TrailsList.js'
 import TrailDetails from './screens/TrailDetails.js'
+import Map from './screens/Map.js';
 
 export const screens = {
   TrailsList,
-  TrailDetails
+  TrailDetails,
+  Map
 };
 
 export { reducer };
