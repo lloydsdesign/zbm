@@ -18,7 +18,7 @@ import { MapView } from '@shoutem/ui-addons';
 
 export default class Map extends Component {
   static propTypes = {
-    marker: React.PropTypes.object,
+    markers: React.PropTypes.object,
     title: React.PropTypes.string,
   };
 
@@ -30,14 +30,14 @@ export default class Map extends Component {
   }
 
   openMaps() {
-    const { marker } = this.props;
-    const geoURL = `geo:${marker.latitude},${marker.longitude}`;
+    const { markers } = this.props;
+    const geoURL = `geo:${markers[0].latitude},${markers[0].longitude}`;
 
     Linking.canOpenURL(geoURL).then(supported => {
       if (supported) {
         Linking.openURL(geoURL);
       } else {
-        Linking.openURL(`http://maps.apple.com/?ll=${marker.latitude},${marker.longitude}`);
+        Linking.openURL(`http://maps.apple.com/?ll=${markers[0].latitude},${markers[0].longitude}`);
       }
     });
   }
@@ -56,7 +56,7 @@ export default class Map extends Component {
   }
 
   render() {
-    const { marker, title } = this.props;
+    const { markers, title } = this.props;
 
     return (
       <Screen styleName="full-screen">
@@ -68,13 +68,13 @@ export default class Map extends Component {
 
         <MapView
           initialRegion={{
-            latitude: marker.latitude,
-            longitude: marker.longitude,
+            latitude: markers[0].latitude,
+            longitude: markers[0].longitude,
             latitudeDelta: 0.03,
             longitudeDelta: 0.03,
           }}
-          markers={[marker]}
-          selectedMarker={marker}
+          markers={markers}
+          selectedMarker={markers[0]}
         />
       </Screen>
     );

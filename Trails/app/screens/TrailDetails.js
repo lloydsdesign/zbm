@@ -2,6 +2,8 @@ import React, {
   Component
 } from 'react';
 
+import { connect } from 'react-redux';
+
 import {
   ScrollView,
   Linking,
@@ -31,9 +33,10 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 
 
-export default class TrailDetails extends Component {
+class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
+	const { navigateTo } = this.props;
 	
 	const markers = [
 		{
@@ -56,8 +59,8 @@ export default class TrailDetails extends Component {
 	const openMap = () => navigateTo({
 		screen: ext('Map'),
 		props: {
-			marker: markers[0],
-			title: trail.title
+			markers: markers.length ? markers : undefined,
+			title: trail.title ? trail.title : ""
 		}
 	});
 
@@ -80,8 +83,8 @@ export default class TrailDetails extends Component {
 				<TouchableOpacity onPress={openMap}>
 					<InlineMap
 						initialRegion={{
-							longitude: markers[0].longitude,
 							latitude: markers[0].latitude,
+							longitude: markers[0].longitude,
 							latitudeDelta: 0.03,
 							longitudeDelta: 0.03
 						}}
@@ -211,3 +214,8 @@ export default class TrailDetails extends Component {
     );
   }
 }
+
+export default connect(
+  undefined,
+  { navigateTo }
+)(TrailDetails);
