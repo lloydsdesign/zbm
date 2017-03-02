@@ -55,7 +55,10 @@ export default class TrailDetails extends Component {
 	
 	const openMap = () => navigateTo({
 		screen: ext('Map'),
-		props: {marker: markers[0], title: trail.title }
+		props: {
+			marker: markers[0],
+			title: trail.title
+		}
 	});
 
     return (
