@@ -37,23 +37,18 @@ export default class TrailDetails extends Component {
 	
 	const markers = [
 		{
-			latitude: parseFloat(43),
-			longitude: parseFloat(16),
+			latitude: parseFloat(45.088645),
+			longitude: parseFloat(14.119623),
 			title: trail.title
 		},
 		{
-			latitude: parseFloat(44),
-			longitude: parseFloat(17),
+			latitude: parseFloat(45.090109),
+			longitude: parseFloat(14.123096),
 			title: trail.title
 		},
 		{
-			latitude: parseFloat(43),
-			longitude: parseFloat(17),
-			title: trail.title
-		},
-		{
-			latitude: parseFloat(44),
-			longitude: parseFloat(16),
+			latitude: parseFloat(45.090900),
+			longitude: parseFloat(14.114427),
 			title: trail.title
 		}
 	];
@@ -73,12 +68,12 @@ export default class TrailDetails extends Component {
           </Overlay>
         </Image>
 		
-		<Divider styleName="section-header">
-			<Caption>MAP</Caption>
-		</Divider>
-		
 		<Row>
 			<View styleName="collapsed">
+				<Divider styleName="section-header">
+					<Caption>MAP</Caption>
+				</Divider>
+				
 				<TouchableOpacity onPress={openMap}>
 					<InlineMap
 						initialRegion={{
