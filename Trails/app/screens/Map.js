@@ -18,7 +18,7 @@ import { MapView } from '@shoutem/ui-addons';
 
 export default class Map extends Component {
   static propTypes = {
-    markers: React.PropTypes.object,
+    markers: React.PropTypes.array,
     title: React.PropTypes.string,
   };
 
