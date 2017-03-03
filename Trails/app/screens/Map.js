@@ -15,6 +15,7 @@ import {
 import { NavigationBar } from '@shoutem/ui/navigation';
 
 import { MapView } from '@shoutem/ui-addons';
+//import { MapView } from 'react-native-maps';
 
 export default class Map extends Component {
   static propTypes = {
@@ -65,7 +66,7 @@ export default class Map extends Component {
           title={title.toUpperCase()}
           renderRightComponent={this.renderNavigateButton}
         />
-
+		
         <MapView
           initialRegion={{
             latitude: markers[0].latitude,
@@ -74,7 +75,10 @@ export default class Map extends Component {
             longitudeDelta: 0.03,
           }}
           markers={markers}
-          selectedMarker={markers[0]}
+          //selectedMarker={markers[0]}
+		  loadingEnabled={true}
+		  showsUserLocation={true}
+		  followsUserLocation={true}
         />
       </Screen>
     );
