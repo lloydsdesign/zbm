@@ -47,18 +47,17 @@ class TrailDetails extends Component {
 	componentWillMount() {
 		const { trail } = this.props;
 		trail.gps = trail.gps ? trail.gps : 'http://www.zadarbikemagic.com/wp-content/uploads/2016/06/MTB-1-Veliko-Rujno-2.gpx';
-		trail.title = trail.title ? trail.title : 'Test trail';
 		
-		this.fetchMarkers(trail.gps, trail.title);
+		this.fetchMarkers(trail.gps);
 	}
 	
-	fetchMarkers(xmlUrl, title) {
+	fetchMarkers(xmlUrl) {
 		
 		return fetch(xmlUrl)
 			.then((response) => response.text())
 			.then((responseXML) =>
 			{
-				const markers = makeMarkers(parseXMLData(responseXML), title);
+				const markers = makeMarkers(parseXMLData(responseXML));
 				this.setState({ markers });
 				
 			})
@@ -256,7 +255,7 @@ function parseXMLData(xmlData)
 	return parser.parseFromString(xmlData).getElementsByTagName('trkpt');
 }
 
-function makeMarkers(gpxData, title)
+function makeMarkers(gpxData)
 {
 	var i = 0, markers = [];
 	
