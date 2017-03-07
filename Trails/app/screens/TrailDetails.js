@@ -120,16 +120,6 @@ class TrailDetails extends Component {
             <Subtitle>{trail.header}</Subtitle>
           </Overlay>
         </Image>
-		
-		<Row>
-			<View styleName="collapsed">
-				<Divider styleName="section-header">
-					<Caption>MAP</Caption>
-				</Divider>
-				
-				{this.renderMap(trail.title)}
-			</View>
-		</Row>
 
         <Row>
           <Text>{trail.description}</Text>
@@ -233,7 +223,15 @@ class TrailDetails extends Component {
           </View>
         </Row>
 
-        <Divider styleName="line" />
+        <Row>
+			<View styleName="collapsed">
+				<Divider styleName="section-header">
+					<Caption>MAP</Caption>
+				</Divider>
+				
+				{this.renderMap(trail.title)}
+			</View>
+		</Row>
 		
 		 <Row>
 			<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
@@ -241,8 +239,6 @@ class TrailDetails extends Component {
 				<Text>GPS DATA</Text>
 			</Button>
 		</Row>
-		
-		<Divider styleName="line" />
       </ScrollView>
     );
   }
@@ -251,8 +247,7 @@ class TrailDetails extends Component {
 
 function parseXMLData(xmlData)
 {
-	const parser = new DOMParser();
-	return parser.parseFromString(xmlData).getElementsByTagName('trkpt');
+	return new DOMParser().parseFromString(xmlData).getElementsByTagName('trkpt');
 }
 
 function makeMarkers(gpxData)

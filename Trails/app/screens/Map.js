@@ -72,7 +72,7 @@ export default class Map extends Component {
             latitude: markers[0].latitude,
             longitude: markers[0].longitude,
             latitudeDelta: 0.03,
-            longitudeDelta: 0.03,
+            longitudeDelta: 0.03
           }}
           markers={markers}
           //selectedMarker={markers[0]}
