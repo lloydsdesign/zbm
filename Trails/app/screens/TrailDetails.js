@@ -95,9 +95,9 @@ class TrailDetails extends Component {
 						latitudeDelta: 0.03,
 						longitudeDelta: 0.03
 					}}
-					markers={markers}
+					markers={[markers[0]]}
 					selectedMarker={markers[0]}
-					style={{height: 240}}
+					style={{height: 160}}
 				/>
 			</TouchableOpacity>
 		);
