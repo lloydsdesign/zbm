@@ -57,7 +57,7 @@ class TrailDetails extends Component {
 			.then((response) => response.text())
 			.then((responseXML) =>
 			{
-				const markers = makeMarkers(parseXMLData(responseXML));
+				const markers = parseXMLData(responseXML);
 				this.setState({ markers });
 				
 			})
@@ -249,14 +249,10 @@ class TrailDetails extends Component {
 }
 
 
-function parseXMLData(xmlData)
-{
-	return new DOMParser().parseFromString(xmlData).getElementsByTagName('trkpt');
-}
-
-function makeMarkers(gpxData)
+function parseXMLData(gpxData)
 {
 	var i = 0, markers = [];
+	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
 	
 	for(i = 0; i < gpxData.length; i += 10)
 	{
