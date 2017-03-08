@@ -1,21 +1,21 @@
 import React, {
-  Component,
+  Component
 } from 'react';
 import {
   Platform,
   Linking,
+  Dimensions
 } from 'react-native';
 
 import {
   Screen,
   Text,
   Button,
-  View,
+  View
 } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
 
-import { MapView } from '@shoutem/ui-addons';
-//import { MapView } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 export default class Map extends Component {
   static propTypes = {
@@ -58,6 +58,7 @@ export default class Map extends Component {
 
   render() {
     const { markers, title } = this.props;
+	const { width, height } = Dimensions.get('window');
 
     return (
       <Screen styleName="full-screen">
@@ -68,18 +69,24 @@ export default class Map extends Component {
         />
 		
         <MapView
-          initialRegion={{
-            latitude: markers[0].latitude,
-            longitude: markers[0].longitude,
-            latitudeDelta: 0.03,
-            longitudeDelta: 0.03
-          }}
-          markers={markers}
-          //selectedMarker={markers[0]}
-		  loadingEnabled={true}
-		  showsUserLocation={true}
-		  followsUserLocation={true}
-        />
+			initialRegion={{
+				latitude: markers[0].latitude,
+				longitude: markers[0].longitude,
+				latitudeDelta: 0.03,
+				longitudeDelta: 0.03
+			}}
+			loadingEnabled
+			showsUserLocation
+			followsUserLocation
+			style={{width: width, height: height}}
+		>
+			<MapView.Polyline
+				coordinates={markers}
+				geodesic
+				strokeColor="#f00"
+				strokeWidth={4}
+			/>
+        </MapView>
       </Screen>
     );
   }

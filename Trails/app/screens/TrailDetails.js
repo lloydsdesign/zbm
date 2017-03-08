@@ -222,6 +222,8 @@ class TrailDetails extends Component {
 			</View>
           </View>
         </Row>
+		
+		<Divider styleName="line" />
 
         <Row>
 			<View styleName="collapsed">
@@ -232,6 +234,8 @@ class TrailDetails extends Component {
 				{this.renderMap(trail.title)}
 			</View>
 		</Row>
+		
+		<Divider styleName="line" />
 		
 		 <Row>
 			<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
@@ -258,8 +262,7 @@ function makeMarkers(gpxData)
 	{
 		markers[markers.length] = {
 			latitude: parseFloat(gpxData[i].getAttribute('lat')),
-			longitude: parseFloat(gpxData[i].getAttribute('lon')),
-			title: ''
+			longitude: parseFloat(gpxData[i].getAttribute('lon'))
 		};
 	}
 	
