@@ -2,15 +2,10 @@ import React, {
   Component
 } from 'react';
 
-import {
-  Dimensions
-} from 'react-native';
-
-import {
-  Screen
-} from '@shoutem/ui';
-
+import { Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
+import { Screen } from '@shoutem/ui';
+import { NavigationBar } from '@shoutem/ui/navigation';
 
 export default class Map extends Component {
   static propTypes = {
@@ -24,6 +19,11 @@ export default class Map extends Component {
 
     return (
       <Screen styleName="full-screen">
+		<NavigationBar
+          styleName="no-border"
+          title={title.toUpperCase()}
+        />
+		
         <MapView
 			initialRegion={{
 				latitude: markers[0].latitude,
@@ -36,6 +36,12 @@ export default class Map extends Component {
 			followsUserLocation
 			style={{width: width, height: height}}
 		>
+			<MapView.Marker
+				coordinate={markers[0]}
+				title="Start / Finish"
+				pinColor="#000"
+			/>
+			
 			<MapView.Polyline
 				coordinates={markers}
 				geodesic
