@@ -146,17 +146,20 @@ class TrailDetails extends Component {
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 32, height: 32}} />
 				</View>
-				<View style={{flex: 0.3}}>
+				<View style={{flex: 0.25}}>
 					<Subtitle>{trail.altitude} m</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/length.png')} style={{width: 32, height: 32}} />
 				</View>
-				<View style={{flex: 0.3}}>
+				<View style={{flex: 0.25}}>
 					<Subtitle>{trail.length} km</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={batt_icon} style={{width: 32, height: 32}} />
+				</View>
+				<View style={{flex: 0.2}}>
+					<Subtitle>{trail.phydiff}/3</Subtitle>
 				</View>
 			</View>
 		</Row>
