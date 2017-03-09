@@ -141,24 +141,24 @@ class TrailDetails extends Component {
           </Overlay>
         </Image>
 		
-        <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -45, paddingTop: 0, paddingBottom: 14}}>
+        <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/elevation.png')} style={{width: 32, height: 32}} />
+					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
 				</View>
-				<View style={{flex: 0.25}}>
+				<View style={{flex: 0.25, marginBottom: -2}}>
 					<Subtitle>{trail.altitude} m</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/length.png')} style={{width: 32, height: 32}} />
+					<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
 				</View>
-				<View style={{flex: 0.25}}>
+				<View style={{flex: 0.25, marginBottom: -2}}>
 					<Subtitle>{trail.length} km</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
-					<Image source={batt_icon} style={{width: 32, height: 32}} />
+					<Image source={batt_icon} style={{width: 24, height: 24}} />
 				</View>
-				<View style={{flex: 0.2}}>
+				<View style={{flex: 0.2, marginBottom: -2}}>
 					<Subtitle>{trail.phydiff}/3</Subtitle>
 				</View>
 			</View>
