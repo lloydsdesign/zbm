@@ -142,7 +142,7 @@ class TrailDetails extends Component {
         </Image>
 		
         <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -43, paddingTop: 10, paddingBottom: 10}}>
-			<View styleName="horizontal">
+			<View styleName="horizontal v-center">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 32, height: 32}} />
 				</View>
