@@ -39,7 +39,6 @@ export default class Map extends Component {
 			<MapView.Marker
 				coordinate={markers[0]}
 				title="Start / Finish"
-				pinColor="#000"
 			/>
 			
 			<MapView.Polyline
