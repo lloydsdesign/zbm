@@ -110,6 +110,27 @@ class TrailDetails extends Component {
 	const { navigateTo } = this.props;
 	
 	trail.title = trail.title ? trail.title : 'Test trail';
+	
+	var batt_icon = null;
+	
+	switch(trail.phydiff)
+	{
+		case 1:
+		{
+			batt_icon = require('../assets/icons/batt-1.png');
+			break;
+		}
+		case 2:
+		{
+			batt_icon = require('../assets/icons/batt-2.png');
+			break;
+		}
+		case 3:
+		{
+			batt_icon = require('../assets/icons/batt-3.png');
+			break;
+		}
+	}
 	  
     return (
       <ScrollView style={{marginTop: -1}}>
@@ -119,28 +140,26 @@ class TrailDetails extends Component {
             <Title style={{color: '#ffffff', fontSize: 24}}>{trail.title}</Title>
           </Overlay>
         </Image>
+		
         <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -43, paddingTop: 10, paddingBottom: 10}}>
-			  <View styleName="horizontal">
-			<View style={{flex: 0.1}}>
-				 <Icon name="photo" style={{color: 'green'}} />
+			<View styleName="horizontal">
+				<View style={{flex: 0.1}}>
+					<Image source={require('../assets/icons/elevation.png')} style={{width: 32, height: 32}} />
+				</View>
+				<View style={{flex: 0.3}}>
+					<Subtitle>{trail.altitude} m</Subtitle>
+				</View>
+				<View style={{flex: 0.1}}>
+					<Image source={require('../assets/icons/length.png')} style={{width: 32, height: 32}} />
+				</View>
+				<View style={{flex: 0.3}}>
+					<Subtitle>{trail.length} km</Subtitle>
+				</View>
+				<View style={{flex: 0.1}}>
+					<Image source={batt_icon} style={{width: 32, height: 32}} />
+				</View>
 			</View>
-			<View style={{flex: 0.25}}>
-				 <Subtitle>{trail.altitude} m</Subtitle>
-			</View>
-			<View style={{flex: 0.1}}>
-				 <Icon name="play" style={{color: 'blue'}} />
-			</View>
-			<View style={{flex: 0.25}}>
-				 <Subtitle>{trail.length} km</Subtitle>
-			</View>
-			<View style={{flex: 0.1}}>
-				 <Icon name="settings" style={{color: 'red'}} />
-			</View>
-			<View style={{flex: 0.2}}>
-				 <Subtitle>{trail.phydiff}/3</Subtitle>
-			</View>
-          </View>
-			</Row>
+		</Row>
 
         <Divider styleName="line" />
 
@@ -148,8 +167,7 @@ class TrailDetails extends Component {
 			<Subtitle style={{fontSize: 18}}>{trail.header}</Subtitle>
 		</Row>
 
-        <Divider styleName="line" />		
-
+        <Divider styleName="line" />
 
         <Row>
           <View styleName="horizontal">
@@ -226,22 +244,24 @@ class TrailDetails extends Component {
 			</View>
           </View>
         </Row>
-        <Image styleName="large-banner" source={{ uri: trail.graph &&
-        trail.graph.url ? trail.graph.url : undefined }}>
-        </Image>
-        <Row>
+        
+		<Image styleName="large-banner" source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
+        
+		<Row>
         	<View style={{flex: 1}}>
               <Subtitle>TRAIL DESCRIPTION</Subtitle>
-              <Text /> 
+              <Text />
               <Text>{trail.description}</Text>
             </View>
         </Row>
+		
         <View styleName="large-banner">
-				{this.renderMap(trail.title)}
+			{this.renderMap(trail.title)}
 		</View>
+		
 		 <Row>
 			<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
-					<Icon name="photo" />
+				<Icon name="photo" />
 				<Text>DOWLNLOAD GPS DATA</Text>
 			</Button>
 		</Row>
