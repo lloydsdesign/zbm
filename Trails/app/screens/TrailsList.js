@@ -16,6 +16,10 @@ import {
   Tile,
   Title,
   Subtitle,
+  Text,
+  Row,
+  Icon,
+  View,
   Overlay,
   Screen
 } from '@shoutem/ui';
@@ -62,7 +66,29 @@ class TrailsList extends Component {
 			  <Title>{trail.title}</Title>
 			  <Subtitle>{trail.header}</Subtitle>
 			</Tile>
-		  </Image>
+		  </Image>		  
+		  <Row style={{backgroundColor: 'rgba(255,255,255,0.75)', marginTop: -43, paddingTop: 10, paddingBottom: 10}}>
+			  <View styleName="horizontal">
+			<View style={{flex: 0.1}}>
+				 <Icon name="photo" style={{color: 'green'}} />
+			</View>
+			<View style={{flex: 0.25}}>
+				 <Subtitle>{trail.altitude} m</Subtitle>
+			</View>
+			<View style={{flex: 0.1}}>
+				 <Icon name="play" style={{color: 'blue'}} />
+			</View>
+			<View style={{flex: 0.3}}>
+				 <Subtitle>{trail.length} km</Subtitle>
+			</View>
+			<View style={{flex: 0.1}}>
+				 <Icon name="settings" style={{color: 'red'}} />
+			</View>
+			<View style={{flex: 0.115}}>
+				 <Subtitle>{trail.phydiff}/3</Subtitle>
+			</View>
+          </View>
+			</Row>
 		</TouchableOpacity>
     );
   }

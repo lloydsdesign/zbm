@@ -112,43 +112,52 @@ class TrailDetails extends Component {
 	trail.title = trail.title ? trail.title : 'Test trail';
 	  
     return (
-      <ScrollView style={{marginTop: -70}}>
-        <Image styleName="featured" source={{ uri: trail.image &&
+      <ScrollView style={{marginTop: -1}}>
+        <Image styleName="large-banner" source={{ uri: trail.image &&
         trail.image.url ? trail.image.url : undefined }}>
           <Overlay styleName="fill-parent">
-            <Title>{trail.title}</Title>
-            <Subtitle>{trail.header}</Subtitle>
+            <Title style={{color: '#ffffff', fontSize: 24}}>{trail.title}</Title>
           </Overlay>
         </Image>
-
-        <Row>
-          <Text>{trail.description}</Text>
-        </Row>
-
-        <Divider styleName="line" />
-		
-		<Row>
-          <Icon name="pin" />
-          <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
-				<Subtitle>Location</Subtitle>
+        <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -43, paddingTop: 10, paddingBottom: 10}}>
+			  <View styleName="horizontal">
+			<View style={{flex: 0.1}}>
+				 <Icon name="photo" style={{color: 'green'}} />
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.location}</Text>
+			<View style={{flex: 0.25}}>
+				 <Subtitle>{trail.altitude} m</Subtitle>
+			</View>
+			<View style={{flex: 0.1}}>
+				 <Icon name="play" style={{color: 'blue'}} />
+			</View>
+			<View style={{flex: 0.25}}>
+				 <Subtitle>{trail.length} km</Subtitle>
+			</View>
+			<View style={{flex: 0.1}}>
+				 <Icon name="settings" style={{color: 'red'}} />
+			</View>
+			<View style={{flex: 0.2}}>
+				 <Subtitle>{trail.phydiff}/3</Subtitle>
 			</View>
           </View>
-        </Row>
+			</Row>
 
         <Divider styleName="line" />
 
+		<Row>
+			<Subtitle style={{fontSize: 18}}>{trail.header}</Subtitle>
+		</Row>
+
+        <Divider styleName="line" />		
+
+
         <Row>
-          <Icon name="pin" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Start / Finish</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.start}</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.start}</Text>
 			</View>
           </View>
         </Row>
@@ -156,13 +165,12 @@ class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="pin" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Via</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.via}</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.via}</Text>
 			</View>
           </View>
         </Row>
@@ -170,13 +178,12 @@ class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="about" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Altitude</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.altitude} m</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.altitude} m</Text>
 			</View>
           </View>
         </Row>
@@ -184,13 +191,12 @@ class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="about" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Length</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.length} km</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.length} km</Text>
 			</View>
           </View>
         </Row>
@@ -198,13 +204,12 @@ class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="about" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Physical difficulty</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.phydiff}/3</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.phydiff}/3</Text>
 			</View>
           </View>
         </Row>
@@ -212,35 +217,32 @@ class TrailDetails extends Component {
         <Divider styleName="line" />
 		
 		<Row>
-          <Icon name="about" />
           <View styleName="horizontal">
-			<View style={{flex: 0.5}}>
+			<View style={{flex: 0.4}}>
 				<Subtitle>Technical difficulty</Subtitle>
 			</View>
-			<View style={{flex: 0.5}}>
-				<Text>{trail.techdiff}/3</Text>
+			<View style={{flex: 0.6}}>
+				<Text styleName="h-right">{trail.techdiff}/3</Text>
 			</View>
           </View>
         </Row>
-		
-		<Divider styleName="line" />
-
+        <Image styleName="large-banner" source={{ uri: trail.graph &&
+        trail.graph.url ? trail.graph.url : undefined }}>
+        </Image>
         <Row>
-			<View styleName="collapsed">
-				<Divider styleName="section-header">
-					<Caption>MAP</Caption>
-				</Divider>
-				
+        	<View style={{flex: 1}}>
+              <Subtitle>TRAIL DESCRIPTION</Subtitle>
+              <Text /> 
+              <Text>{trail.description}</Text>
+            </View>
+        </Row>
+        <View styleName="large-banner">
 				{this.renderMap(trail.title)}
-			</View>
-		</Row>
-		
-		<Divider styleName="line" />
-		
+		</View>
 		 <Row>
 			<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
-				<Icon name="web" />
-				<Text>GPS DATA</Text>
+					<Icon name="photo" />
+				<Text>DOWLNLOAD GPS DATA</Text>
 			</Button>
 		</Row>
       </ScrollView>

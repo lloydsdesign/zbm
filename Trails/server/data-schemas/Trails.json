@@ -10,7 +10,7 @@
     },
 	"header": {
       "format": "single-line",
-      "title": "Header (max. 160)",
+      "title": "Header (max. 100)",
       "type": "string",
 	  "maxLength": 160,
 	  "required": true
@@ -90,7 +90,7 @@
     },
     "graph": {
       "format": "attachment",
-      "title": "Altitude graph",
+      "title": "Altitude Graph",
       "type": "object",
       "referencedSchema": "shoutem.core.image-attachments",
 	  "required": true
