@@ -21,7 +21,8 @@ import {
   Row,
   View,
   Overlay,
-  Screen
+  Screen,
+  Button
 } from '@shoutem/ui';
 
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -47,7 +48,35 @@ class TrailsList extends Component {
     super(props);
 
     this.renderRow = this.renderRow.bind(this);
+	this.state = {
+      dataSource: []
+    };
   }
+  
+  componentWillMount() {
+	const { trails } = this.props;
+	this.setState({ dataSource: trails });
+  }
+  
+	sortTrails(trails, mode, order)
+	{
+		trails.sort(function(a, b)
+		{
+			var value = 0;
+			
+			if(mode == 'altitude') value = a.altitude - b.altitude;
+			else if(mode == 'length') value = a.length - b.length;
+			else if(mode == 'phy_diff') value = a.phydiff - b.phydiff;
+			
+			return value * order;
+		});
+		
+		this.setState({
+			dataSource: trails
+		});
+		
+		console.dir(trails);
+	}
   
   renderRow(trail) {
 	const { navigateTo } = this.props;
@@ -85,7 +114,7 @@ class TrailsList extends Component {
 			</Tile>
 		  </Image>
 		  
-		  <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
+		  <Row style={{backgroundColor: 'rgba(255,255,255,1)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
@@ -112,16 +141,37 @@ class TrailsList extends Component {
   }
 
   render() {
-	  const { trails } = this.props;
+	const { trails } = this.props;
 	  
     return (
       <Screen>
         <NavigationBar title="TRAILS" />
+		
         <ListView
-          data={trails}
+          data={this.state.dataSource}
           loading={isBusy(trails)}
           renderRow={trail => this.renderRow(trail)}
         />
+		
+		<View styleName="horizontal">
+			<View style={{flex: 0.33}} styleName="h-center">
+				<Button onPress={() => this.sortTrails(trails, 'altitude', 1)}>
+					<Text>ALTITUDE</Text>
+				</Button>
+			</View>
+			
+			<View style={{flex: 0.33}} styleName="h-center">
+				<Button onPress={() => this.sortTrails(trails, 'length', 1)}>
+					<Text>LENGTH</Text>
+				</Button>
+			</View>
+			
+			<View style={{flex: 0.33}} styleName="h-center">
+				<Button onPress={() => this.sortTrails(trails, 'phydiff', 1)}>
+					<Text>DIFFICULTY</Text>
+				</Button>
+			</View>
+		</View>
       </Screen>
     );
   }

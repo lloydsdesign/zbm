@@ -26,6 +26,7 @@ import {
   Tile
 } from '@shoutem/ui';
 
+import { find } from '@shoutem/redux-io';
 import { InlineMap } from '@shoutem/ui-addons';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
@@ -39,6 +40,15 @@ class TrailDetails extends Component {
 	{
 		super(props);
 		this.state = {markers: []};
+	}
+	
+	componentDidMount()
+	{
+		const { find } = this.props;
+		
+		find(ext('Trails'), 'all', {
+			include: ['image', 'graph']
+		})
 	}
 	
 	componentWillMount() {
@@ -138,7 +148,7 @@ class TrailDetails extends Component {
           </Overlay>
         </Image>
 		
-        <Row style={{backgroundColor: 'rgba(255,255,255,0.8)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
+        <Row style={{backgroundColor: 'rgba(255,255,255,1)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
@@ -291,5 +301,5 @@ function parseXMLData(gpxData)
 
 export default connect(
   undefined,
-  { navigateTo }
+  { navigateTo, find }
 )(TrailDetails);
