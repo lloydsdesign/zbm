@@ -26,10 +26,7 @@ import {
   Tile
 } from '@shoutem/ui';
 
-import {
-  InlineMap
-} from '@shoutem/ui-addons';
-
+import { InlineMap } from '@shoutem/ui-addons';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 
@@ -234,19 +231,21 @@ class TrailDetails extends Component {
 			</View>
           </View>
         </Row>
-
-        <Divider styleName="line" />
 		
-		<Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Technical difficulty</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.techdiff}/3</Text>
-			</View>
-          </View>
-        </Row>
+		{trail.techdiff && trail.techdiff != "" &&
+			<Divider styleName="line" />
+		&&
+			<Row>
+			  <View styleName="horizontal">
+				<View style={{flex: 0.4}}>
+					<Subtitle>Technical difficulty</Subtitle>
+				</View>
+				<View style={{flex: 0.6}}>
+					<Text styleName="h-right">{trail.techdiff}/3</Text>
+				</View>
+			  </View>
+			</Row>
+		}
         
 		<Image styleName="large-banner" source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
         
