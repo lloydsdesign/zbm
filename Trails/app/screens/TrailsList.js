@@ -70,13 +70,7 @@ class TrailsList extends Component
 		
 		trails.sort(function(a, b)
 		{
-			var value = 0;
-			
-			if(mode == 'altitude') value = a.altitude - b.altitude;
-			else if(mode == 'length') value = a.length - b.length;
-			else if(mode == 'phydiff') value = a.phydiff - b.phydiff;
-			
-			return value * order;
+			return (a[mode] - b[mode]) * order;
 		});
 		
 		this.setState({
