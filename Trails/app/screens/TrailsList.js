@@ -41,8 +41,7 @@ class TrailsList extends Component
 		this.renderRow = this.renderRow.bind(this);
 		this.state = {
 			dataSource: ds.cloneWithRows([]),
-			sortOrders: [1, 1, 1],
-			sortIcons: []
+			sortOrders: [1, 1, 1]
 		};
 	}
 	
