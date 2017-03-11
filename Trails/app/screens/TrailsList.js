@@ -20,14 +20,11 @@ import {
 	View,
 	Overlay,
 	Screen,
-	Button
+	Button,
+	TouchableOpacity
 } from '@shoutem/ui';
 
-import {
-	TouchableOpacity,
-	ListView
-} from 'react-native';
-
+import { ListView } from 'react-native';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
@@ -103,8 +100,8 @@ class TrailsList extends Component
 	
     return (
 		<TouchableOpacity onPress={() => navigateTo({
-        screen: ext('TrailDetails'),
-        props: { trail }
+			screen: ext('TrailDetails'),
+			props: { trail }
 		})}>
 		  <Image styleName="large-banner" source={{ uri: trail.image &&
 			trail.image.url ? trail.image.url : undefined }}>

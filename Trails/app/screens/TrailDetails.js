@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 
 import {
   ScrollView,
-  Linking,
-  TouchableOpacity
+  Linking
 } from 'react-native';
 
 import {
@@ -23,7 +22,8 @@ import {
   Divider,
   Overlay,
   Spinner,
-  Tile
+  Tile,
+  TouchableOpacity
 } from '@shoutem/ui';
 
 import { find } from '@shoutem/redux-io';
