@@ -39,9 +39,7 @@ class TrailsList extends Component
 		super(props);
 		
 		this.renderRow = this.renderRow.bind(this);
-		this.state = {
-			dataSource: []
-		};
+		this.state = { dataSource: [] };
 	}
 	
 	componentWillMount()
@@ -73,11 +71,7 @@ class TrailsList extends Component
 			return (a[mode] - b[mode]) * order;
 		});
 		
-		this.setState({
-			dataSource: trails
-		});
-		
-		//console.dir(trails);
+		this.setState({ dataSource: trails });
 	}
   
   renderRow(trail)
