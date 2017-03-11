@@ -39,7 +39,10 @@ class TrailsList extends Component
 		super(props);
 		
 		this.renderRow = this.renderRow.bind(this);
-		this.state = { dataSource: ds.cloneWithRows([]) };
+		this.state = {
+			dataSource: ds.cloneWithRows([]),
+			sortOrders: [1, 1, 1]
+		};
 	}
 	
 	componentWillMount()
@@ -65,13 +68,19 @@ class TrailsList extends Component
 	sortTrails(mode, order)
 	{
 		var { trails } = this.props;
+		var newOrders = this.state.sortOrders;
 		
 		trails.sort(function(a, b)
 		{
-			return (a[mode] - b[mode]) * order;
+			return (a[mode] - b[mode]) * newOrders[order];
 		});
 		
-		this.setState({ dataSource: ds.cloneWithRows(trails) });
+		newOrders[order] *= -1;
+		
+		this.setState({
+			dataSource: ds.cloneWithRows(trails),
+			sortOrders: newOrders
+		});
 	}
   
   renderRow(trail)
