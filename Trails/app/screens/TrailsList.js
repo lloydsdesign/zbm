@@ -66,7 +66,7 @@ class TrailsList extends Component {
 			
 			if(mode == 'altitude') value = a.altitude - b.altitude;
 			else if(mode == 'length') value = a.length - b.length;
-			else if(mode == 'phy_diff') value = a.phydiff - b.phydiff;
+			else if(mode == 'phydiff') value = a.phydiff - b.phydiff;
 			
 			return value * order;
 		});
