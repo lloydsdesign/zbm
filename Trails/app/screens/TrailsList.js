@@ -1,36 +1,39 @@
 import React, {
-  Component
+	Component
 } from 'react';
 
 import {
-  find,
-  isBusy,
-  shouldRefresh,
-  getCollection
+	find,
+	shouldRefresh,
+	getCollection
 } from '@shoutem/redux-io';
 
 import _ from 'lodash';
 
 import {
-  Image,
-  ListView,
-  Tile,
-  Title,
-  Subtitle,
-  Text,
-  Row,
-  View,
-  Overlay,
-  Screen,
-  Button
+	Image,
+	Tile,
+	Title,
+	Subtitle,
+	Text,
+	Row,
+	View,
+	Overlay,
+	Screen,
+	Button
 } from '@shoutem/ui';
 
+import {
+	TouchableOpacity,
+	ListView
+} from 'react-native';
+
 import { NavigationBar } from '@shoutem/ui/navigation';
-import { TouchableOpacity } from 'react-native';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 import { connect } from 'react-redux';
 
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class TrailsList extends Component
 {
@@ -39,13 +42,13 @@ class TrailsList extends Component
 		super(props);
 		
 		this.renderRow = this.renderRow.bind(this);
-		this.state = { dataSource: [] };
+		this.state = { dataSource: ds.cloneWithRows([]) };
 	}
 	
 	componentWillMount()
 	{
 		const { trails } = this.props;
-		this.setState({ dataSource: trails });
+		this.setState({ dataSource: ds.cloneWithRows(trails) });
 	}
 	
 	componentDidMount()
@@ -64,14 +67,14 @@ class TrailsList extends Component
   
 	sortTrails(mode, order)
 	{
-		var trails = this.state.dataSource;
+		var { trails } = this.props;
 		
 		trails.sort(function(a, b)
 		{
 			return (a[mode] - b[mode]) * order;
 		});
 		
-		this.setState({ dataSource: trails });
+		this.setState({ dataSource: ds.cloneWithRows(trails) });
 	}
   
   renderRow(trail)
@@ -144,8 +147,7 @@ class TrailsList extends Component
         <NavigationBar title="TRAILS" />
 		
         <ListView
-          data={this.state.dataSource}
-          loading={isBusy(this.state.dataSource)}
+          dataSource={this.state.dataSource}
           renderRow={trail => this.renderRow(trail)}
         />
 		
