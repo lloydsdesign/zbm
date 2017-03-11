@@ -159,7 +159,7 @@ class TrailsList extends Component
 		
 		<View styleName="horizontal">
 			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails('altitude', 1)}>
+				<Button onPress={() => this.sortTrails('altitude', 0)}>
 					<Text>ALTITUDE</Text>
 				</Button>
 			</View>
@@ -171,7 +171,7 @@ class TrailsList extends Component
 			</View>
 			
 			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails('phydiff', 1)}>
+				<Button onPress={() => this.sortTrails('phydiff', 2)}>
 					<Text>DIFFICULTY</Text>
 				</Button>
 			</View>
