@@ -75,7 +75,7 @@ class TrailsList extends Component {
 			dataSource: trails
 		});
 		
-		console.dir(trails);
+		//console.dir(trails);
 	}
   
   renderRow(trail) {
