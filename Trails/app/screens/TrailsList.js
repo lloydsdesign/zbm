@@ -30,6 +30,8 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 import { connect } from 'react-redux';
 
+const sortAsc = require('../assets/icons/sort-asc.png');
+const sortDesc = require('../assets/icons/sort-desc.png');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class TrailsList extends Component
@@ -41,7 +43,8 @@ class TrailsList extends Component
 		this.renderRow = this.renderRow.bind(this);
 		this.state = {
 			dataSource: ds.cloneWithRows([]),
-			sortOrders: [1, 1, 1]
+			sortOrders: [1, 1, 1],
+			sortIcons: [sortAsc, sortAsc, sortAsc]
 		};
 	}
 	
@@ -68,19 +71,32 @@ class TrailsList extends Component
 	sortTrails(mode, order)
 	{
 		var { trails } = this.props;
-		var i, newOrders = this.state.sortOrders;
+		var newOrders = this.state.sortOrders;
+		var newIcons = this.state.sortIcons;
+		var i;
 		
 		trails.sort(function(a, b)
 		{
 			return (a[mode] - b[mode]) * newOrders[order];
 		});
 		
-		for(i = 0; i < newOrders.length; i++) newOrders[i] = 1;
+		for(i = 0; i < newOrders.length; i++)
+		{
+			if(i != order)
+			{
+				newOrders[i] = 1;
+				newIcons[i] = sortAsc;
+			}
+		}
+		
 		newOrders[order] *= -1;
+		if(newOrders[order] > 0) newIcons[order] = sortDesc;
+		else newIcons[order] = sortAsc;
 		
 		this.setState({
 			dataSource: ds.cloneWithRows(trails),
-			sortOrders: newOrders
+			sortOrders: newOrders,
+			sortIcons: newIcons
 		});
 	}
   
@@ -161,18 +177,21 @@ class TrailsList extends Component
 		<View styleName="horizontal">
 			<View style={{flex: 0.33}} styleName="h-center">
 				<Button onPress={() => this.sortTrails('altitude', 0)}>
+					<Image source={this.state.sortIcons[0]} style={{width: 24, height: 24}} />
 					<Text>ALTITUDE</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.33}} styleName="h-center">
 				<Button onPress={() => this.sortTrails('length', 1)}>
+					<Image source={this.state.sortIcons[1]} style={{width: 24, height: 24}} />
 					<Text>LENGTH</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.33}} styleName="h-center">
 				<Button onPress={() => this.sortTrails('phydiff', 2)}>
+					<Image source={this.state.sortIcons[2]} style={{width: 24, height: 24}} />
 					<Text>DIFFICULTY</Text>
 				</Button>
 			</View>
