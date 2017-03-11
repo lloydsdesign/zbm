@@ -34,12 +34,19 @@ import { ext } from '../const';
 const DOMParser = require('xmldom').DOMParser;
 
 
-class TrailDetails extends Component {
-	
+class TrailDetails extends Component
+{
 	constructor(props)
 	{
 		super(props);
 		this.state = {markers: []};
+	}
+	
+	componentWillMount() {
+		const { trail } = this.props;
+		trail.gps = trail.gps ? trail.gps : 'http://www.zadarbikemagic.com/wp-content/uploads/2016/06/MTB-1-Veliko-Rujno-2.gpx';
+		
+		this.fetchMarkers(trail.gps);
 	}
 	
 	componentDidMount()
@@ -51,15 +58,8 @@ class TrailDetails extends Component {
 		})
 	}
 	
-	componentWillMount() {
-		const { trail } = this.props;
-		trail.gps = trail.gps ? trail.gps : 'http://www.zadarbikemagic.com/wp-content/uploads/2016/06/MTB-1-Veliko-Rujno-2.gpx';
-		
-		this.fetchMarkers(trail.gps);
-	}
-	
-	fetchMarkers(xmlUrl) {
-		
+	fetchMarkers(xmlUrl)
+	{
 		return fetch(xmlUrl)
 			.then((response) => response.text())
 			.then((responseXML) =>
@@ -73,7 +73,8 @@ class TrailDetails extends Component {
 			});
 	}
 
-	renderMap(title) {
+	renderMap(title)
+	{
 		const { markers } = this.state;
 		const { navigateTo } = this.props;
 		
@@ -111,8 +112,8 @@ class TrailDetails extends Component {
 	}
 	
 	
-  render() {
-	  
+  render()
+  {
 	const { trail } = this.props;
 	const { navigateTo } = this.props;
 	

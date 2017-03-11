@@ -32,34 +32,42 @@ import { ext } from '../const';
 import { connect } from 'react-redux';
 
 
-class TrailsList extends Component {
-	componentDidMount() {
-    const { find, trails } = this.props;
-    if (shouldRefresh(trails)) {
-      _.defer(() =>
-        find(ext('Trails'), 'all', {
-            include: 'image'
-        })
-      );
-    }
-  }
-	
-	constructor(props) {
-    super(props);
-
-    this.renderRow = this.renderRow.bind(this);
-	this.state = {
-      dataSource: []
-    };
-  }
-  
-  componentWillMount() {
-	const { trails } = this.props;
-	this.setState({ dataSource: trails });
-  }
-  
-	sortTrails(trails, mode, order)
+class TrailsList extends Component
+{
+	constructor(props)
 	{
+		super(props);
+		
+		this.renderRow = this.renderRow.bind(this);
+		this.state = {
+			dataSource: []
+		};
+	}
+	
+	componentWillMount()
+	{
+		const { trails } = this.props;
+		this.setState({ dataSource: trails });
+	}
+	
+	componentDidMount()
+	{
+		const { find, trails } = this.props;
+		
+		if(shouldRefresh(trails))
+		{
+			_.defer(() =>
+				find(ext('Trails'), 'all', {
+					include: 'image'
+				})
+			);
+		}
+	}
+  
+	sortTrails(mode, order)
+	{
+		var trails = this.state.dataSource;
+		
 		trails.sort(function(a, b)
 		{
 			var value = 0;
@@ -78,7 +86,8 @@ class TrailsList extends Component {
 		//console.dir(trails);
 	}
   
-  renderRow(trail) {
+  renderRow(trail)
+  {
 	const { navigateTo } = this.props;
 	var batt_icon = null;
 	
@@ -140,34 +149,33 @@ class TrailsList extends Component {
     );
   }
 
-  render() {
-	const { trails } = this.props;
-	  
+  render()
+  {  
     return (
       <Screen>
         <NavigationBar title="TRAILS" />
 		
         <ListView
           data={this.state.dataSource}
-          loading={isBusy(trails)}
+          loading={isBusy(this.state.dataSource)}
           renderRow={trail => this.renderRow(trail)}
         />
 		
 		<View styleName="horizontal">
 			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails(trails, 'altitude', 1)}>
+				<Button onPress={() => this.sortTrails('altitude', 1)}>
 					<Text>ALTITUDE</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails(trails, 'length', 1)}>
+				<Button onPress={() => this.sortTrails('length', 1)}>
 					<Text>LENGTH</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails(trails, 'phydiff', 1)}>
+				<Button onPress={() => this.sortTrails('phydiff', 1)}>
 					<Text>DIFFICULTY</Text>
 				</Button>
 			</View>
