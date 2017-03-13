@@ -284,7 +284,7 @@ class TrailDetails extends Component
 
 function parseXMLData(gpxData)
 {
-	var i = 0, markers = [];
+	var i, markers = [];
 	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
 	
 	for(i = 0; i < gpxData.length; i += 10)
