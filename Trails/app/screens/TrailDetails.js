@@ -14,13 +14,11 @@ import {
   Button,
   Row,
   Subtitle,
-  Caption,
   Text,
   Title,
   View,
   Image,
   Divider,
-  Overlay,
   Spinner,
   Tile,
   TouchableOpacity
@@ -144,9 +142,9 @@ class TrailDetails extends Component
       <ScrollView style={{marginTop: -1}}>
         <Image styleName="large-banner" source={{ uri: trail.image &&
         trail.image.url ? trail.image.url : undefined }}>
-          <Overlay styleName="fill-parent">
-            <Title style={{color: '#ffffff', fontSize: 24}}>{trail.title}</Title>
-          </Overlay>
+			<Title style={{color: '#ffffff', fontSize: 24}}>
+				{trail.title}
+			</Title>
         </Image>
 		
         <Row style={{backgroundColor: 'rgba(255,255,255,1)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>

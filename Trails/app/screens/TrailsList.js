@@ -18,7 +18,6 @@ import {
 	Text,
 	Row,
 	View,
-	Overlay,
 	Screen,
 	Button,
 	TouchableOpacity
