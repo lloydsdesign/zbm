@@ -33,6 +33,7 @@ const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+
 class TrailsList extends Component
 {
 	constructor(props)

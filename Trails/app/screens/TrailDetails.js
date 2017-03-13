@@ -53,7 +53,7 @@ class TrailDetails extends Component
 		
 		find(ext('Trails'), 'all', {
 			include: ['image', 'graph']
-		})
+		});
 	}
 	
 	fetchMarkers(xmlUrl)
@@ -64,7 +64,6 @@ class TrailDetails extends Component
 			{
 				const markers = parseXMLData(responseXML);
 				this.setState({ markers });
-				
 			})
 			.catch((error) => {
 				console.error(error);
