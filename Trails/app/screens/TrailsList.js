@@ -18,6 +18,7 @@ import {
 	Text,
 	Row,
 	View,
+	Overlay,
 	Screen,
 	Button,
 	TouchableOpacity
@@ -32,7 +33,6 @@ import { connect } from 'react-redux';
 const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
 
 class TrailsList extends Component
 {
@@ -131,31 +131,34 @@ class TrailsList extends Component
 		})}>
 		  <Image styleName="large-banner" source={{ uri: trail.image &&
 			trail.image.url ? trail.image.url : undefined }}>
-			<Tile>
-			  <Title>{trail.title}</Title>
-			  <Subtitle>{trail.header}</Subtitle>
+			<Tile style={{marginTop: -40}}>
+			<View styleName="h-center">
+			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
+			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
+			</View>
+			  <Title>{trail.title.toUpperCase()}</Title>
 			</Tile>
 		  </Image>
 		  
-		  <Row style={{backgroundColor: 'rgba(255,255,255,1)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
+		  <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle>{trail.altitude} m</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.altitude} m</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle>{trail.length} km</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.length} km</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={batt_icon} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.2, marginBottom: -2}}>
-					<Subtitle>{trail.phydiff}/3</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.phydiff}/3</Subtitle>
 				</View>
 			</View>
 		</Row>
@@ -174,25 +177,25 @@ class TrailsList extends Component
           renderRow={trail => this.renderRow(trail)}
         />
 		
-		<View styleName="horizontal">
-			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails('altitude', 0)}>
+		<View styleName="horizontal" style={{backgroundColor: '#ddd', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5} }}>
+			<View style={{flex: 0.32}} styleName="v-center">
+				<Button styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
+					<Text style={{fontSize: 10, color: '#fff'}}>ALTITUDE</Text>
 					<Image source={this.state.sortIcons[0]} style={{width: 24, height: 24}} />
-					<Text>ALTITUDE</Text>
 				</Button>
 			</View>
 			
-			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails('length', 1)}>
+			<View style={{flex: 0.32}} styleName="v-center">
+				<Button style={{backgroundColor: '#b1b1b1', borderRadius: 0, borderWidth: 0, borderTopColor: 'blue', borderTopWidth: 3}} onPress={() => this.sortTrails('length', 1)}>
+					<Text style={{fontSize: 10, color: '#fff'}}>LENGTH</Text>
 					<Image source={this.state.sortIcons[1]} style={{width: 24, height: 24}} />
-					<Text>LENGTH</Text>
 				</Button>
 			</View>
 			
-			<View style={{flex: 0.33}} styleName="h-center">
-				<Button onPress={() => this.sortTrails('phydiff', 2)}>
+			<View style={{flex: 0.36}} styleName="v-center">
+				<Button style={{backgroundColor: '#a6a6a6', borderRadius: 0, borderWidth: 0, borderTopColor: 'red', borderTopWidth: 3}} onPress={() => this.sortTrails('phydiff', 2)}>
+					<Text style={{fontSize: 10, color: '#fff'}}>DIFFICULTY</Text>
 					<Image source={this.state.sortIcons[2]} style={{width: 24, height: 24}} />
-					<Text>DIFFICULTY</Text>
 				</Button>
 			</View>
 		</View>

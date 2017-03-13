@@ -139,36 +139,41 @@ class TrailDetails extends Component
 	  
     return (
       <ScrollView style={{marginTop: -1}}>
+    	<View styleName="horizontal">
+    		<View styleName="h-center" style={{flex: 0.2}}>
+			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
+			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
+			</View>
+    		<View styleName="h-center" style={{flex: 0.8}}>
+    	<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      
+			</View>
+		</View>     
         <Image styleName="large-banner" source={{ uri: trail.image &&
         trail.image.url ? trail.image.url : undefined }}>
-			<Title style={{color: '#ffffff', fontSize: 24}}>
-				{trail.title}
-			</Title>
         </Image>
 		
-        <Row style={{backgroundColor: 'rgba(255,255,255,1)', marginTop: -34, paddingTop: 0, paddingBottom: 10}}>
+        <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle>{trail.altitude} m</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.altitude} m</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle>{trail.length} km</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.length} km</Subtitle>
 				</View>
 				<View style={{flex: 0.1}}>
 					<Image source={batt_icon} style={{width: 24, height: 24}} />
 				</View>
 				<View style={{flex: 0.2, marginBottom: -2}}>
-					<Subtitle>{trail.phydiff}/3</Subtitle>
+					<Subtitle style={{color: '#fff'}}>{trail.phydiff}/3</Subtitle>
 				</View>
 			</View>
 		</Row>
-
         <Divider styleName="line" />
 
 		<Row>
