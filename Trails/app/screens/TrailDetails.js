@@ -41,10 +41,9 @@ class TrailDetails extends Component
 		this.state = {markers: []};
 	}
 	
-	componentWillMount() {
+	componentWillMount()
+	{
 		const { trail } = this.props;
-		trail.gps = trail.gps ? trail.gps : 'http://www.zadarbikemagic.com/wp-content/uploads/2016/06/MTB-1-Veliko-Rujno-2.gpx';
-		
 		this.fetchMarkers(trail.gps);
 	}
 	
@@ -114,8 +113,6 @@ class TrailDetails extends Component
   {
 	const { trail } = this.props;
 	const { navigateTo } = this.props;
-	
-	trail.title = trail.title ? trail.title : 'Test trail';
 	var batt_icon = null;
 	
 	switch(trail.phydiff)
