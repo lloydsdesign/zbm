@@ -145,12 +145,11 @@ class TrailDetails extends Component
 			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
 			</View>
     		<View styleName="h-center" style={{flex: 0.8}}>
-    	<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      
+				<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      
 			</View>
-		</View>     
-        <Image styleName="large-banner" source={{ uri: trail.image &&
-        trail.image.url ? trail.image.url : undefined }}>
-        </Image>
+		</View>
+		
+        <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
 		
         <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
 			<View styleName="horizontal">
@@ -174,6 +173,7 @@ class TrailDetails extends Component
 				</View>
 			</View>
 		</Row>
+		
         <Divider styleName="line" />
 
 		<Row>
