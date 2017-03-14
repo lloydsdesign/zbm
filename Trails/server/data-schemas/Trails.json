@@ -8,6 +8,22 @@
 	  "maxLength": 50,
 	  "required": true
     },
+	"type": {
+      "format": "single-line",
+      "title": "Type (MTB, Road, Family)",
+      "type": "string",
+	  "minLength": 3,
+	  "maxLength": 6,
+	  "required": true
+    },
+	"number": {
+      "format": "number",
+      "title": "Number",
+      "type": "number",
+	  "minimum": 1,
+	  "maximum": 100,
+	  "required": true
+    },
 	"header": {
       "format": "single-line",
       "title": "Header (max. 100)",

@@ -144,8 +144,8 @@ class TrailDetails extends Component
 			
 			<View styleName="horizontal">
 				<View styleName="h-center" style={{flex: 0.2}}>
-				  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
-				  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
+				  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>{trail.type.toUpperCase()}</Title>
+				  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>{trail.number}</Title>
 				</View>
 				<View styleName="h-center" style={{flex: 0.8}}>
 					<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      

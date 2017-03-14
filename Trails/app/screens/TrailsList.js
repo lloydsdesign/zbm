@@ -129,12 +129,11 @@ class TrailsList extends Component
 			screen: ext('TrailDetails'),
 			props: { trail }
 		})}>
-		  <Image styleName="large-banner" source={{ uri: trail.image &&
-			trail.image.url ? trail.image.url : undefined }}>
+		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }}>
 			<Tile style={{marginTop: -40}}>
 			<View styleName="h-center">
-			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
-			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
+			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>{trail.type.toUpperCase()}</Title>
+			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>{trail.number}</Title>
 			</View>
 			  <Title>{trail.title.toUpperCase()}</Title>
 			</Tile>
