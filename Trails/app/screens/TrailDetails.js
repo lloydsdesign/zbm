@@ -26,6 +26,7 @@ import {
 
 import { find } from '@shoutem/redux-io';
 import { InlineMap } from '@shoutem/ui-addons';
+import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 
@@ -138,149 +139,151 @@ class TrailDetails extends Component
 	}
 	  
     return (
-      <ScrollView style={{marginTop: -1}}>
-    	<View styleName="horizontal">
-    		<View styleName="h-center" style={{flex: 0.2}}>
-			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
-			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
-			</View>
-    		<View styleName="h-center" style={{flex: 0.8}}>
-				<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      
-			</View>
-		</View>
-		
-        <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
-		
-        <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
+		<ScrollView style={{marginTop: -1}}>
+			<NavigationBar title={trail.title.toUpperCase()} />
+			
 			<View styleName="horizontal">
-				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
+				<View styleName="h-center" style={{flex: 0.2}}>
+				  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>MTB</Title>
+				  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>01</Title>
 				</View>
-				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.altitude} m</Subtitle>
-				</View>
-				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
-				</View>
-				<View style={{flex: 0.25, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.length} km</Subtitle>
-				</View>
-				<View style={{flex: 0.1}}>
-					<Image source={batt_icon} style={{width: 24, height: 24}} />
-				</View>
-				<View style={{flex: 0.2, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.phydiff}/3</Subtitle>
+				<View styleName="h-center" style={{flex: 0.8}}>
+					<Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 17}}>{trail.title.toUpperCase()}</Title>      
 				</View>
 			</View>
-		</Row>
-		
-        <Divider styleName="line" />
 
-		<Row>
-			<Subtitle style={{fontSize: 18}}>{trail.header}</Subtitle>
-		</Row>
+			<Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
 
-        <Divider styleName="line" />
+			<Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
+				<View styleName="horizontal">
+					<View style={{flex: 0.1}}>
+						<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
+					</View>
+					<View style={{flex: 0.25, marginBottom: -2}}>
+						<Subtitle style={{color: '#fff'}}>{trail.altitude} m</Subtitle>
+					</View>
+					<View style={{flex: 0.1}}>
+						<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
+					</View>
+					<View style={{flex: 0.25, marginBottom: -2}}>
+						<Subtitle style={{color: '#fff'}}>{trail.length} km</Subtitle>
+					</View>
+					<View style={{flex: 0.1}}>
+						<Image source={batt_icon} style={{width: 24, height: 24}} />
+					</View>
+					<View style={{flex: 0.2, marginBottom: -2}}>
+						<Subtitle style={{color: '#fff'}}>{trail.phydiff}/3</Subtitle>
+					</View>
+				</View>
+			</Row>
 
-        <Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Start / Finish</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.start}</Text>
-			</View>
-          </View>
-        </Row>
-
-        <Divider styleName="line" />
-		
-		<Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Via</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.via}</Text>
-			</View>
-          </View>
-        </Row>
-
-        <Divider styleName="line" />
-		
-		<Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Altitude</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.altitude} m</Text>
-			</View>
-          </View>
-        </Row>
-
-        <Divider styleName="line" />
-		
-		<Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Length</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.length} km</Text>
-			</View>
-          </View>
-        </Row>
-
-        <Divider styleName="line" />
-		
-		<Row>
-          <View styleName="horizontal">
-			<View style={{flex: 0.4}}>
-				<Subtitle>Physical difficulty</Subtitle>
-			</View>
-			<View style={{flex: 0.6}}>
-				<Text styleName="h-right">{trail.phydiff}/3</Text>
-			</View>
-          </View>
-        </Row>
-		
-		{trail.techdiff && trail.techdiff != "" &&
 			<Divider styleName="line" />
-		&&
+
+			<Row>
+				<Subtitle style={{fontSize: 18}}>{trail.header}</Subtitle>
+			</Row>
+
+			<Divider styleName="line" />
+
 			<Row>
 			  <View styleName="horizontal">
 				<View style={{flex: 0.4}}>
-					<Subtitle>Technical difficulty</Subtitle>
+					<Subtitle>Start / Finish</Subtitle>
 				</View>
 				<View style={{flex: 0.6}}>
-					<Text styleName="h-right">{trail.techdiff}/3</Text>
+					<Text styleName="h-right">{trail.start}</Text>
 				</View>
 			  </View>
 			</Row>
-		}
-        
-		<Image styleName="large-banner" source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
-        
-		<Row>
-        	<View style={{flex: 1}}>
-              <Subtitle>TRAIL DESCRIPTION</Subtitle>
-              <Text />
-              <Text>{trail.description}</Text>
-            </View>
-        </Row>
-		
-        <View styleName="large-banner">
-			{this.renderMap(trail.title)}
-		</View>
-		
-		 <Row>
-			<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
-				<Icon name="photo" />
-				<Text>DOWNLOAD GPS DATA</Text>
-			</Button>
-		</Row>
-      </ScrollView>
+
+			<Divider styleName="line" />
+
+			<Row>
+			  <View styleName="horizontal">
+				<View style={{flex: 0.4}}>
+					<Subtitle>Via</Subtitle>
+				</View>
+				<View style={{flex: 0.6}}>
+					<Text styleName="h-right">{trail.via}</Text>
+				</View>
+			  </View>
+			</Row>
+
+			<Divider styleName="line" />
+
+			<Row>
+			  <View styleName="horizontal">
+				<View style={{flex: 0.4}}>
+					<Subtitle>Altitude</Subtitle>
+				</View>
+				<View style={{flex: 0.6}}>
+					<Text styleName="h-right">{trail.altitude} m</Text>
+				</View>
+			  </View>
+			</Row>
+
+			<Divider styleName="line" />
+
+			<Row>
+			  <View styleName="horizontal">
+				<View style={{flex: 0.4}}>
+					<Subtitle>Length</Subtitle>
+				</View>
+				<View style={{flex: 0.6}}>
+					<Text styleName="h-right">{trail.length} km</Text>
+				</View>
+			  </View>
+			</Row>
+
+			<Divider styleName="line" />
+
+			<Row>
+			  <View styleName="horizontal">
+				<View style={{flex: 0.4}}>
+					<Subtitle>Physical difficulty</Subtitle>
+				</View>
+				<View style={{flex: 0.6}}>
+					<Text styleName="h-right">{trail.phydiff}/3</Text>
+				</View>
+			  </View>
+			</Row>
+
+			{trail.techdiff && trail.techdiff != "" &&
+				<Divider styleName="line" />
+			&&
+				<Row>
+				  <View styleName="horizontal">
+					<View style={{flex: 0.4}}>
+						<Subtitle>Technical difficulty</Subtitle>
+					</View>
+					<View style={{flex: 0.6}}>
+						<Text styleName="h-right">{trail.techdiff}/3</Text>
+					</View>
+				  </View>
+				</Row>
+			}
+
+			<Image styleName="large-banner" source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
+
+			<Row>
+				<View style={{flex: 1}}>
+				  <Subtitle>TRAIL DESCRIPTION</Subtitle>
+				  <Text />
+				  <Text>{trail.description}</Text>
+				</View>
+			</Row>
+
+			<View styleName="large-banner">
+				{this.renderMap(trail.title)}
+			</View>
+
+			 <Row>
+				<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
+					<Icon name="photo" />
+					<Text>DOWNLOAD GPS DATA</Text>
+				</Button>
+			</Row>
+		</ScrollView>
     );
   }
 }
