@@ -116,8 +116,6 @@ class TrailDetails extends Component
 	const { navigateTo } = this.props;
 	
 	trail.title = trail.title ? trail.title : 'Test trail';
-	if(trail.number < 10) trail.number = '0'+ trail.number;
-	
 	var batt_icon = null;
 	
 	switch(trail.phydiff)
