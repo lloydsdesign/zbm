@@ -104,7 +104,9 @@ class TrailsList extends Component
   {
 	const { navigateTo } = this.props;
 	
-	if(parseInt(trail.number, 10) < 10) trail.number = '0'+ trail.number;
+	trail.number = parseInt(trail.number, 10);
+	if(trail.number < 10) trail.number = '0'+ trail.number;
+	
 	var batt_icon = null;
 	
 	switch(trail.phydiff)
