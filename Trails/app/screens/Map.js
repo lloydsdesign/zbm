@@ -7,48 +7,75 @@ import MapView from 'react-native-maps';
 import { Screen } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
 
-export default class Map extends Component {
-  static propTypes = {
-    markers: React.PropTypes.array,
-    title: React.PropTypes.string,
-  };
+export default class Map extends Component
+{
+	constructor(props)
+	{
+		super(props);
+		this.state = {hasLoaded: false};
+	}
 
-  render() {
-    const { markers, title } = this.props;
-	const { width, height } = Dimensions.get('window');
+	static propTypes = {
+		markers: React.PropTypes.array,
+		title: React.PropTypes.string,
+	};
 
-    return (
-      <Screen styleName="full-screen">
-		<NavigationBar
-          styleName="no-border"
-          title={title.toUpperCase()}
-        />
+	fitToCoordinates()
+	{
+		if(this.state.hasLoaded) return;
+		const { markers } = this.props;
 		
-        <MapView
-			initialRegion={{
-				latitude: markers[0].latitude,
-				longitude: markers[0].longitude,
-				latitudeDelta: 0.03,
-				longitudeDelta: 0.03
-			}}
-			loadingEnabled
-			showsUserLocation
-			followsUserLocation
-			style={{width: width, height: height}}
-		>
-			<MapView.Marker
-				coordinate={markers[0]}
-				title="Start / Finish"
+		this.refs.map.fitToCoordinates(markers, {
+			options:
+			{
+				edgePadding:
+				{
+					top: 10,
+					right: 10,
+					bottom: 10,
+					left: 10
+				},
+				animated: true
+			}
+		});
+		
+		this.setState({hasLoaded: true});
+	}
+
+
+	render()
+	{
+		const { markers, title } = this.props;
+		const { width, height } = Dimensions.get('window');
+
+		return (
+		  <Screen styleName="full-screen">
+			<NavigationBar
+			  styleName="no-border"
+			  title={title.toUpperCase()}
 			/>
 			
-			<MapView.Polyline
-				coordinates={markers}
-				geodesic
-				strokeColor="#f00"
-				strokeWidth={3}
-			/>
-        </MapView>
-      </Screen>
-    );
-  }
+			<MapView
+				ref="map"
+				onRegionChangeComplete={() => this.fitToCoordinates()}
+				loadingEnabled
+				showsUserLocation
+				followsUserLocation
+				style={{width: width, height: height}}
+			>
+				<MapView.Marker
+					coordinate={markers[0]}
+					title="Start / Finish"
+				/>
+				
+				<MapView.Polyline
+					coordinates={markers}
+					geodesic
+					strokeColor="#f00"
+					strokeWidth={3}
+				/>
+			</MapView>
+		  </Screen>
+		);
+	}
 }
