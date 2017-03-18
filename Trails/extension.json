@@ -6,9 +6,35 @@
   "platform": "1.0.*",
   "shortcuts": [
     {
+      "title": "MTB",
+      "description": "MTB trails",
+      "name": "MTB",
+      "screen": "@.TrailsList",
+	  "adminPages": [{
+      "page": "shoutem.cms.CmsPage",
       "title": "Trails",
-      "description": "Browse trough available trails",
-      "name": "openTrailsList",
+      "parameters": {
+        "schema": "@.Trails"
+      }
+    }]
+    },
+	{
+      "title": "Road",
+      "description": "Road trails",
+      "name": "ROAD",
+      "screen": "@.TrailsList",
+	  "adminPages": [{
+      "page": "shoutem.cms.CmsPage",
+      "title": "Trails",
+      "parameters": {
+        "schema": "@.Trails"
+      }
+    }]
+    },
+	{
+      "title": "Family",
+      "description": "Family trails",
+      "name": "FAMILY",
       "screen": "@.TrailsList",
 	  "adminPages": [{
       "page": "shoutem.cms.CmsPage",
