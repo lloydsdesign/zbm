@@ -21,10 +21,16 @@ import {
 	Overlay,
 	Screen,
 	Button,
+	Icon,
 	TouchableOpacity
 } from '@shoutem/ui';
 
-import { ListView } from 'react-native';
+import {
+	ListView,
+	NetInfo,
+	AsyncStorage
+} from 'react-native';
+
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
@@ -42,6 +48,8 @@ class TrailsList extends Component
 		
 		this.renderRow = this.renderRow.bind(this);
 		this.state = {
+			trails: [],
+			isConnected: null,
 			dataSource: ds.cloneWithRows([]),
 			sortOrders: [1, 1, 1],
 			sortIcons: [sortAsc, sortAsc, sortAsc]
@@ -51,14 +59,20 @@ class TrailsList extends Component
 	componentWillMount()
 	{
 		const { trails } = this.props;
-		this.setState({ dataSource: ds.cloneWithRows(trails) });
+		this.setState({trails});
+		
+		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
+		NetInfo.isConnected.fetch().done((isConnected) => {
+			this.setState({isConnected});
+			this.refreshData();
+		});
 	}
 	
 	componentDidMount()
 	{
-		const { find, trails } = this.props;
+		const { find } = this.props;
 		
-		if(shouldRefresh(trails))
+		if(shouldRefresh(this.state.trails))
 		{
 			_.defer(() =>
 				find(ext('Trails'), 'all', {
@@ -67,10 +81,19 @@ class TrailsList extends Component
 			);
 		}
 	}
+	
+	componentWillUnmount()
+	{
+		NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
+	}
+	
+	handleConnectivityChange = (isConnected) => {
+		this.setState({isConnected});
+	};
   
 	sortTrails(mode, order)
 	{
-		var { trails } = this.props;
+		var trails = this.state.trails;
 		var newOrders = this.state.sortOrders;
 		var newIcons = this.state.sortIcons;
 		var i;
@@ -94,9 +117,32 @@ class TrailsList extends Component
 		else newIcons[order] = sortAsc;
 		
 		this.setState({
+			trails: trails,
 			dataSource: ds.cloneWithRows(trails),
 			sortOrders: newOrders,
 			sortIcons: newIcons
+		});
+	}
+	
+	async refreshData()
+	{
+		var trails = this.state.trails;
+		
+		if(this.state.isConnected)
+		{
+			await AsyncStorage.clear();
+			if(trails && trails.length) await AsyncStorage.setItem('TrailsDB', JSON.stringify(trails));
+		}
+		else
+		{
+			trails = await AsyncStorage.getItem('TrailsDB');
+			if(trails) trails = JSON.parse(trails);
+		}
+		
+		if(!trails) trails = [];
+		this.setState({
+			trails: trails,
+			dataSource: ds.cloneWithRows(trails)
 		});
 	}
   
@@ -177,7 +223,19 @@ class TrailsList extends Component
   {  
     return (
       <Screen>
-        <NavigationBar title="TRAILS" />
+        <NavigationBar
+			title="TRAILS"
+			rightComponent={(
+				<Button onPress={() => this.refreshData()}>
+					<Icon name="refresh" />
+				</Button>
+			)}
+		/>
+		
+		<Button onPress={() => this.refreshData()} style={{height: 50}}>
+			<Icon name="refresh" />
+			<Text>REFRESH TRAILS</Text>
+		</Button>
 		
         <ListView
           dataSource={this.state.dataSource}

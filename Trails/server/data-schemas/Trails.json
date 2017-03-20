@@ -98,8 +98,8 @@
       "title": "Technical difficulty (1 = Novice, 2 = Experienced, 3 = Pro)",
       "type": "number",
 	  "minimum": 1,
-	  "displayPriority": 12,
-	  "maximum": 3
+	  "maximum": 3,
+	  "displayPriority": 12
     },
     "gps": {
       "format": "uri",
