@@ -117,7 +117,6 @@ class TrailsList extends Component
 		else newIcons[order] = sortAsc;
 		
 		this.setState({
-			trails: trails,
 			dataSource: ds.cloneWithRows(trails),
 			sortOrders: newOrders,
 			sortIcons: newIcons
@@ -242,7 +241,7 @@ class TrailsList extends Component
           renderRow={trail => this.renderRow(trail)}
         />
 		
-		<View styleName="horizontal" style={{backgroundColor: '#ddd', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5} }}>
+		<View styleName="horizontal" style={{backgroundColor: '#ddd', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
 			<View style={{flex: 0.32}} styleName="v-center">
 				<Button styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
 					<Text style={{fontSize: 10, color: '#fff'}}>ALTITUDE</Text>
