@@ -77,7 +77,7 @@ class TrailsList extends Component
 			_.defer(() =>
 				find(ext('Trails'), 'all', {
 					include: ['image']
-				});
+				})
 			);
 		}
 	}
