@@ -274,7 +274,7 @@ class TrailDetails extends Component
 			</View>
 
 			 <Row>
-				<Button styleName="full-width" onPress={() => Linking.openURL(trail.gps)}>
+				<Button styleName="full-width" style={{backgroundColor: '#000'}} onPress={() => Linking.openURL(trail.gps)}>
 					<Icon name="photo" />
 					<Text>DOWNLOAD GPS DATA</Text>
 				</Button>

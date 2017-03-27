@@ -226,25 +226,25 @@ class TrailsList extends Component
 		  enableEmptySections
         />
 		
-		<View styleName="horizontal" style={{backgroundColor: '#ddd', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
+		<View styleName="horizontal" style={{backgroundColor: '#000', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
 			<View style={{flex: 0.32}} styleName="v-center">
-				<Button styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
-					<Text style={{fontSize: 10, color: '#fff'}}>ALTITUDE</Text>
-					<Image source={this.state.sortIcons[0]} style={{width: 24, height: 24}} />
+				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#009245', borderTopWidth: 3}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
+					<Text style={{fontSize: 10, color: '#009245'}}>ALTITUDE</Text>
+					<Image source={this.state.sortIcons[0]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.32}} styleName="v-center">
-				<Button style={{backgroundColor: '#b1b1b1', borderRadius: 0, borderWidth: 0, borderTopColor: 'blue', borderTopWidth: 3}} onPress={() => this.sortTrails('length', 1)}>
-					<Text style={{fontSize: 10, color: '#fff'}}>LENGTH</Text>
-					<Image source={this.state.sortIcons[1]} style={{width: 24, height: 24}} />
+				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#29ABE2', borderTopWidth: 3}} onPress={() => this.sortTrails('length', 1)}>
+					<Text style={{fontSize: 10, color: '#29ABE2'}}>LENGTH</Text>
+					<Image source={this.state.sortIcons[1]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.36}} styleName="v-center">
-				<Button style={{backgroundColor: '#a6a6a6', borderRadius: 0, borderWidth: 0, borderTopColor: 'red', borderTopWidth: 3}} onPress={() => this.sortTrails('phydiff', 2)}>
-					<Text style={{fontSize: 10, color: '#fff'}}>DIFFICULTY</Text>
-					<Image source={this.state.sortIcons[2]} style={{width: 24, height: 24}} />
+				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#FBB03B', borderTopWidth: 3}} onPress={() => this.sortTrails('phydiff', 2)}>
+					<Text style={{fontSize: 10, color: '#FBB03B'}}>DIFFICULTY</Text>
+					<Image source={this.state.sortIcons[2]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 		</View>
