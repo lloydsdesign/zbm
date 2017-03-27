@@ -18,7 +18,6 @@ import {
 	Text,
 	Row,
 	View,
-	Overlay,
 	Screen,
 	Button,
 	Icon,
@@ -58,21 +57,18 @@ class TrailsList extends Component
 	
 	componentWillMount()
 	{
-		const { trails } = this.props;
-		this.setState({trails});
-		
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
-			this.setState({isConnected});
+			this.setState({ isConnected });
 			this.refreshData();
 		});
 	}
 	
 	componentDidMount()
 	{
-		const { find } = this.props;
+		const { find, trails } = this.props;
 		
-		if(shouldRefresh(this.state.trails))
+		if(shouldRefresh(trails))
 		{
 			_.defer(() =>
 				find(ext('Trails'), 'all', {
@@ -88,7 +84,7 @@ class TrailsList extends Component
 	}
 	
 	handleConnectivityChange = (isConnected) => {
-		this.setState({isConnected});
+		this.setState({ isConnected });
 	};
   
 	sortTrails(mode, order)
@@ -125,7 +121,7 @@ class TrailsList extends Component
 	
 	async refreshData()
 	{
-		var trails = this.state.trails;
+		var { trails } = this.props;
 		
 		if(this.state.isConnected)
 		{
@@ -222,23 +218,12 @@ class TrailsList extends Component
   {  
     return (
       <Screen>
-        <NavigationBar
-			title="TRAILS"
-			rightComponent={(
-				<Button onPress={() => this.refreshData()}>
-					<Icon name="refresh" />
-				</Button>
-			)}
-		/>
-		
-		<Button onPress={() => this.refreshData()} style={{height: 50}}>
-			<Icon name="refresh" />
-			<Text>REFRESH TRAILS</Text>
-		</Button>
+        <NavigationBar title="TRAILS" />
 		
         <ListView
           dataSource={this.state.dataSource}
           renderRow={trail => this.renderRow(trail)}
+		  enableEmptySections
         />
 		
 		<View styleName="horizontal" style={{backgroundColor: '#ddd', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
