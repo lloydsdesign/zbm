@@ -124,7 +124,14 @@
       "referencedSchema": "shoutem.core.image-attachments",
 	  "displayPriority": 15,
 	  "required": true
-    }
+    },
+	"startlocation": {
+	  "type": "object",
+	  "format": "geolocation",
+	  "title": "Start location",
+	  "displayPriority": 16,
+	  "required": true
+	}
   },
   "titleProperty": "title",
   "type": "object"

@@ -19,7 +19,6 @@ import {
   View,
   Image,
   Divider,
-  Spinner,
   Tile,
   TouchableOpacity
 } from '@shoutem/ui';
@@ -30,23 +29,9 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../const';
 
-const DOMParser = require('xmldom').DOMParser;
-
 
 class TrailDetails extends Component
 {
-	constructor(props)
-	{
-		super(props);
-		this.state = {markers: []};
-	}
-	
-	componentWillMount()
-	{
-		const { trail } = this.props;
-		this.fetchMarkers(trail.gps);
-	}
-	
 	componentDidMount()
 	{
 		const { find } = this.props;
@@ -56,63 +41,10 @@ class TrailDetails extends Component
 		});
 	}
 	
-	fetchMarkers(xmlUrl)
-	{
-		return fetch(xmlUrl)
-			.then((response) => response.text())
-			.then((responseXML) =>
-			{
-				const markers = parseXMLData(responseXML);
-				this.setState({ markers });
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
-
-	renderMap(title)
-	{
-		const { markers } = this.state;
-		const { navigateTo } = this.props;
-		
-		if(!markers.length)
-		{
-			return (
-				<View styleName="h-center v-center">
-					<Spinner />
-				</View>
-			);
-		}
-		
-		return (
-			<TouchableOpacity
-				onPress={() => navigateTo({
-					screen: ext('Map'),
-					props: {
-						markers: markers,
-						title: title
-					}
-				})}>
-				<InlineMap
-					initialRegion={{
-						latitude: markers[0].latitude,
-						longitude: markers[0].longitude,
-						latitudeDelta: 0.03,
-						longitudeDelta: 0.03
-					}}
-					markers={[markers[0]]}
-					selectedMarker={markers[0]}
-					style={{height: 160}}
-				/>
-			</TouchableOpacity>
-		);
-	}
-	
 	
   render()
   {
-	const { trail } = this.props;
-	const { navigateTo } = this.props;
+	const { navigateTo, trail } = this.props;
 	var batt_icon = null;
 	
 	switch(trail.phydiff)
@@ -133,6 +65,12 @@ class TrailDetails extends Component
 			break;
 		}
 	}
+	
+	const startMarker = {
+		latitude: parseFloat(trail.startlocation.latitude),
+		longitude: parseFloat(trail.startlocation.longitude),
+		title: trail.startlocation.formattedAddress
+	};
 	  
     return (
 		<ScrollView style={{marginTop: -1}}>
@@ -270,7 +208,26 @@ class TrailDetails extends Component
 			</Row>
 
 			<View styleName="large-banner">
-				{this.renderMap(trail.title)}
+				<TouchableOpacity
+					onPress={() => navigateTo({
+						screen: ext('Map'),
+						props: {
+							title: trail.title,
+							gpsurl: trail.gps
+						}
+					})}>
+					<InlineMap
+						initialRegion={{
+							latitude: startMarker.latitude,
+							longitude: startMarker.longitude,
+							latitudeDelta: 0.03,
+							longitudeDelta: 0.03
+						}}
+						markers={[startMarker]}
+						selectedMarker={startMarker}
+						style={{height: 160}}
+					/>
+				</TouchableOpacity>
 			</View>
 
 			 <Row>
@@ -282,23 +239,6 @@ class TrailDetails extends Component
 		</ScrollView>
     );
   }
-}
-
-
-function parseXMLData(gpxData)
-{
-	var i, markers = [];
-	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
-	
-	for(i = 0; i < gpxData.length; i += 10)
-	{
-		markers[markers.length] = {
-			latitude: parseFloat(gpxData[i].getAttribute('lat')),
-			longitude: parseFloat(gpxData[i].getAttribute('lon'))
-		};
-	}
-	
-	return markers;
 }
 
 export default connect(

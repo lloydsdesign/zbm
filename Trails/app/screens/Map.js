@@ -7,23 +7,69 @@ import MapView from 'react-native-maps';
 import { Screen } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
 
+const DOMParser = require('xmldom').DOMParser;
+
 export default class Map extends Component
 {
 	constructor(props)
 	{
 		super(props);
-		this.state = {hasLoaded: false};
+		
+		this.state = {
+			markers: [],
+			hasLoaded: false
+		};
 	}
-
+	
 	static propTypes = {
-		markers: React.PropTypes.array,
 		title: React.PropTypes.string,
+		gpsurl: React.PropTypes.string
 	};
+	
+	componentWillMount()
+	{
+		const { gpsurl } = this.props;
+		this.fetchMarkers(gpsurl);
+	}
+	
+	fetchMarkers(xmlUrl)
+	{
+		return fetch(xmlUrl)
+			.then((response) => response.text())
+			.then((responseXML) =>
+			{
+				const markers = parseXMLData(responseXML);
+				this.setState({ markers });
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}
+	
+	renderPolyLine()
+	{
+		const { markers } = this.state;
+		if(!markers.length) return null;
+		
+		return (
+			<MapView.Marker
+				coordinate={markers[0]}
+				title="Start / Finish"
+			/>
+			&&
+			<MapView.Polyline
+				coordinates={markers}
+				geodesic
+				strokeColor="#f00"
+				strokeWidth={3}
+			/>
+		);
+	}
 
 	fitToCoordinates()
 	{
-		if(this.state.hasLoaded) return;
-		const { markers } = this.props;
+		const { markers, hasLoaded } = this.state;
+		if(hasLoaded || !markers.length) return;
 		
 		this.refs.map.fitToCoordinates(markers, {
 			options:
@@ -45,7 +91,7 @@ export default class Map extends Component
 
 	render()
 	{
-		const { markers, title } = this.props;
+		const { marker, title } = this.props;
 		const { width, height } = Dimensions.get('window');
 
 		return (
@@ -62,20 +108,26 @@ export default class Map extends Component
 				showsUserLocation
 				followsUserLocation
 				style={{width: width, height: height}}
-			>
-				<MapView.Marker
-					coordinate={markers[0]}
-					title="Start / Finish"
-				/>
-				
-				<MapView.Polyline
-					coordinates={markers}
-					geodesic
-					strokeColor="#f00"
-					strokeWidth={3}
-				/>
+			>	
+				{this.renderPolyLine()}
 			</MapView>
 		  </Screen>
 		);
 	}
+}
+
+function parseXMLData(gpxData)
+{
+	var i, markers = [];
+	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
+	
+	for(i = 0; i < gpxData.length; i += 10)
+	{
+		markers[markers.length] = {
+			latitude: parseFloat(gpxData[i].getAttribute('lat')),
+			longitude: parseFloat(gpxData[i].getAttribute('lon'))
+		};
+	}
+	
+	return markers;
 }

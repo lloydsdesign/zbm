@@ -119,6 +119,34 @@ class TrailsList extends Component
 		});
 	}
 	
+	getNearestTrail()
+	{
+		var trails = this.state.trails;
+		var currPos;
+		
+		/*navigator.geolocation.getCurrentPosition((position) => {
+				currPos = position.coords;
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);*/
+		
+		currPos = {
+			latitude: 44,
+			longitude: 14
+		};
+		
+		trails.sort(function(a, b)
+		{
+			if(!("startlocation" in a) || !("startlocation" in b)) return 0;
+			return haversine(currPos, a.startlocation) - haversine(currPos, b.startlocation);
+		});
+		
+		this.setState({
+			dataSource: ds.cloneWithRows(trails)
+		});
+	}
+	
 	async refreshData()
 	{
 		var { trails } = this.props;
@@ -248,9 +276,45 @@ class TrailsList extends Component
 				</Button>
 			</View>
 		</View>
+		
+		<View styleName="horizontal">
+			<Button styleName="full-width" onPress={() => this.getNearestTrail()}>
+				<Text>NEAREST TRAILS</Text>
+				<Icon name="search" />
+			</Button>
+		</View>
       </Screen>
     );
   }
+}
+
+function toRad(num)
+{
+	return num * Math.PI / 180;
+}
+
+function haversine(start, end, options)
+{
+	options = options || {};
+
+	const radii = {
+		km:    6371,
+		mile:  3960,
+		meter: 6371000,
+		nmi:   3440
+	};
+
+	const R = options.unit in radii ? radii[options.unit] : radii.meter;
+
+	const dLat = toRad(end.latitude - start.latitude);
+	const dLon = toRad(end.longitude - start.longitude);
+	const lat1 = toRad(start.latitude);
+	const lat2 = toRad(end.latitude);
+
+	const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	return R * c;
 }
 
 export default connect(
