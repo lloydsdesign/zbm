@@ -132,8 +132,8 @@ class TrailsList extends Component
 		);*/
 		
 		currPos = {
-			latitude: 44,
-			longitude: 14
+			latitude: 44.118072,
+			longitude: 15.222783
 		};
 		
 		trails.sort(function(a, b)
