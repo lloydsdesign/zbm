@@ -1,5 +1,13 @@
 {
   "name": "crle.trails",
   "version": "0.0.1",
-  "description": "Trails information"
+  "description": "Trails information",
+  "dependencies": {
+    "react-native-mapbox-gl": "git+https://github.com/shoutem/react-native-mapbox-gl.git"
+  },
+    "rnpm": {
+      "commands": {
+        "postlink": "node node_modules/crle.trails/scripts/run.js"
+      }
+    }
 }
