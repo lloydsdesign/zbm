@@ -67,16 +67,15 @@ export default class Map extends Component {
       type: 'point',
       title: 'Start',
       subtitle: 'Track starting point',
-      id: 'start',
+      id: 'start'
     };
 
     const polyline = {
       coordinates: markers,
       type: 'polyline',
-      strokeColor: '#00FB00',
-      strokeWidth: 4,
-      strokeAlpha: 0.5,
-      id: 'line',
+      strokeColor: '#ff0000',
+      strokeWidth: 3,
+      id: 'line'
     };
 
     return [
