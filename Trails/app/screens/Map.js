@@ -1,9 +1,11 @@
 import React, {
   Component,
 } from 'react';
+
 import { STYLE_URL } from '../const';
 import { Screen } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
+import Mapbox from 'react-native-mapbox-gl';
 import { MapView } from 'react-native-mapbox-gl';
 import _ from 'lodash';
 
@@ -16,18 +18,18 @@ export default class Map extends Component {
     gpsurl: React.PropTypes.string,
   };
 
-  constructor(props) {
+  constructor(props)
+  {
     super(props);
 
     this.state = {
       markers: [],
-      isReady: false,
+      isReady: false
     };
   }
 
-
-
-  componentWillMount() {
+  componentWillMount()
+  {
     const { gpsurl } = this.props;
     this.fetchMarkers(gpsurl);
   }
@@ -38,18 +40,23 @@ export default class Map extends Component {
       .then((responseXML) => {
         const markers = parseXMLData(responseXML);
         const initialRegion = this.resolveInitialRegion(_.head(markers));
-        this.setState({ markers, initialRegion, isReady: true });
+		
+        this.setState({
+			markers,
+			initialRegion,
+			isReady: true
+		});
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  resolveInitialRegion(marker) {
-    console.log(marker);
+  resolveInitialRegion(marker)
+  {
     return {
       latitude: _.head(marker),
-      longitude: _.last(marker),
+      longitude: _.last(marker)
     };
   }
 
@@ -63,14 +70,6 @@ export default class Map extends Component {
       id: 'start',
     };
 
-    const lastPoint = {
-      coordinates: _.last(markers),
-      type: 'point',
-      title: 'Finish',
-      subtitle: 'Track finish point',
-      id: 'finish',
-    };
-
     const polyline = {
       coordinates: markers,
       type: 'polyline',
@@ -82,59 +81,16 @@ export default class Map extends Component {
 
     return [
       startingPoint,
-      lastPoint,
-      polyline,
+      polyline
     ];
   }
-
-  /*renderPolyLine() {
-    const { markers } = this.state;
-    if (!markers.length) return null;
-
-    return (
-      <MapView.Marker
-        coordinate={markers[0]}
-        title="Start / Finish"
-      />
-      &&
-      <MapView.Polyline
-        coordinates={markers}
-        geodesic
-        strokeColor="#f00"
-        strokeWidth={3}
-      />
-    );
-  }
-
-  fitToCoordinates() {
-    const { markers, hasLoaded } = this.state;
-    if (hasLoaded || !markers.length) return;
-
-    this.refs.map.fitToCoordinates(markers, {
-      options:
-      {
-        edgePadding:
-        {
-          top: 10,
-          right: 10,
-          bottom: 10,
-          left: 10
-        },
-        animated: true
-      }
-    });
-
-    this.setState({ hasLoaded: true });
-  }*/
-
 
   render() {
     const { title } = this.props;
     const { markers, initialRegion, isReady } = this.state;
-
     const mapMarkers = this.resolveMapmarkers(markers);
-
-    if (!isReady) return null;
+	
+    if(!isReady) return null;
 
     return (
       <Screen styleName="full-screen">
@@ -142,31 +98,34 @@ export default class Map extends Component {
           styleName="no-border"
           title={title.toUpperCase()}
         />
+		
         <MapView
           initialCenterCoordinate={initialRegion}
-          style={{ flex: 1 }}
           initialZoomLevel={13}
-          styleURL={STYLE_URL}
           annotations={mapMarkers}
+		  logoIsHidden
           showsUserLocation
-          logoIsHidden
-          compassIsHidden
+		  userTrackingMode={Mapbox.userTrackingMode.followWithCourse}
+		  styleURL={STYLE_URL}
+		  style={{ flex: 1 }}
         />
       </Screen>
     );
   }
 }
 
-function parseXMLData(gpxData) {
-  var i, markers = [];
-  gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
+function parseXMLData(gpxData)
+{
+	var i, markers = [];
+	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
 
-  for (i = 0; i < gpxData.length; i += 10) {
-    markers[markers.length] = [
-      parseFloat(gpxData[i].getAttribute('lat')),
-      parseFloat(gpxData[i].getAttribute('lon')),
-    ];
-  }
+	for (i = 0; i < gpxData.length; i += 10)
+	{
+		markers[markers.length] = [
+			parseFloat(gpxData[i].getAttribute('lat')),
+			parseFloat(gpxData[i].getAttribute('lon'))
+		];
+	}
 
-  return markers;
+	return markers;
 }

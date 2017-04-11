@@ -19,8 +19,7 @@ import {
   View,
   Image,
   Divider,
-  Tile,
-  TouchableOpacity,
+  TouchableOpacity
 } from '@shoutem/ui';
 
 import { find } from '@shoutem/redux-io';

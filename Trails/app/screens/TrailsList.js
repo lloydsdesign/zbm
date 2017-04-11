@@ -121,30 +121,22 @@ class TrailsList extends Component
 	
 	sortByNearestTrail()
 	{
-		var trails = this.state.trails;
-		var currPos;
-		
-		/*navigator.geolocation.getCurrentPosition((position) => {
-				currPos = position.coords;
+		navigator.geolocation.getCurrentPosition((position) => {
+				var trails = this.state.trails;
+				
+				trails.sort(function(a, b)
+				{
+					if(!("startlocation" in a) || !("startlocation" in b)) return 0;
+					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
+				});
+				
+				this.setState({
+					dataSource: ds.cloneWithRows(trails)
+				});
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
-		);*/
-		
-		currPos = {
-			latitude: 44.118072,
-			longitude: 15.222783
-		};
-		
-		trails.sort(function(a, b)
-		{
-			if(!("startlocation" in a) || !("startlocation" in b)) return 0;
-			return haversine(currPos, a.startlocation) - haversine(currPos, b.startlocation);
-		});
-		
-		this.setState({
-			dataSource: ds.cloneWithRows(trails)
-		});
+		);
 	}
 	
 	async refreshData()
