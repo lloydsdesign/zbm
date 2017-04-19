@@ -134,7 +134,7 @@ class TrailDetails extends Component {
 				<Row>
 					<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
 						<Icon name="down-arrow" />
-						<Text>DOWNLOAD OFFLINE MAPS {packProgress}</Text>
+						<Text>DOWNLOAD OFFLINE MAPS</Text>
 					</Button>
 				</Row>
 			);
