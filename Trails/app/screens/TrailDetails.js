@@ -39,6 +39,7 @@ class TrailDetails extends Component {
     this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
 	
 	this.state = {
+		offlinePacks: [],
 		packDownloading: false,
 		packProgress: 0,
 		packBytesCompleted: 0
@@ -49,6 +50,8 @@ class TrailDetails extends Component {
   {
     Mapbox.setAccessToken(MGL_TOKEN);
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
+	
+	this.getOfflinePack();
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
       // progress object will have the following shape :
@@ -102,7 +105,7 @@ class TrailDetails extends Component {
   getOfflinePack() {
     return Mapbox.getOfflinePacks()
       .then((packs) => {
-        return packs;
+        this.setState({ offlinePacks: packs });
       })
       .catch((err) => {
       });
@@ -131,9 +134,9 @@ class TrailDetails extends Component {
   
 	renderOfflineButton()
 	{
-		const packs = this.getOfflinePack();
+		const { offlinePacks, packDownloading } = this.state;
 		
-		if(packs.length)
+		if(offlinePacks.length)
 		{
 			return (
 				<Row>
@@ -143,8 +146,6 @@ class TrailDetails extends Component {
 				</Row>
 			);
 		}
-		
-		const { packDownloading } = this.state;
 		
 		if(!packDownloading)
 		{
