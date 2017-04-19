@@ -140,7 +140,7 @@ class TrailsList extends Component
 		
 		if(this.state.isConnected)
 		{
-			await AsyncStorage.clear();
+			await AsyncStorage.removeItem('TrailsDB');
 			if(trails && trails.length) await AsyncStorage.setItem('TrailsDB', JSON.stringify(trails));
 		}
 		else

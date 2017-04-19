@@ -5,7 +5,8 @@ import React, {
 import {
   ScrollView,
   Linking,
-  NetInfo
+  NetInfo,
+  AsyncStorage
 } from 'react-native';
 
 import {
@@ -62,6 +63,8 @@ class TrailDetails extends Component {
 		const { trail } = this.props;
 		
 		if(isConnected) this.fetchMarkers(trail.gps);
+		else this.getMarkers();
+		
 		this.setState({ isConnected });
 	});
 
@@ -97,11 +100,34 @@ class TrailDetails extends Component {
     return fetch(xmlUrl)
       .then((response) => response.text())
       .then((responseXML) => {
-        this.setState({ markers: parseXMLData(responseXML) });
+		const markers = parseXMLData(responseXML);
+		this.storeMarkers(markers);
+        this.setState({ markers });
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+  
+  async storeMarkers(markers)
+  {
+	  const { trail } = this.props;
+	  const key = 'trail_'+ trail.id;
+	  
+	  await AsyncStorage.removeItem(key);
+	  await AsyncStorage.setItem(key, JSON.stringify(markers));
+  }
+  
+  async getMarkers()
+  {
+	  const { trail } = this.props;
+	  const key = 'trail_'+ trail.id;
+	  
+	  markers = await AsyncStorage.getItem(key);
+	  if(markers) markers = JSON.parse(markers);
+	  
+	  if(!markers) markers = [];
+	  this.setState({ markers });
   }
 
   getOfflinePack() {
