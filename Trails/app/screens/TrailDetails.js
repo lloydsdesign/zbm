@@ -38,6 +38,7 @@ class TrailDetails extends Component {
     this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
 	
 	this.state = {
+		packDownloading: false,
 		packProgress: 0
 	};
   }
@@ -45,6 +46,7 @@ class TrailDetails extends Component {
   componentWillMount()
   {
     Mapbox.setAccessToken(MGL_TOKEN);
+	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
       // progress object will have the following shape :
@@ -105,7 +107,7 @@ class TrailDetails extends Component {
   // in addition to logging the action
   saveOfflinePack() {
     Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
-      console.log('Download started');
+      this.setState({ packDownloading: true });
     }).catch((err) => {
       console.log(err);
     });
@@ -115,11 +117,7 @@ class TrailDetails extends Component {
   deleteOfflinePack() {
     Mapbox.removeOfflinePack('MainMap')
       .then((info) => {
-        if (info.deleted) {
-          console.log(info.deleted);
-        } else {
-          console.log('No packs to delete');
-        }
+        if(info.deleted) this.setState({ packDownloading: false });
       })
       .catch((err) => {
         console.log(err);
@@ -128,19 +126,33 @@ class TrailDetails extends Component {
   
 	renderOfflineButton()
 	{
-		var { packProgress } = this.state;
+		const { packDownloading } = this.state;
 		
-		if(packProgress) packProgress = '('+ packProgress +'%)';
-		else packProgress = '';
-		
-		return (
-			<Row>
-				<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
-					<Icon name="down-arrow" />
-					<Text>DOWNLOAD OFFLINE MAPS {packProgress}</Text>
-				</Button>
-			</Row>
-		);
+		if(!packDownloading)
+		{
+			return (
+				<Row>
+					<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
+						<Icon name="down-arrow" />
+						<Text>DOWNLOAD OFFLINE MAPS {packProgress}</Text>
+					</Button>
+				</Row>
+			);
+		}
+		else
+		{
+			var { packProgress } = this.state;
+			packProgress = '('+ packProgress +'%)';
+			
+			return (
+				<Row>
+					<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
+						<Icon name="close" />
+						<Text>CANCEL {packProgress}</Text>
+					</Button>
+				</Row>
+			);
+		}
 	}
 
 
