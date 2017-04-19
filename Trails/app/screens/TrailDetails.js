@@ -30,18 +30,23 @@ import { ext, MGL_TOKEN, OFFLINE_PACK_CONFIG } from '../const';
 
 
 class TrailDetails extends Component {
-  constructor(props) {
+  constructor(props)
+  {
     super(props);
     this.saveOfflinePack = this.saveOfflinePack.bind(this);
     this.getOfflinePack = this.getOfflinePack.bind(this);
     this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
+	
+	this.state = {
+		packProgress: 0
+	};
   }
 
-  componentWillMount() {
+  componentWillMount()
+  {
     Mapbox.setAccessToken(MGL_TOKEN);
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
-      console.log('offline pack progress', progress);
       // progress object will have the following shape :
       // {
       // 	name: 'test', // The name this pack was registered with
@@ -54,7 +59,13 @@ class TrailDetails extends Component {
       // you can make use of these progress parameters to display download progress in real time,
       // as the difference between countOfResourcesCompleted and countOfResourcesExpected, displayed
       // in percentage, for example. Instead of logging, you can just return the object and use it elsewhere
+	  
+	  progress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
+	  if(progress == this.state.packProgress) return;
+	  
+	  this.setState({ packProgress: progress });
     });
+	
     this.offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener((tiles) => {
       console.log('offline max allowed tiles', tiles);
     });
@@ -114,6 +125,23 @@ class TrailDetails extends Component {
         console.log(err);
       });
   }
+  
+	renderOfflineButton()
+	{
+		var { packProgress } = this.state;
+		
+		if(packProgress) packProgress = '('+ packProgress +'%)';
+		else packProgress = '';
+		
+		return (
+			<Row>
+				<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
+					<Icon name="down-arrow" />
+					<Text>DOWNLOAD OFFLINE MAPS {packProgress}</Text>
+				</Button>
+			</Row>
+		);
+	}
 
 
   render() {
@@ -301,10 +329,12 @@ class TrailDetails extends Component {
             />
           </TouchableOpacity>
         </View>
+		
+		{this.renderOfflineButton()}
 
         <Row>
           <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
-            <Icon name="photo" />
+            <Icon name="down-arrow" />
             <Text>DOWNLOAD GPS DATA</Text>
           </Button>
         </Row>

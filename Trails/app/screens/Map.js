@@ -15,7 +15,7 @@ export default class Map extends Component {
 
   static propTypes = {
     title: React.PropTypes.string,
-    gpsurl: React.PropTypes.string,
+    gpsurl: React.PropTypes.string
   };
 
   constructor(props)
