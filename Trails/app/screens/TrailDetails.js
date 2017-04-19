@@ -29,6 +29,8 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext, MGL_TOKEN, OFFLINE_PACK_CONFIG } from '../const';
 
+const DOMParser = require('xmldom').DOMParser;
+
 
 class TrailDetails extends Component {
   constructor(props)
@@ -39,6 +41,7 @@ class TrailDetails extends Component {
     this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
 	
 	this.state = {
+		markers: [],
 		offlinePacks: [],
 		packDownloading: false,
 		packProgress: 0,
@@ -52,6 +55,13 @@ class TrailDetails extends Component {
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 	
 	this.getOfflinePack();
+	
+	const { trail, find } = this.props;
+    this.fetchMarkers(trail.gps);
+	
+	find(ext('Trails'), 'all', {
+      include: ['image', 'graph']
+    });
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
       // progress object will have the following shape :
@@ -85,18 +95,21 @@ class TrailDetails extends Component {
     });
   }
 
-  componentDidMount() {
-    const { find } = this.props;
-
-    find(ext('Trails'), 'all', {
-      include: ['image', 'graph']
-    });
-  }
-
   componentWillUnmount() {
     this.offlineProgressSubscription.remove();
     this.offlineMaxTilesSubscription.remove();
     this.offlineErrorSubscription.remove();
+  }
+  
+  fetchMarkers(xmlUrl) {
+    return fetch(xmlUrl)
+      .then((response) => response.text())
+      .then((responseXML) => {
+        this.setState({ markers: parseXMLData(responseXML) });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // You can call this method in componentWillMount lifecycle method, to see
@@ -178,6 +191,7 @@ class TrailDetails extends Component {
 
 
   render() {
+	const { markers } = this.state;
     const { navigateTo, trail } = this.props;
     var batt_icon = null;
 
@@ -346,7 +360,7 @@ class TrailDetails extends Component {
               screen: ext('Map'),
               props: {
                 title: trail.title,
-                gpsurl: trail.gps
+                markers: markers
               }
             })}>
             <InlineMap
@@ -380,3 +394,19 @@ export default connect(
   undefined,
   { navigateTo, find }
 )(TrailDetails);
+
+function parseXMLData(gpxData)
+{
+	var i, markers = [];
+	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
+
+	for (i = 0; i < gpxData.length; i += 10)
+	{
+		markers[markers.length] = [
+			parseFloat(gpxData[i].getAttribute('lat')),
+			parseFloat(gpxData[i].getAttribute('lon'))
+		];
+	}
+
+	return markers;
+}

@@ -57,25 +57,20 @@ class TrailsList extends Component
 	
 	componentWillMount()
 	{
+		const { find, trails } = this.props;
+		
+		if(shouldRefresh(trails))
+		{
+			find(ext('Trails'), 'all', {
+				include: ['image', 'graph']
+			});
+		}
+		
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
 			this.setState({ isConnected });
 			this.refreshData();
 		});
-	}
-	
-	componentDidMount()
-	{
-		const { find, trails } = this.props;
-		
-		if(shouldRefresh(trails))
-		{
-			_.defer(() =>
-				find(ext('Trails'), 'all', {
-					include: ['image']
-				})
-			);
-		}
 	}
 	
 	componentWillUnmount()
