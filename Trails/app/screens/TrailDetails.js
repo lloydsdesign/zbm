@@ -19,7 +19,8 @@ import {
   View,
   Image,
   Divider,
-  TouchableOpacity
+  TouchableOpacity,
+  Spinner
 } from '@shoutem/ui';
 
 import { find } from '@shoutem/redux-io';
@@ -39,7 +40,8 @@ class TrailDetails extends Component {
 	
 	this.state = {
 		packDownloading: false,
-		packProgress: 0
+		packProgress: 0,
+		packBytesCompleted: 0
 	};
   }
 
@@ -62,10 +64,13 @@ class TrailDetails extends Component {
       // as the difference between countOfResourcesCompleted and countOfResourcesExpected, displayed
       // in percentage, for example. Instead of logging, you can just return the object and use it elsewhere
 	  
-	  progress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
-	  if(progress == this.state.packProgress) return;
+	  var packProgress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
+	  if(packProgress == this.state.packProgress) return;
 	  
-	  this.setState({ packProgress: progress });
+	  this.setState({
+		  packProgress: packProgress,
+		  packBytesCompleted: progress.countOfBytesCompleted
+		});
     });
 	
     this.offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener((tiles) => {
@@ -126,6 +131,19 @@ class TrailDetails extends Component {
   
 	renderOfflineButton()
 	{
+		const packs = this.getOfflinePack();
+		
+		if(packs.length)
+		{
+			return (
+				<Row>
+					<View styleName="h-center v-center">
+						<Text>OFFLINE MAPS UP TO DATE</Text>
+					</View>
+				</Row>
+			);
+		}
+		
 		const { packDownloading } = this.state;
 		
 		if(!packDownloading)
@@ -139,20 +157,22 @@ class TrailDetails extends Component {
 				</Row>
 			);
 		}
-		else
-		{
-			var { packProgress } = this.state;
-			packProgress = '('+ packProgress +'%)';
-			
-			return (
-				<Row>
-					<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
-						<Icon name="close" />
-						<Text>CANCEL {packProgress}</Text>
-					</Button>
-				</Row>
-			);
-		}
+		
+		var { packProgress, packBytesCompleted } = this.state;
+		
+		packBytesCompleted /= 1024 * 1024;
+		packBytesCompleted = packBytesCompleted.toFixed(2);
+		packProgress = '('+ packProgress +'% - '+ packBytesCompleted +' MB)';
+		
+		return (
+			<Row>
+				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
+					<Icon name="close" />
+					<Text>CANCEL {packProgress}</Text>
+					<Spinner />
+				</Button>
+			</Row>
+		);
 	}
 
 
