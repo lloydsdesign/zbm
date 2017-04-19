@@ -88,7 +88,7 @@ export default class Map extends Component {
           annotations={mapMarkers}
 		  logoIsHidden
           showsUserLocation
-		  userTrackingMode={Mapbox.userTrackingMode.followWithHeading}
+		  userTrackingMode={Mapbox.userTrackingMode.followWithCourse}
 		  styleURL={STYLE_URL}
 		  style={{ flex: 1 }}
         />

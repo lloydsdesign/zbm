@@ -1,12 +1,11 @@
 import React, {
   Component
 } from 'react';
-import Mapbox from 'react-native-mapbox-gl';
-import { connect } from 'react-redux';
 
 import {
   ScrollView,
   Linking,
+  NetInfo
 } from 'react-native';
 
 import {
@@ -23,7 +22,8 @@ import {
   Spinner
 } from '@shoutem/ui';
 
-import { find } from '@shoutem/redux-io';
+import Mapbox from 'react-native-mapbox-gl';
+import { connect } from 'react-redux';
 import { InlineMap } from '@shoutem/ui-addons';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
@@ -41,6 +41,7 @@ class TrailDetails extends Component {
     this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
 	
 	this.state = {
+		isConnected: null,
 		markers: [],
 		offlinePacks: [],
 		packDownloading: false,
@@ -56,32 +57,18 @@ class TrailDetails extends Component {
 	
 	this.getOfflinePack();
 	
-	const { trail, find } = this.props;
-    this.fetchMarkers(trail.gps);
-	
-	find(ext('Trails'), 'all', {
-      include: ['image', 'graph']
-    });
+	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
+	NetInfo.isConnected.fetch().done((isConnected) => {
+		const { trail } = this.props;
+		
+		if(isConnected) this.fetchMarkers(trail.gps);
+		this.setState({ isConnected });
+	});
 
-    this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
-      // progress object will have the following shape :
-      // {
-      // 	name: 'test', // The name this pack was registered with
-      // 	metadata, // The value that was previously passed as metadata
-      // 	countOfBytesCompleted: 0, // The number of bytes downloaded for this pack
-      // 	countOfResourcesCompleted: 0, // The number of tiles that have been downloaded for this pack
-      // 	countOfResourcesExpected: 0, // The estimated minimum number of total tiles in this pack
-      // 	maximumResourcesExpected: 0 // The estimated maximum number of total tiles in this pack
-      // }
-      // you can make use of these progress parameters to display download progress in real time,
-      // as the difference between countOfResourcesCompleted and countOfResourcesExpected, displayed
-      // in percentage, for example. Instead of logging, you can just return the object and use it elsewhere
-	  
-	  const packProgress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
-	  
+    this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => { 
 	  this.setState({
 		  packDownloading: progress.countOfResourcesExpected - progress.countOfResourcesCompleted,
-		  packProgress: packProgress,
+		  packProgress: Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected),
 		  packBytesCompleted: progress.countOfBytesCompleted
 		});
     });
@@ -99,7 +86,12 @@ class TrailDetails extends Component {
     this.offlineProgressSubscription.remove();
     this.offlineMaxTilesSubscription.remove();
     this.offlineErrorSubscription.remove();
+	NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
   }
+  
+	handleConnectivityChange = (isConnected) => {
+		this.setState({ isConnected });
+	};
   
   fetchMarkers(xmlUrl) {
     return fetch(xmlUrl)
@@ -112,9 +104,6 @@ class TrailDetails extends Component {
       });
   }
 
-  // You can call this method in componentWillMount lifecycle method, to see
-  // if there's an offline pack already dowloaded. If you save this to state for example,
-  // you can get a clear condition to show the download button or not
   getOfflinePack() {
     return Mapbox.getOfflinePacks()
       .then((packs) => {
@@ -124,8 +113,6 @@ class TrailDetails extends Component {
       });
   }
 
-  // You can expand this method to bring up your UI component that shows the download progress
-  // in addition to logging the action
   saveOfflinePack() {
     Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
       this.setState({ packDownloading: true });
@@ -134,7 +121,6 @@ class TrailDetails extends Component {
     });
   }
 
-  // Similar to above, you can use this to delete previously saved pack
   deleteOfflinePack() {
     Mapbox.removeOfflinePack('MainMap')
       .then((info) => {
@@ -392,7 +378,7 @@ class TrailDetails extends Component {
 
 export default connect(
   undefined,
-  { navigateTo, find }
+  { navigateTo }
 )(TrailDetails);
 
 function parseXMLData(gpxData)
