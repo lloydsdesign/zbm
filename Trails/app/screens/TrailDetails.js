@@ -64,10 +64,10 @@ class TrailDetails extends Component {
       // as the difference between countOfResourcesCompleted and countOfResourcesExpected, displayed
       // in percentage, for example. Instead of logging, you can just return the object and use it elsewhere
 	  
-	  var packProgress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
-	  if(packProgress == this.state.packProgress) return;
+	  const packProgress = Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected);
 	  
 	  this.setState({
+		  packDownloading: progress.countOfResourcesExpected - progress.countOfResourcesCompleted,
 		  packProgress: packProgress,
 		  packBytesCompleted: progress.countOfBytesCompleted
 		});
