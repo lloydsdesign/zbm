@@ -169,7 +169,7 @@ class TrailDetails extends Component {
 				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
 					<Icon name="close" />
 					<Text>CANCEL {packProgress}</Text>
-					<Spinner />
+					<Spinner style={{color: '#fff'}} />
 				</Button>
 			</Row>
 		);
