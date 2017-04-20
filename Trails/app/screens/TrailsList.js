@@ -194,16 +194,17 @@ class TrailsList extends Component
 			props: { trail }
 		})}>
 		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }}>
-			<Tile style={{marginTop: -40}}>
-			<View styleName="h-center">
-			  <Title styleName="h-center" style={{backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12}}>{trail.type}</Title>
-			  <Title styleName="h-center" style={{backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5}}>{trail.number}</Title>
-			</View>
-			  <Title>{trail.title.toUpperCase()}</Title>
-			</Tile>
+			
 		  </Image>
+		  <Row style={{height: 10, backgroundColor: '#000'}}>
+		  </Row>
+		  <Row>		
+			<View styleName="horizontal h-center" style={{paddingTop: 10, paddingBottom: 10, backgroundColor: '#FF2222', marginTop: -85}}>
+			  <Title style={{color: '#FFF'}}>{trail.type} {trail.number} - {trail.title.toUpperCase()}</Title>
+			</View>
+		  </Row>
 		  
-		  <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5}}>
+		  <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 20}}>
 			<View styleName="horizontal">
 				<View style={{flex: 0.1}}>
 					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
@@ -241,30 +242,30 @@ class TrailsList extends Component
 		  enableEmptySections
         />
 		
-		<View styleName="horizontal" style={{backgroundColor: '#000', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
-			<View style={{flex: 0.32}} styleName="v-center">
-				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#009245', borderTopWidth: 3}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
-					<Text style={{fontSize: 10, color: '#009245'}}>ALTITUDE</Text>
+		<View styleName="horizontal" style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
+			<View style={{flex: 0.3}} styleName="v-center">
+				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
+					<Text style={{fontSize: 10, color: '#555'}}>ALTITUDE</Text>
 					<Image source={this.state.sortIcons[0]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
-			<View style={{flex: 0.32}} styleName="v-center">
-				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#29ABE2', borderTopWidth: 3}} onPress={() => this.sortTrails('length', 1)}>
-					<Text style={{fontSize: 10, color: '#29ABE2'}}>LENGTH</Text>
+			<View style={{flex: 0.3}} styleName="v-center">
+				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('length', 1)}>
+					<Text style={{fontSize: 10, color: '#555'}}>LENGTH</Text>
 					<Image source={this.state.sortIcons[1]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
-			<View style={{flex: 0.36}} styleName="v-center">
-				<Button style={{backgroundColor: '#000', borderRadius: 0, borderWidth: 0, borderTopColor: '#FBB03B', borderTopWidth: 3}} onPress={() => this.sortTrails('phydiff', 2)}>
-					<Text style={{fontSize: 10, color: '#FBB03B'}}>DIFFICULTY</Text>
+			<View style={{flex: 0.4}} styleName="v-center">
+				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('phydiff', 2)}>
+					<Text style={{fontSize: 10, color: '#555'}}>DIFFICULTY</Text>
 					<Image source={this.state.sortIcons[2]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 		</View>
 		
-		<View styleName="h-center" style={{backgroundColor: '#000'}}>
+		<View styleName="h-center" style={{backgroundColor: '#FFF'}}>
 			<Button styleName="h-center" style={{backgroundColor: '#FF2222', borderWidth: 0, marginTop: 0, marginLeft: 10, marginRight: 10, marginBottom: 10}} onPress={() => this.sortByNearestTrail()}>
 				<Icon name="search" style={{color: '#FFF'}} />
 				<Text style={{color: '#FFF'}}>SORT BY NEAREST TRAIL START</Text>

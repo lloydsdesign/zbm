@@ -58,7 +58,10 @@ class TrailDetails extends Component {
 	
 	this.getOfflinePack();
 	
-	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
+	NetInfo.isConnected.addEventListener('change', (isConnected) => {
+		this.setState({ isConnected });
+	});
+	
 	NetInfo.isConnected.fetch().done((isConnected) => {
 		const { trail } = this.props;
 		
@@ -68,20 +71,22 @@ class TrailDetails extends Component {
 		this.setState({ isConnected });
 	});
 
-    this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => { 
+    this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
 	  this.setState({
-		  packDownloading: progress.countOfResourcesExpected - progress.countOfResourcesCompleted,
-		  packProgress: Math.floor((100 * progress.countOfResourcesCompleted) / progress.countOfResourcesExpected),
+		  packDownloading: progress.maximumResourcesExpected - progress.countOfResourcesCompleted,
+		  packProgress: Math.floor((100 * progress.countOfResourcesCompleted) / progress.maximumResourcesExpected),
 		  packBytesCompleted: progress.countOfBytesCompleted
 		});
     });
 	
     this.offlineMaxTilesSubscription = Mapbox.addOfflineMaxAllowedTilesListener((tiles) => {
       console.log('offline max allowed tiles', tiles);
+	  this.deleteOfflinePack();
     });
 
     this.offlineErrorSubscription = Mapbox.addOfflineErrorListener((error) => {
       console.log('offline error', error);
+	  this.deleteOfflinePack();
     });
   }
 
@@ -91,10 +96,6 @@ class TrailDetails extends Component {
     this.offlineErrorSubscription.remove();
 	NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
   }
-  
-	handleConnectivityChange = (isConnected) => {
-		this.setState({ isConnected });
-	};
   
   fetchMarkers(xmlUrl) {
     return fetch(xmlUrl)
@@ -139,7 +140,8 @@ class TrailDetails extends Component {
       });
   }
 
-  saveOfflinePack() {
+  async saveOfflinePack() {
+	await this.deleteOfflinePack();
     Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
       this.setState({ packDownloading: true });
     }).catch((err) => {
