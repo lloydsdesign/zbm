@@ -39,6 +39,10 @@ const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
+const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
+
+
 class TrailsList extends Component
 {
 	constructor(props)
@@ -48,6 +52,8 @@ class TrailsList extends Component
 		this.renderRow = this.renderRow.bind(this);
 		this.state = {
 			trails: [],
+			trailType: '',
+			trailTypeColor: '#fff',
 			isConnected: null,
 			dataSource: ds.cloneWithRows([]),
 			sortOrders: [1, 1, 1],
@@ -66,6 +72,8 @@ class TrailsList extends Component
 			});
 		}
 		
+		this.setTrailType();
+		
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
 			this.setState({ isConnected });
@@ -81,6 +89,24 @@ class TrailsList extends Component
 	handleConnectivityChange = (isConnected) => {
 		this.setState({ isConnected });
 	};
+	
+	setTrailType()
+	{
+		var i;
+		const screenName = this.props.shortcut.canonicalName.toUpperCase();
+		
+		for(i = 0; i < trailTypes.length; i++)
+		{
+			if(screenName.indexOf(trailTypes[i]) != -1)
+			{
+				this.setState({
+					trailType: trailTypes[i],
+					trailTypeColor: trailTypeColors[i]
+				});
+				break;
+			}
+		}
+	}
   
 	sortTrails(mode, order)
 	{
@@ -158,10 +184,10 @@ class TrailsList extends Component
   
   renderRow(trail)
   {
-	const screenName = this.props.shortcut.canonicalName.toUpperCase();
+	const { trailType, trailTypeColor } = this.state;
 	trail.type = trail.type.trim().toUpperCase();
 	
-	if(screenName.indexOf(trail.type) == -1) return null;
+	if(trailType != trail.type) return null;
 	const { navigateTo } = this.props;
 	
 	trail.number = parseInt(trail.number, 10);
@@ -199,7 +225,7 @@ class TrailsList extends Component
 		  <Row style={{height: 10, backgroundColor: '#000'}}>
 		  </Row>
 		  <Row>		
-			<View styleName="horizontal h-center" style={{paddingTop: 10, paddingBottom: 10, backgroundColor: '#FF2222', marginTop: -85}}>
+			<View styleName="horizontal h-center" style={{paddingTop: 10, paddingBottom: 10, backgroundColor: trailTypeColor, marginTop: -85}}>
 			  <Title style={{color: '#FFF'}}>{trail.type} {trail.number} - {trail.title.toUpperCase()}</Title>
 			</View>
 		  </Row>
@@ -231,13 +257,15 @@ class TrailsList extends Component
   }
 
   render()
-  {  
+  {
+	const { dataSource, sortIcons, trailType } = this.state;
+	  
     return (
       <Screen>
-        <NavigationBar title="TRAILS" />
+        <NavigationBar title={trailType +' TRAILS'} />
 		
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={dataSource}
           renderRow={trail => this.renderRow(trail)}
 		  enableEmptySections
         />
@@ -246,21 +274,21 @@ class TrailsList extends Component
 			<View style={{flex: 0.3}} styleName="v-center">
 				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
 					<Text style={{fontSize: 10, color: '#555'}}>ALTITUDE</Text>
-					<Image source={this.state.sortIcons[0]} style={{width: 14, height: 14}} />
+					<Image source={sortIcons[0]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.3}} styleName="v-center">
 				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('length', 1)}>
 					<Text style={{fontSize: 10, color: '#555'}}>LENGTH</Text>
-					<Image source={this.state.sortIcons[1]} style={{width: 14, height: 14}} />
+					<Image source={sortIcons[1]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 			
 			<View style={{flex: 0.4}} styleName="v-center">
 				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('phydiff', 2)}>
 					<Text style={{fontSize: 10, color: '#555'}}>DIFFICULTY</Text>
-					<Image source={this.state.sortIcons[2]} style={{width: 14, height: 14}} />
+					<Image source={sortIcons[2]} style={{width: 14, height: 14}} />
 				</Button>
 			</View>
 		</View>
