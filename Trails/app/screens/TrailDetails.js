@@ -164,23 +164,19 @@ class TrailDetails extends Component {
 		if(offlinePacks.length)
 		{
 			return (
-				<Row>
-					<View styleName="h-center v-center">
-						<Text>OFFLINE MAPS UP TO DATE</Text>
-					</View>
-				</Row>
+				<View styleName="h-center v-center">
+					<Text>OFFLINE MAPS UP TO DATE</Text>
+				</View>
 			);
 		}
 		
 		if(!packDownloading)
 		{
 			return (
-				<Row>
-					<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
-						<Icon name="down-arrow" />
-						<Text>DOWNLOAD OFFLINE MAPS</Text>
-					</Button>
-				</Row>
+				<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
+					<Icon name="down-arrow" />
+					<Text>DOWNLOAD OFFLINE MAPS</Text>
+				</Button>
 			);
 		}
 		
@@ -191,13 +187,11 @@ class TrailDetails extends Component {
 		packProgress = '('+ packProgress +'% - '+ packBytesCompleted +' MB)';
 		
 		return (
-			<Row>
-				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
-					<Icon name="close" />
-					<Text>CANCEL {packProgress}</Text>
-					<Spinner style={{color: '#fff'}} />
-				</Button>
-			</Row>
+			<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
+				<Icon name="close" />
+				<Text>CANCEL {packProgress}</Text>
+				<Spinner style={{color: '#fff'}} />
+			</Button>
 		);
 	}
 
@@ -389,7 +383,7 @@ class TrailDetails extends Component {
           </TouchableOpacity>
         </View>
 		
-		{this.renderOfflineButton()}
+		<Row>{this.renderOfflineButton()}</Row>
 
         <Row>
           <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
