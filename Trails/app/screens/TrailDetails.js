@@ -123,7 +123,7 @@ class TrailDetails extends Component {
 	  const { trail } = this.props;
 	  const key = 'trail_'+ trail.id;
 	  
-	  markers = await AsyncStorage.getItem(key);
+	  var markers = await AsyncStorage.getItem(key);
 	  if(markers) markers = JSON.parse(markers);
 	  
 	  if(!markers) markers = [];
