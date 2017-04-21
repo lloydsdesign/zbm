@@ -84,11 +84,10 @@ export default class Map extends Component {
 		
         <MapView
           initialCenterCoordinate={initialRegion}
-          initialZoomLevel={13}
+          initialZoomLevel={12}
           annotations={mapMarkers}
 		  logoIsHidden
           showsUserLocation
-		  userTrackingMode={Mapbox.userTrackingMode.followWithCourse}
 		  styleURL={STYLE_URL}
 		  style={{ flex: 1 }}
         />

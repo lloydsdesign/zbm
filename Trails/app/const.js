@@ -11,7 +11,7 @@ export const OFFLINE_PACK_CONFIG = {
 	name: 'MainMap',
 	type: 'bbox',
 	bounds: [43.82935658485809, 14.89413461455638, 44.56000257018692, 15.89849111614171],
-	minZoomLevel: 8,
-	maxZoomLevel: 15,
+	minZoomLevel: 11,
+	maxZoomLevel: 13,
 	styleURL: STYLE_URL
 };

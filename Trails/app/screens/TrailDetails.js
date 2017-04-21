@@ -58,10 +58,7 @@ class TrailDetails extends Component {
 	
 	this.getOfflinePack();
 	
-	NetInfo.isConnected.addEventListener('change', (isConnected) => {
-		this.setState({ isConnected });
-	});
-	
+	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 	NetInfo.isConnected.fetch().done((isConnected) => {
 		const { trail } = this.props;
 		
@@ -72,10 +69,13 @@ class TrailDetails extends Component {
 	});
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
-	  this.setState({
-		  packDownloading: progress.maximumResourcesExpected - progress.countOfResourcesCompleted,
-		  packProgress: Math.floor((100 * progress.countOfResourcesCompleted) / progress.maximumResourcesExpected),
-		  packBytesCompleted: progress.countOfBytesCompleted
+		const resourcesLeft = progress.maximumResourcesExpected - progress.countOfResourcesCompleted;
+		if(!resourcesLeft) this.getOfflinePack();
+		
+		this.setState({
+			packDownloading: resourcesLeft,
+			packProgress: Math.floor((100 * progress.countOfResourcesCompleted) / progress.maximumResourcesExpected),
+			packBytesCompleted: progress.countOfBytesCompleted
 		});
     });
 	
@@ -96,6 +96,10 @@ class TrailDetails extends Component {
     this.offlineErrorSubscription.remove();
 	NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
   }
+  
+	handleConnectivityChange = (isConnected) => {
+		this.setState({ isConnected });
+	};
   
   fetchMarkers(xmlUrl) {
     return fetch(xmlUrl)

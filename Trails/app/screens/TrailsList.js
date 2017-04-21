@@ -73,10 +73,7 @@ class TrailsList extends Component
 		
 		this.setTrailType();
 		
-		NetInfo.isConnected.addEventListener('change', (isConnected) => {
-			this.setState({ isConnected });
-		});
-		
+		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
 			this.setState({ isConnected });
 			this.refreshData();
@@ -87,6 +84,10 @@ class TrailsList extends Component
 	{
 		NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
 	}
+	
+	handleConnectivityChange = (isConnected) => {
+		this.setState({ isConnected });
+	};
 	
 	setTrailType()
 	{
