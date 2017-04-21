@@ -54,7 +54,6 @@ class TrailsList extends Component
 			trailType: '',
 			trailTypeColor: '#fff',
 			isConnected: null,
-			dataSource: ds.cloneWithRows([]),
 			sortOrders: [1, 1, 1],
 			sortIcons: [sortAsc, sortAsc, sortAsc]
 		};
@@ -75,8 +74,14 @@ class TrailsList extends Component
 		
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
+			if(isConnected)
+			{
+				this.storeTrails();
+				this.setState({ trails });
+			}
+			else this.getTrails();
+			
 			this.setState({ isConnected });
-			this.refreshData();
 		});
 	}
 	
@@ -133,7 +138,7 @@ class TrailsList extends Component
 		else newIcons[order] = sortAsc;
 		
 		this.setState({
-			dataSource: ds.cloneWithRows(trails),
+			trails,
 			sortOrders: newOrders,
 			sortIcons: newIcons
 		});
@@ -150,34 +155,29 @@ class TrailsList extends Component
 					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
 				});
 				
-				this.setState({
-					dataSource: ds.cloneWithRows(trails)
-				});
+				this.setState({ trails });
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
 	}
 	
-	async refreshData()
+	storeTrails()
 	{
-		var { trails } = this.props;
+		const { trails } = this.props;
 		
-		if(this.state.isConnected)
-		{
-			await AsyncStorage.removeItem('TrailsDB');
-			if(trails && trails.length) await AsyncStorage.setItem('TrailsDB', JSON.stringify(trails));
-		}
-		else
-		{
-			trails = await AsyncStorage.getItem('TrailsDB');
+		AsyncStorage.removeItem('TrailsDB').then(() => {
+			if(trails && trails.length) AsyncStorage.setItem('TrailsDB', JSON.stringify(trails));
+		});
+	}
+	
+	getTrails()
+	{
+		AsyncStorage.getItem('TrailsDB').then((trails) => {
 			if(trails) trails = JSON.parse(trails);
-		}
-		
-		if(!trails) trails = [];
-		this.setState({
-			trails: trails,
-			dataSource: ds.cloneWithRows(trails)
+			
+			if(!trails) trails = [];
+			this.setState({ trails });
 		});
 	}
   
@@ -257,14 +257,14 @@ class TrailsList extends Component
 
   render()
   {
-	const { dataSource, sortIcons, trailType } = this.state;
+	const { trails, sortIcons, trailType } = this.state;
 	  
     return (
       <Screen>
         <NavigationBar title={trailType +' TRAILS'} />
 		
         <ListView
-          dataSource={dataSource}
+          dataSource={ds.cloneWithRows(trails)}
           renderRow={trail => this.renderRow(trail)}
 		  enableEmptySections
         />

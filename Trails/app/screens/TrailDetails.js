@@ -62,10 +62,14 @@ class TrailDetails extends Component {
 	NetInfo.isConnected.fetch().done((isConnected) => {
 		const { trail } = this.props;
 		
-		if(isConnected) this.fetchMarkers(trail.gps);
-		else this.getMarkers();
-		
-		this.setState({ isConnected });
+		this.getMarkers().then((markers) => {
+			if(isConnected && !markers.length) this.fetchMarkers(trail.gps);
+			
+			this.setState({
+				markers,
+				isConnected
+			});
+		});
 	});
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
@@ -114,52 +118,47 @@ class TrailDetails extends Component {
       });
   }
   
-  async storeMarkers(markers)
+  storeMarkers(markers)
   {
 	  const { trail } = this.props;
 	  const key = 'trail_'+ trail.id;
 	  
-	  await AsyncStorage.removeItem(key);
-	  await AsyncStorage.setItem(key, JSON.stringify(markers));
+	  AsyncStorage.removeItem(key).then(() => {
+		  AsyncStorage.setItem(key, JSON.stringify(markers));
+	  });
   }
   
-  async getMarkers()
+  getMarkers()
   {
 	  const { trail } = this.props;
 	  const key = 'trail_'+ trail.id;
 	  
-	  var markers = await AsyncStorage.getItem(key);
-	  if(markers) markers = JSON.parse(markers);
-	  
-	  if(!markers) markers = [];
-	  this.setState({ markers });
+	  return AsyncStorage.getItem(key).then((markers) => {
+		  if(markers) markers = JSON.parse(markers);
+		  if(!markers) markers = [];
+		  return markers;
+	  });
   }
 
   getOfflinePack() {
     return Mapbox.getOfflinePacks()
       .then((packs) => {
         this.setState({ offlinePacks: packs });
-      })
-      .catch((err) => {
       });
   }
 
-  async saveOfflinePack() {
-	await this.deleteOfflinePack();
-    Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
-      this.setState({ packDownloading: true });
-    }).catch((err) => {
-      console.log(err);
-    });
+  saveOfflinePack() {
+	return this.deleteOfflinePack().then(() => {
+		Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
+		  this.setState({ packDownloading: true });
+		});
+	});
   }
 
   deleteOfflinePack() {
-    Mapbox.removeOfflinePack('MainMap')
+    return Mapbox.removeOfflinePack('MainMap')
       .then((info) => {
         this.setState({ packDownloading: false });
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
   
