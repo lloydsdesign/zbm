@@ -152,7 +152,7 @@ class TrailDetails extends Component {
   deleteOfflinePack() {
     Mapbox.removeOfflinePack('MainMap')
       .then((info) => {
-        if(info.deleted) this.setState({ packDownloading: false });
+        this.setState({ packDownloading: false });
       })
       .catch((err) => {
         console.log(err);
