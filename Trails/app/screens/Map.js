@@ -5,7 +5,6 @@ import React, {
 import { STYLE_URL } from '../const';
 import { Screen } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
-import Mapbox from 'react-native-mapbox-gl';
 import { MapView } from 'react-native-mapbox-gl';
 import _ from 'lodash';
 
