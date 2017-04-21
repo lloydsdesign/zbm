@@ -16,25 +16,6 @@ export default class Map extends Component {
     markers: React.PropTypes.array
   };
 
-  constructor(props)
-  {
-    super(props);
-
-    this.state = {
-      isReady: false
-    };
-  }
-
-  componentWillMount()
-  {
-	const { markers } = this.props;
-	
-	this.setState({
-		initialRegion: this.resolveInitialRegion(_.head(markers)),
-		isReady: true
-	});
-  }
-
   resolveInitialRegion(marker)
   {
     return {
@@ -69,10 +50,9 @@ export default class Map extends Component {
 
   render() {
     const { title, markers } = this.props;
-    const { initialRegion, isReady } = this.state;
 	
+	const initialRegion = this.resolveInitialRegion(_.head(markers));
     const mapMarkers = this.resolveMapmarkers(markers);
-    if(!isReady) return null;
 
     return (
       <Screen styleName="full-screen">
