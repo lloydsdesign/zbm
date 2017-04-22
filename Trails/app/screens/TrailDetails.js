@@ -199,11 +199,46 @@ class TrailDetails extends Component {
 			</Button>
 		);
 	}
+	
+	renderInlineMap()
+	{
+		const { markers } = this.state;
+		if(!markers.length) return (<Spinner />);
+		
+		const { navigateTo, trail } = this.props;
+		
+		const marker = {
+			latitude: markers[0][0],
+			longitude: markers[0][1]
+		};
+		
+		return (
+			<TouchableOpacity
+				onPress={() => navigateTo({
+					screen: ext('Map'),
+					props: {
+						title: trail.title,
+						markers: markers
+					}
+			})}>
+				<InlineMap
+					initialRegion={{
+						latitude: marker.latitude,
+						longitude: marker.longitude,
+						latitudeDelta: 0.03,
+						longitudeDelta: 0.03
+					}}
+					markers={[marker]}
+					selectedMarker={marker}
+					style={{ height: 160 }}
+				/>
+			</TouchableOpacity>
+		);
+	}
 
 
   render() {
-	const { markers } = this.state;
-    const { navigateTo, trail } = this.props;
+    const { trail } = this.props;
     var batt_icon = null;
 
     switch (trail.phydiff) {
@@ -223,12 +258,6 @@ class TrailDetails extends Component {
           break;
         }
     }
-
-    const startMarker = {
-      latitude: parseFloat(trail.startlocation.latitude),
-      longitude: parseFloat(trail.startlocation.longitude),
-      title: trail.startlocation.formattedAddress
-    };
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
@@ -365,27 +394,8 @@ class TrailDetails extends Component {
           </View>
         </Row>
 
-        <View styleName="large-banner">
-          <TouchableOpacity
-            onPress={() => navigateTo({
-              screen: ext('Map'),
-              props: {
-                title: trail.title,
-                markers: markers
-              }
-            })}>
-            <InlineMap
-              initialRegion={{
-                latitude: startMarker.latitude,
-                longitude: startMarker.longitude,
-                latitudeDelta: 0.03,
-                longitudeDelta: 0.03
-              }}
-              markers={[startMarker]}
-              selectedMarker={startMarker}
-              style={{ height: 160 }}
-            />
-          </TouchableOpacity>
+        <View styleName="large-banner h-center v-center">
+			{this.renderInlineMap()}
         </View>
 		
 		<Row>{this.renderOfflineButton()}</Row>
