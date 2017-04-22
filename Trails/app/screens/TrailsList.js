@@ -114,40 +114,39 @@ class TrailsList extends Component
   
 	sortTrails(mode, order)
 	{
-		var trails = this.state.trails;
-		var newOrders = this.state.sortOrders;
-		var newIcons = this.state.sortIcons;
+		var { trails, sortOrders, sortIcons } = this.state;
 		var i;
 		
 		trails.sort(function(a, b)
 		{
-			return (a[mode] - b[mode]) * newOrders[order];
+			return (a[mode] - b[mode]) * sortOrders[order];
 		});
 		
-		for(i = 0; i < newOrders.length; i++)
+		for(i = 0; i < sortOrders.length; i++)
 		{
 			if(i != order)
 			{
-				newOrders[i] = 1;
-				newIcons[i] = sortAsc;
+				sortOrders[i] = 1;
+				sortIcons[i] = sortAsc;
 			}
 		}
 		
-		newOrders[order] *= -1;
-		if(newOrders[order] > 0) newIcons[order] = sortDesc;
-		else newIcons[order] = sortAsc;
+		sortOrders[order] *= -1;
+		if(sortOrders[order] > 0) sortIcons[order] = sortDesc;
+		else sortIcons[order] = sortAsc;
 		
 		this.setState({
 			trails,
-			sortOrders: newOrders,
-			sortIcons: newIcons
+			sortOrders,
+			sortIcons
 		});
 	}
 	
 	sortByNearestTrail()
 	{
 		navigator.geolocation.getCurrentPosition((position) => {
-				var trails = this.state.trails;
+				var { trails, sortOrders, sortIcons } = this.state;
+				var i;
 				
 				trails.sort(function(a, b)
 				{
@@ -155,9 +154,19 @@ class TrailsList extends Component
 					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
 				});
 				
-				this.setState({ trails });
+				for(i = 0; i < sortOrders.length; i++)
+				{
+					sortOrders[i] = 1;
+					sortIcons[i] = sortAsc;
+				}
+				
+				this.setState({
+					trails,
+					sortOrders,
+					sortIcons
+				});
 			},
-			(error) => console.log(JSON.stringify(error)),
+			(error) => console.error(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
 	}
@@ -218,11 +227,8 @@ class TrailsList extends Component
 			screen: ext('TrailDetails'),
 			props: { trail }
 		})}>
-		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }}>
-			
-		  </Image>
-		  <Row style={{height: 10, backgroundColor: '#000'}}>
-		  </Row>
+		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
+		  <Row style={{height: 10, backgroundColor: '#000'}}></Row>
 		  <Row>		
 			<View styleName="horizontal h-center" style={{paddingTop: 10, paddingBottom: 10, backgroundColor: trailTypeColor, marginTop: -85}}>
 			  <Title style={{color: '#FFF'}}>{trail.type} {trail.number} - {trail.title.toUpperCase()}</Title>
