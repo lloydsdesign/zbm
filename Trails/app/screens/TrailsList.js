@@ -49,7 +49,6 @@ class TrailsList extends Component
 	{
 		super(props);
 		
-		this.renderRow = this.renderRow.bind(this);
 		this.state = {
 			trails: [],
 			trailType: '',
