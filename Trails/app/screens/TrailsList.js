@@ -115,13 +115,14 @@ class TrailsList extends Component
 	sortTrails(mode, order)
 	{
 		var { trails, sortOrders, sortIcons } = this.state;
-		var i;
+		this.setState({ trails: [] });
 		
 		trails.sort(function(a, b)
 		{
 			return (a[mode] - b[mode]) * sortOrders[order];
 		});
 		
+		var i;
 		for(i = 0; i < sortOrders.length; i++)
 		{
 			if(i != order)
