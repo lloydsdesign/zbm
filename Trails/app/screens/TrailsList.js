@@ -283,7 +283,9 @@ class TrailsList extends Component
       <Screen>
         <NavigationBar title={trailType +' TRAILS'} />
 		
-		{this.renderListView()}
+		<View styleName="vertical h-center v-center" style={{ flex: 1 }}>
+			{this.renderListView()}
+		</View>
 		
 		<View styleName="horizontal" style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
 			<View style={{flex: 0.3}} styleName="v-center">
