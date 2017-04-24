@@ -20,7 +20,8 @@ import {
 	Screen,
 	Button,
 	Icon,
-	TouchableOpacity
+	TouchableOpacity,
+	Spinner
 } from '@shoutem/ui';
 
 import {
@@ -189,6 +190,20 @@ class TrailsList extends Component
 			this.setState({ trails });
 		});
 	}
+	
+	renderListView()
+	{
+		const { trails } = this.state;
+		if(!trails.length) return (<Spinner style={{ size: "large" }} />);
+		
+		return (
+			<ListView
+			  dataSource={ds.cloneWithRows(trails)}
+			  renderRow={trail => this.renderRow(trail)}
+			  enableEmptySections
+			/>
+		);
+	}
   
   renderRow(trail)
   {
@@ -263,17 +278,13 @@ class TrailsList extends Component
 
   render()
   {
-	const { trails, sortIcons, trailType } = this.state;
+	const { sortIcons, trailType } = this.state;
 	  
     return (
       <Screen>
         <NavigationBar title={trailType +' TRAILS'} />
 		
-        <ListView
-          dataSource={ds.cloneWithRows(trails)}
-          renderRow={trail => this.renderRow(trail)}
-		  enableEmptySections
-        />
+		{this.renderListView()}
 		
 		<View styleName="horizontal" style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
 			<View style={{flex: 0.3}} styleName="v-center">
