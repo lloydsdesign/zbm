@@ -144,16 +144,17 @@ class TrailsList extends Component
 	
 	sortByNearestTrail()
 	{
+		var { trails, sortOrders, sortIcons } = this.state;
+		this.setState({ trails: [] });
+		
 		navigator.geolocation.getCurrentPosition((position) => {
-				var { trails, sortOrders, sortIcons } = this.state;
-				var i;
-				
 				trails.sort(function(a, b)
 				{
 					if(!("startlocation" in a) || !("startlocation" in b)) return 0;
 					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
 				});
 				
+				var i;
 				for(i = 0; i < sortOrders.length; i++)
 				{
 					sortOrders[i] = 1;
