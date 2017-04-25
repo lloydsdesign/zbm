@@ -230,14 +230,15 @@ class TrailsList extends Component
 	if(trail.number < 10) trail.number = '0'+ trail.number;
 	
 	var flexValue = 0.25, tech_icon = null;
-	const techDiff = trailType.indexOf('MTB');
 	const batt_icon = battIcons[trail.phydiff - 1];
+	var techDiff = trailType.indexOf('MTB');
 	
-	if(techDiff > -1)
+	if(techDiff > -1 && trail.techdiff && trail.techdiff != "")
 	{
 		flexValue = 0.17;
 		tech_icon = techIcons[trail.techdiff - 1];
 	}
+	else techDiff = -1;
 	
     return (
 		<TouchableOpacity onPress={() => navigateTo({
