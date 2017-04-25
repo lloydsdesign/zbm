@@ -157,7 +157,7 @@ class TrailsList extends Component
 				trails.sort(function(a, b)
 				{
 					if(!("startlocation" in a) || !("startlocation" in b)) return 0;
-					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
+					else return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
 				});
 				
 				var i;
