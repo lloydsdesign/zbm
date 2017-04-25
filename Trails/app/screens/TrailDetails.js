@@ -15,6 +15,7 @@ import {
   Row,
   Subtitle,
   Text,
+  Tile,
   Title,
   View,
   Image,
@@ -215,7 +216,14 @@ class TrailDetails extends Component {
 	renderInlineMap()
 	{
 		const { markers } = this.state;
-		if(!markers.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
+		if(!markers.length)
+		{
+			return (
+				<Tile styleName="clear text-centric">
+					<Spinner style={{ size: 'large', color: '#fff' }} />
+				</Tile>
+			);
+		}
 		
 		const { navigateTo, trail } = this.props;
 		
@@ -359,7 +367,7 @@ class TrailDetails extends Component {
           </View>
         </Row>
 
-        <View styleName="h-center v-center">
+        <View styleName="h-center v-center" style={{ height: 300 }}>
 			{this.renderInlineMap()}
         </View>
 		
