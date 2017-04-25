@@ -252,7 +252,7 @@ class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
 	const batt_icon = battIcons[trail.phydiff - 1];
-	const tech_icon = battIcons[trail.techdiff - 1];
+	const tech_icon = techIcons[trail.techdiff - 1];
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
