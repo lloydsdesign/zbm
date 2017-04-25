@@ -231,14 +231,14 @@ class TrailsList extends Component
 	
 	var flexValue = 0.25, tech_icon = null;
 	const batt_icon = battIcons[trail.phydiff - 1];
-	var techDiff = trailType.indexOf('MTB');
+	var isMTB = trailType.indexOf('MTB');
 	
-	if(techDiff > -1 && trail.techdiff && trail.techdiff != "")
+	if(isMTB > -1 && trail.techdiff && trail.techdiff != "")
 	{
 		flexValue = 0.17;
 		tech_icon = techIcons[trail.techdiff - 1];
 	}
-	else techDiff = -1;
+	else isMTB = -1;
 	
     return (
 		<TouchableOpacity onPress={() => navigateTo({
@@ -276,7 +276,7 @@ class TrailsList extends Component
 					<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.phydiff}/3</Subtitle>
 				</View>
 				
-				{techDiff > -1 &&
+				{isMTB > -1 &&
 					<View style={{flex: 0.08}}>
 						<Image source={tech_icon} style={{width: 18, height: 18}} />
 					</View>

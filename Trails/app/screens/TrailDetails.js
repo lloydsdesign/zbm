@@ -367,7 +367,7 @@ class TrailDetails extends Component {
 
 		<Row style={{paddingTop: 0}}>
           <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
-            <Icon name="down-arrow" />
+            <Icon name="down-arrow" style={{color: '#FF0000'}} />
             <Text style={{color: '#FF0000'}}>MAP DOWNLOAD</Text>
           </Button>
         </Row>
