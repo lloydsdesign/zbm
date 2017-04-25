@@ -109,12 +109,20 @@
 	  "displayPriority": 13,
 	  "required": true
     },
+	"pdf": {
+      "format": "uri",
+      "title": "PDF URL",
+      "type": "string",
+	  "maxLength": 256,
+	  "displayPriority": 14,
+	  "required": true
+    },
     "image": {
       "format": "attachment",
       "title": "Image",
       "type": "object",
       "referencedSchema": "shoutem.core.image-attachments",
-	  "displayPriority": 14,
+	  "displayPriority": 15,
 	  "required": true
     },
     "graph": {
@@ -122,14 +130,14 @@
       "title": "Altitude Graph",
       "type": "object",
       "referencedSchema": "shoutem.core.image-attachments",
-	  "displayPriority": 15,
+	  "displayPriority": 16,
 	  "required": true
     },
 	"startlocation": {
 	  "type": "object",
 	  "format": "geolocation",
 	  "title": "Start location",
-	  "displayPriority": 16,
+	  "displayPriority": 17,
 	  "required": true
 	}
   },

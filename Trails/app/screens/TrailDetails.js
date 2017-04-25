@@ -215,7 +215,7 @@ class TrailDetails extends Component {
 	renderInlineMap()
 	{
 		const { markers } = this.state;
-		if(!markers.length) return (<Spinner />);
+		if(!markers.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		const { navigateTo, trail } = this.props;
 		
@@ -359,14 +359,14 @@ class TrailDetails extends Component {
           </View>
         </Row>
 
-        <View styleName="h-center v-center" style={{ height: 300 }}>
+        <View styleName="h-center v-center">
 			{this.renderInlineMap()}
         </View>
 		
 		<Row>{this.renderOfflineButton()}</Row>
 
 		<Row style={{paddingTop: 0}}>
-          <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.gps)}>
+          <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
             <Icon name="down-arrow" />
             <Text style={{color: '#FF0000'}}>MAP DOWNLOAD</Text>
           </Button>
