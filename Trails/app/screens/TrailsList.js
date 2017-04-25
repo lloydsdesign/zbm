@@ -46,6 +46,11 @@ const battIcons = [
 	require('../assets/icons/batt-2.png'),
 	require('../assets/icons/batt-3.png')
 ];
+const techIcons = [
+	require('../assets/icons/tech-1.png'),
+	require('../assets/icons/tech-2.png'),
+	require('../assets/icons/tech-3.png')
+];
 
 
 class TrailsList extends Component
@@ -222,14 +227,14 @@ class TrailsList extends Component
 	trail.number = parseInt(trail.number, 10);
 	if(trail.number < 10) trail.number = '0'+ trail.number;
 	
-	var flexValue = 0.23, batt_icon_tech = null;
+	var flexValue = 0.25, tech_icon = null;
 	const techDiff = trailType.indexOf('MTB');
 	const batt_icon = battIcons[trail.phydiff - 1];
 	
 	if(techDiff > -1)
 	{
-		flexValue = 0.15;
-		batt_icon_tech = battIcons[trail.techdiff - 1];
+		flexValue = 0.17;
+		tech_icon = techIcons[trail.techdiff - 1];
 	}
 	
     return (
@@ -238,44 +243,43 @@ class TrailsList extends Component
 			props: { trail }
 		})}>
 		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
-		  <Row style={{height: 10, backgroundColor: '#000'}}></Row>
 		  
-		  <Row>		
-			<View styleName="horizontal h-center" style={{paddingTop: 10, paddingBottom: 10, backgroundColor: trailTypeColor, marginTop: -85}}>
+		  <Row style={{padding: 0, marginBottom: 0, backgroundColor: '#000'}}>		
+			<View styleName="horizontal h-center" style={{marginLeft: 20, marginRight: 20, paddingTop: 10, paddingBottom: 10, bottom: 20, backgroundColor: trailTypeColor, marginTop: 0}}>
 			  <Title style={{color: '#FFF'}}>{trail.type} {trail.number} - {trail.title.toUpperCase()}</Title>
 			</View>
 		  </Row>
 		  
-		  <Row style={{backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 20}}>
+		  <Row style={{backgroundColor: '#000', marginTop: 0, paddingTop: 0, paddingBottom:16}}>
 			<View styleName="horizontal">
-				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/elevation.png')} style={{width: 24, height: 24}} />
+				<View style={{flex: 0.08}}>
+					<Image source={require('../assets/icons/elevation.png')} style={{width: 18, height: 18}} />
 				</View>
-				<View style={{flex: flexValue, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.altitude} m</Subtitle>
-				</View>
-				
-				<View style={{flex: 0.1}}>
-					<Image source={require('../assets/icons/length.png')} style={{width: 24, height: 24}} />
-				</View>
-				<View style={{flex: flexValue, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.length} km</Subtitle>
+				<View style={{flex: flexValue, marginBottom: -4}}>
+					<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.altitude} m</Subtitle>
 				</View>
 				
-				<View style={{flex: 0.1}}>
-					<Image source={batt_icon} style={{width: 24, height: 24}} />
+				<View style={{flex: 0.08}}>
+					<Image source={require('../assets/icons/length.png')} style={{width: 18, height: 18}} />
 				</View>
-				<View style={{flex: flexValue, marginBottom: -2}}>
-					<Subtitle style={{color: '#fff'}}>{trail.phydiff}/3</Subtitle>
+				<View style={{flex: flexValue, marginBottom: -4}}>
+					<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.length} km</Subtitle>
+				</View>
+				
+				<View style={{flex: 0.08}}>
+					<Image source={batt_icon} style={{width: 18, height: 18}} />
+				</View>
+				<View style={{flex: flexValue, marginBottom: -4}}>
+					<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.phydiff}/3</Subtitle>
 				</View>
 				
 				{techDiff > -1 &&
-					<View style={{flex: 0.1}}>
-						<Image source={batt_icon_tech} style={{width: 24, height: 24}} />
+					<View style={{flex: 0.08}}>
+						<Image source={tech_icon} style={{width: 18, height: 18}} />
 					</View>
 					&&
-					<View style={{flex: flexValue, marginBottom: -2}}>
-						<Subtitle style={{color: '#fff'}}>{trail.techdiff}/3</Subtitle>
+					<View style={{flex: flexValue, marginBottom: -4}}>
+						<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.techdiff}/3</Subtitle>
 					</View>
 				}
 			</View>
@@ -302,32 +306,33 @@ class TrailsList extends Component
 		</View>
 		
 		<View styleName="horizontal" style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -5}}}>
+			
 			<View style={{flex: flexValue}} styleName="v-center">
-				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
-					<Text style={{fontSize: 10, color: '#555'}}>ALTITUDE</Text>
-					<Image source={sortIcons[0]} style={{width: 14, height: 14}} />
+				<Button style={{paddingTop: 0, backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}}styleName="clear" onPress={() => this.sortTrails('altitude', 0)}>
+					<Image source={sortIcons[0]} style={{width: 10, height: 10, marginRight: 5, marginBottom: 4}} />
+					<Text style={{fontSize: 8, color: '#555', paddingBottom: 5}}>ALTITUDE</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: flexValue}} styleName="v-center">
-				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('length', 1)}>
-					<Text style={{fontSize: 10, color: '#555'}}>LENGTH</Text>
-					<Image source={sortIcons[1]} style={{width: 14, height: 14}} />
+				<Button style={{marginTop: 0, paddingTop: 0, backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('length', 1)}>
+					<Image source={sortIcons[1]} style={{width: 10, height: 10, marginRight: 5, marginBottom: 4}} />
+					<Text style={{fontSize: 8, color: '#555', paddingBottom: 5}}>LENGTH</Text>
 				</Button>
 			</View>
 			
 			<View style={{flex: flexValue}} styleName="v-center">
-				<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('phydiff', 2)}>
-					<Text style={{fontSize: 10, color: '#555'}}>PHY. DIFFICULTY</Text>
-					<Image source={sortIcons[2]} style={{width: 14, height: 14}} />
+				<Button style={{paddingTop: 0, backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('phydiff', 2)}>
+					<Image source={sortIcons[2]} style={{width: 10, height: 10, marginRight: 5}} />
+					<Text style={{fontSize: 8, color: '#555'}}>PHYSICAL DIFFICULTY</Text>
 				</Button>
 			</View>
 			
 			{techDiff > -1 &&
 				<View style={{flex: flexValue}} styleName="v-center">
-					<Button style={{backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('techdiff', 3)}>
-						<Text style={{fontSize: 10, color: '#555'}}>TECH. DIFFICULTY</Text>
-						<Image source={sortIcons[3]} style={{width: 14, height: 14}} />
+					<Button style={{paddingTop: 0, backgroundColor: '#FFF', borderRadius: 0, borderWidth: 0}} onPress={() => this.sortTrails('techdiff', 3)}>
+						<Image source={sortIcons[3]} style={{width: 10, height: 10, marginRight: 5}} />
+						<Text style={{fontSize: 8, color: '#555'}}>TECHNICAL DIFFICULTY</Text>
 					</Button>
 				</View>
 			}

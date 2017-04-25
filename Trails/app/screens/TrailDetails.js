@@ -184,7 +184,7 @@ class TrailDetails extends Component {
 		if(!packDownloading)
 		{
 			return (
-				<Button styleName="full-width" style={{ backgroundColor: '#009245' }} onPress={() => this.saveOfflinePack()}>
+				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.saveOfflinePack()}>
 					<Icon name="down-arrow" />
 					<Text>DOWNLOAD OFFLINE MAPS</Text>
 				</Button>
@@ -236,7 +236,7 @@ class TrailDetails extends Component {
 					}}
 					markers={[marker]}
 					selectedMarker={marker}
-					style={{ height: 160 }}
+					style={{ height: 300 }}
 				/>
 			</TouchableOpacity>
 		);
@@ -251,55 +251,20 @@ class TrailDetails extends Component {
       <ScrollView style={{ marginTop: -1 }}>
         <NavigationBar title={trail.title.toUpperCase()} />
 
-        <View styleName="horizontal">
-          <View styleName="h-center" style={{ flex: 0.2 }}>
-            <Title styleName="h-center" style={{ backgroundColor: '#000', color: '#FFF', paddingHorizontal: 5, fontSize: 12 }}>{trail.type.toUpperCase()}</Title>
-            <Title styleName="h-center" style={{ backgroundColor: 'red', color: '#FFF', paddingHorizontal: 10, paddingVertical: 5 }}>{trail.number}</Title>
-          </View>
-          <View styleName="h-center" style={{ flex: 0.8 }}>
-            <Title styleName="h-center" style={{ color: '#FFF', backgroundColor: '#000', padding: 17 }}>{trail.title.toUpperCase()}</Title>
-          </View>
-        </View>
-
         <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
 
-        <Row style={{ backgroundColor: '#000', marginTop: -34, paddingTop: 0, paddingBottom: 10, shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 5 }}>
-          <View styleName="horizontal">
-            <View style={{ flex: 0.1 }}>
-              <Image source={require('../assets/icons/elevation.png')} style={{ width: 24, height: 24 }} />
-            </View>
-            <View style={{ flex: 0.25, marginBottom: -2 }}>
-              <Subtitle style={{ color: '#fff' }}>{trail.altitude} m</Subtitle>
-            </View>
-            <View style={{ flex: 0.1 }}>
-              <Image source={require('../assets/icons/length.png')} style={{ width: 24, height: 24 }} />
-            </View>
-            <View style={{ flex: 0.25, marginBottom: -2 }}>
-              <Subtitle style={{ color: '#fff' }}>{trail.length} km</Subtitle>
-            </View>
-            <View style={{ flex: 0.1 }}>
-              <Image source={batt_icon} style={{ width: 24, height: 24 }} />
-            </View>
-            <View style={{ flex: 0.2, marginBottom: -2 }}>
-              <Subtitle style={{ color: '#fff' }}>{trail.phydiff}/3</Subtitle>
-            </View>
+        <Row>
+          <View styleName="horizontal h-center" style={{bottom: 35, paddingTop: 12, paddingBottom: 12, backgroundColor: '#e60005'}}>
+            <Subtitle style={{color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center'}}>{trail.header}</Subtitle>
           </View>
         </Row>
 
-        <Divider styleName="line" />
-
-        <Row>
-          <Subtitle style={{ fontSize: 18 }}>{trail.header}</Subtitle>
-        </Row>
-
-        <Divider styleName="line" />
-
-        <Row>
+    	<Row>
           <View styleName="horizontal">
-            <View style={{ flex: 0.4 }}>
-              <Subtitle>Start / Finish</Subtitle>
+            <View style={{ flex: 0.5 }}>
+              <Subtitle>Start / Finishing point</Subtitle>
             </View>
-            <View style={{ flex: 0.6 }}>
+            <View style={{ flex: 0.5 }}>
               <Text styleName="h-right">{trail.start}</Text>
             </View>
           </View>
@@ -309,37 +274,28 @@ class TrailDetails extends Component {
 
         <Row>
           <View styleName="horizontal">
-            <View style={{ flex: 0.4 }}>
+            <View style={{ flex: 0.5 }}>
               <Subtitle>Via</Subtitle>
             </View>
-            <View style={{ flex: 0.6 }}>
+            <View style={{ flex: 0.5 }}>
               <Text styleName="h-right">{trail.via}</Text>
             </View>
           </View>
         </Row>
 
-        <Divider styleName="line" />
-
-        <Row>
-          <View styleName="horizontal">
-            <View style={{ flex: 0.4 }}>
-              <Subtitle>Altitude</Subtitle>
-            </View>
-            <View style={{ flex: 0.6 }}>
-              <Text styleName="h-right">{trail.altitude} m</Text>
-            </View>
-          </View>
-        </Row>
 
         <Divider styleName="line" />
 
         <Row>
           <View styleName="horizontal">
-            <View style={{ flex: 0.4 }}>
+            <View style={{ flex: 0.5 }}>
               <Subtitle>Length</Subtitle>
             </View>
-            <View style={{ flex: 0.6 }}>
+            <View style={{ paddingRight: 10,flex: 0.4 }}>
               <Text styleName="h-right">{trail.length} km</Text>
+            </View>
+             <View style={{ flex: 0.1 }}>
+              <Image source={require('../assets/icons/arrow.png')} style={{width: 24, height: 24}} />
             </View>
           </View>
         </Row>
@@ -348,52 +304,90 @@ class TrailDetails extends Component {
 
         <Row>
           <View styleName="horizontal">
-            <View style={{ flex: 0.4 }}>
+            <View style={{ flex: 0.5 }}>
               <Subtitle>Physical difficulty</Subtitle>
             </View>
-            <View style={{ flex: 0.6 }}>
+            <View style={{ flex: 0.4 }}>
               <Text styleName="h-right">{trail.phydiff}/3</Text>
             </View>
+              <View style={{ paddingLeft: 10, flex: 0.1 }}>
+              	<Image source={batt_icon} style={{width: 24, height: 24}} />
+              </View>
           </View>
         </Row>
+
+		<Divider styleName="line" />
 
         {trail.techdiff && trail.techdiff != "" &&
           <Divider styleName="line" />
           &&
           <Row>
             <View styleName="horizontal">
-              <View style={{ flex: 0.4 }}>
+              <View style={{ flex: 0.5 }}>
                 <Subtitle>Technical difficulty</Subtitle>
               </View>
-              <View style={{ flex: 0.6 }}>
+              <View style={{ flex: 0.4 }}>
                 <Text styleName="h-right">{trail.techdiff}/3</Text>
+              </View>
+              <View style={{ paddingLeft: 10, flex: 0.1 }}>
+              	<Image source={batt_icon} style={{width: 24, height: 24}} />
               </View>
             </View>
           </Row>
         }
+        
+        <Divider styleName="line" />
 
-        <Image styleName="large-banner" source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
-
-        <Row>
-          <View style={{ flex: 1 }}>
-            <Subtitle>TRAIL DESCRIPTION</Subtitle>
-            <Text />
-            <Text>{trail.description}</Text>
+        <Row style={{paddingTop: 10}}>
+          <View styleName="horizontal">
+            <View style={{ flex: 0.5 }}>
+              <Subtitle>Elevation</Subtitle>
+            </View>
+            <View style={{ paddingRight: 10, flex: 0.4 }}>
+              <Text styleName="h-right">{trail.altitude} m</Text>
+            </View>
+            <View style={{flex: 0.1 }}>
+             <Image source={require('../assets/icons/elev.png')} style={{width: 24, height: 24}} />
+            </View>
           </View>
         </Row>
 
-        <View styleName="large-banner h-center v-center">
+        <View styleName="h-center v-center" style={{ height: 300 }}>
 			{this.renderInlineMap()}
         </View>
 		
 		<Row>{this.renderOfflineButton()}</Row>
 
-        <Row>
+		<Row style={{paddingTop: 0}}>
+          <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.gps)}>
+            <Icon name="down-arrow" />
+            <Text style={{color: '#FF0000'}}>MAP DOWNLOAD</Text>
+          </Button>
+        </Row>
+
+        <Row style={{paddingTop: 0}}>
           <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
             <Icon name="down-arrow" />
             <Text>DOWNLOAD GPS DATA</Text>
           </Button>
         </Row>
+        
+        <Row>
+          <View style={{ flex: 1, paddingTop: 20}}>
+            <Subtitle>ROUTE DESCRIPTION</Subtitle>
+          </View>
+        </Row>
+        
+        <Image styleName="large-banner" style={{height: 100}}source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
+        
+        <Row>
+          <View style={{ flex: 1, paddingTop: 20}}>
+            <Subtitle>TRAIL DESCRIPTION</Subtitle>
+            <Text />
+            <Text style={{fontSize: 14}}>{trail.description}</Text>
+          </View>
+        </Row>
+      
       </ScrollView>
     );
   }
