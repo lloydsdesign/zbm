@@ -41,6 +41,11 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
 const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
+const battIcons = [
+	require('../assets/icons/batt-1.png'),
+	require('../assets/icons/batt-2.png'),
+	require('../assets/icons/batt-3.png')
+];
 
 
 class TrailsList extends Component
@@ -217,50 +222,14 @@ class TrailsList extends Component
 	trail.number = parseInt(trail.number, 10);
 	if(trail.number < 10) trail.number = '0'+ trail.number;
 	
-	var flexValue = 0.23, batt_icon = null, batt_icon_tech = null;
+	var flexValue = 0.23, batt_icon_tech = null;
 	const techDiff = trailType.indexOf('MTB');
+	const batt_icon = battIcons[trail.phydiff - 1];
 	
 	if(techDiff > -1)
 	{
 		flexValue = 0.15;
-		
-		switch(trail.techdiff)
-		{
-			case 1:
-			{
-				batt_icon_tech = require('../assets/icons/batt-1.png');
-				break;
-			}
-			case 2:
-			{
-				batt_icon_tech = require('../assets/icons/batt-2.png');
-				break;
-			}
-			case 3:
-			{
-				batt_icon_tech = require('../assets/icons/batt-3.png');
-				break;
-			}
-		}
-	}
-	
-	switch(trail.phydiff)
-	{
-		case 1:
-		{
-			batt_icon = require('../assets/icons/batt-1.png');
-			break;
-		}
-		case 2:
-		{
-			batt_icon = require('../assets/icons/batt-2.png');
-			break;
-		}
-		case 3:
-		{
-			batt_icon = require('../assets/icons/batt-3.png');
-			break;
-		}
+		batt_icon_tech = battIcons[trail.techdiff - 1];
 	}
 	
     return (

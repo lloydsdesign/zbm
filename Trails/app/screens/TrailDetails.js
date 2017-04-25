@@ -30,6 +30,12 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext, MGL_TOKEN, OFFLINE_PACK_CONFIG } from '../const';
 
+const battIcons = [
+	require('../assets/icons/batt-1.png'),
+	require('../assets/icons/batt-2.png'),
+	require('../assets/icons/batt-3.png')
+];
+
 const DOMParser = require('xmldom').DOMParser;
 
 
@@ -239,25 +245,7 @@ class TrailDetails extends Component {
 
   render() {
     const { trail } = this.props;
-    var batt_icon = null;
-
-    switch (trail.phydiff) {
-      case 1:
-        {
-          batt_icon = require('../assets/icons/batt-1.png');
-          break;
-        }
-      case 2:
-        {
-          batt_icon = require('../assets/icons/batt-2.png');
-          break;
-        }
-      case 3:
-        {
-          batt_icon = require('../assets/icons/batt-3.png');
-          break;
-        }
-    }
+	const batt_icon = battIcons[trail.phydiff - 1];
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
