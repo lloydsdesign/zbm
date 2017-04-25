@@ -41,11 +41,13 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
 const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
+
 const battIcons = [
 	require('../assets/icons/batt-1.png'),
 	require('../assets/icons/batt-2.png'),
 	require('../assets/icons/batt-3.png')
 ];
+
 const techIcons = [
 	require('../assets/icons/tech-1.png'),
 	require('../assets/icons/tech-2.png'),
@@ -205,7 +207,7 @@ class TrailsList extends Component
 	renderListView()
 	{
 		const { trails } = this.state;
-		if(!trails.length) return (<Spinner style={{ size: "large" }} />);
+		if(!trails.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		return (
 			<ListView

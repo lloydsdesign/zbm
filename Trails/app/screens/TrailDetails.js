@@ -36,6 +36,12 @@ const battIcons = [
 	require('../assets/icons/batt-3.png')
 ];
 
+const techIcons = [
+	require('../assets/icons/tech-1.png'),
+	require('../assets/icons/tech-2.png'),
+	require('../assets/icons/tech-3.png')
+];
+
 const DOMParser = require('xmldom').DOMParser;
 
 
@@ -246,6 +252,7 @@ class TrailDetails extends Component {
   render() {
     const { trail } = this.props;
 	const batt_icon = battIcons[trail.phydiff - 1];
+	const tech_icon = battIcons[trail.techdiff - 1];
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
@@ -330,7 +337,7 @@ class TrailDetails extends Component {
                 <Text styleName="h-right">{trail.techdiff}/3</Text>
               </View>
               <View style={{ paddingLeft: 10, flex: 0.1 }}>
-              	<Image source={batt_icon} style={{width: 24, height: 24}} />
+              	<Image source={tech_icon} style={{width: 24, height: 24}} />
               </View>
             </View>
           </Row>
