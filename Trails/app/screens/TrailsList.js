@@ -37,8 +37,6 @@ import { connect } from 'react-redux';
 
 const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
 const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
 const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
 
@@ -113,7 +111,7 @@ class TrailsList extends Component
 		
 		for(i = 0; i < trailTypes.length; i++)
 		{
-			if(screenName.indexOf(trailTypes[i]) != -1)
+			if(screenName.indexOf(trailTypes[i]) > -1)
 			{
 				this.setState({
 					trailType: trailTypes[i],
@@ -208,6 +206,8 @@ class TrailsList extends Component
 	{
 		const { trails } = this.state;
 		if(!trails.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
+		
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		
 		return (
 			<ListView
