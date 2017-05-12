@@ -32,8 +32,12 @@ import {
 
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
-import { ext } from '../const';
 import { connect } from 'react-redux';
+
+import {
+	ext,
+	showAlert
+} from '../const';
 
 const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
@@ -178,7 +182,10 @@ class TrailsList extends Component
 					sortIcons
 				});
 			},
-			(error) => console.error(JSON.stringify(error)),
+			(error) => {
+				showAlert('Unable to get current location. Are your geolocation services turned on?');
+				this.setState({ trails });
+			},
 			{enableHighAccuracy: true}
 		);
 	}
@@ -213,7 +220,6 @@ class TrailsList extends Component
 			<ListView
 			  dataSource={ds.cloneWithRows(trails)}
 			  renderRow={trail => this.renderRow(trail)}
-			  enableEmptySections
 			/>
 		);
 	}
