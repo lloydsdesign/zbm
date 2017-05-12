@@ -29,7 +29,12 @@ import { connect } from 'react-redux';
 import { InlineMap } from '@shoutem/ui-addons';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
-import { ext, MGL_TOKEN, OFFLINE_PACK_CONFIG } from '../const';
+
+import {
+	ext,
+	MGL_TOKEN,
+	OFFLINE_PACK_CONFIG
+} from '../const';
 
 const battIcons = [
 	require('../assets/icons/batt-1.png'),
@@ -201,7 +206,7 @@ class TrailDetails extends Component {
 		var { packProgress, packBytesCompleted } = this.state;
 		
 		packBytesCompleted /= 1024 * 1024;
-		packBytesCompleted = packBytesCompleted.toFixed(2);
+		packBytesCompleted = parseFloat(packBytesCompleted.toFixed(2));
 		packProgress = '('+ packProgress +'% - '+ packBytesCompleted +' MB)';
 		
 		return (
