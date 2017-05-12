@@ -2,12 +2,6 @@ import React, {
 	Component
 } from 'react';
 
-import {
-	find,
-	shouldRefresh,
-	getCollection
-} from '@shoutem/redux-io';
-
 import _ from 'lodash';
 
 import {
@@ -35,6 +29,9 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { connect } from 'react-redux';
 
 import {
+	CMS_BASE,
+	CMS_REST,
+	parseJSON,
 	ext,
 	showAlert
 } from '../const';
@@ -75,24 +72,11 @@ class TrailsList extends Component
 	
 	componentWillMount()
 	{
-		const { find, trails } = this.props;
-		
-		if(shouldRefresh(trails))
-		{
-			find(ext('Trails'), 'all', {
-				include: ['image', 'graph']
-			});
-		}
-		
 		this.setTrailType();
 		
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
-			if(isConnected)
-			{
-				this.storeTrails();
-				this.setState({ trails });
-			}
+			if(isConnected) this.fetchTrails();
 			else this.getTrails();
 			
 			this.setState({ isConnected });
@@ -108,6 +92,28 @@ class TrailsList extends Component
 		this.setState({ isConnected });
 	};
 	
+	fetchTrails()
+	{
+		const { trailType } = this.state;
+		
+		var data = new FormData();
+		data.append('get_trails', '');
+		data.append('type', trailType);
+		
+		fetch(CMS_REST, {
+			method: 'POST',
+			body: data
+		})
+		.then((response) => response.text())
+		.then((response) => {
+			response = parseJSON(response);
+			response.trails = adjustTrails(response.trails);
+			
+			this.setState({ trails: response.trails });
+			this.storeTrails();
+		});
+	}
+	
 	setTrailType()
 	{
 		var i;
@@ -121,6 +127,7 @@ class TrailsList extends Component
 					trailType: trailTypes[i],
 					trailTypeColor: trailTypeColors[i]
 				});
+				
 				break;
 			}
 		}
@@ -192,16 +199,18 @@ class TrailsList extends Component
 	
 	storeTrails()
 	{
-		const { trails } = this.props;
+		const { trails, trailType } = this.state;
 		
-		AsyncStorage.removeItem('TrailsDB').then(() => {
-			if(trails && trails.length) AsyncStorage.setItem('TrailsDB', JSON.stringify(trails));
+		AsyncStorage.removeItem('TrailsDB_'+ trailType).then(() => {
+			if(trails && trails.length) AsyncStorage.setItem('TrailsDB_'+ trailType, JSON.stringify(trails));
 		});
 	}
 	
 	getTrails()
 	{
-		AsyncStorage.getItem('TrailsDB').then((trails) => {
+		const { trailType } = this.state;
+		
+		AsyncStorage.getItem('TrailsDB_'+ trailType).then((trails) => {
 			if(trails) trails = JSON.parse(trails);
 			
 			if(!trails) trails = [];
@@ -227,9 +236,6 @@ class TrailsList extends Component
   renderRow(trail)
   {
 	const { trailType, trailTypeColor } = this.state;
-	trail.type = trail.type.trim().toUpperCase();
-	
-	if(trailType != trail.type) return null;
 	const { navigateTo } = this.props;
 	
 	trail.number = parseInt(trail.number, 10);
@@ -251,7 +257,7 @@ class TrailsList extends Component
 			screen: ext('TrailDetails'),
 			props: { trail }
 		})}>
-		  <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
+		  <Image styleName="large-banner" source={{ uri: trail.image }} />
 		  
 		  <Row style={{padding: 0, marginBottom: 0, backgroundColor: '#000'}}>		
 			<View styleName="horizontal h-center" style={{marginLeft: 20, marginRight: 20, paddingTop: 10, paddingBottom: 10, bottom: 20, backgroundColor: trailTypeColor, marginTop: 0}}>
@@ -388,8 +394,18 @@ function haversine(start, end, options)
 }
 
 export default connect(
-  (state) => ({
-    trails: getCollection(state[ext()].allTrails, state)
-  }),
-  { navigateTo, find }
+  undefined,
+  { navigateTo }
 )(TrailsList);
+
+function adjustTrails(trails)
+{
+	var i;
+	for(i = 0; i < trails.length; i++)
+	{
+		trails[i].image = CMS_BASE + trails[i].image;
+		trails[i].graph = CMS_BASE + trails[i].graph;
+	}
+	
+	return trails;
+}

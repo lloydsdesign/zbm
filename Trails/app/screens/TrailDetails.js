@@ -271,7 +271,7 @@ class TrailDetails extends Component {
       <ScrollView style={{ marginTop: -1 }}>
         <NavigationBar title={trail.title.toUpperCase()} />
 
-        <Image styleName="large-banner" source={{ uri: trail.image && trail.image.url ? trail.image.url : undefined }} />
+        <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
           <View styleName="horizontal h-center" style={{bottom: 35, paddingTop: 12, paddingBottom: 12, backgroundColor: '#e60005'}}>
@@ -398,7 +398,7 @@ class TrailDetails extends Component {
           </View>
         </Row>
         
-        <Image styleName="large-banner" style={{height: 100}}source={{ uri: trail.graph && trail.graph.url ? trail.graph.url : undefined }} />
+        <Image styleName="large-banner" style={{height: 100}}source={{ uri: trail.graph }} />
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
