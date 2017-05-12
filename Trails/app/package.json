@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Trails information",
   "dependencies": {
-    "react-native-mapbox-gl": "git+https://github.com/shoutem/react-native-mapbox-gl.git"
+    "react-native-mapbox-gl": "git+https://github.com/shoutem/react-native-mapbox-gl.git",
+    "xmldom": "^0.1.27"
   },
   "rnpm": {
     "commands": {

@@ -303,7 +303,6 @@ class TrailDetails extends Component {
           </View>
         </Row>
 
-
         <Divider styleName="line" />
 
         <Row>
@@ -398,7 +397,7 @@ class TrailDetails extends Component {
           </View>
         </Row>
         
-        <Image styleName="large-banner" style={{height: 100}}source={{ uri: trail.graph }} />
+        <Image styleName="large-banner" style={{height: 100}} source={{ uri: trail.graph }} />
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
@@ -420,8 +419,11 @@ export default connect(
 
 function parseXMLData(gpxData)
 {
-	var i, markers = [];
+	return [];
 	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
+	
+	if(!gpxData) return [];
+	var i, markers = [];
 
 	for (i = 0; i < gpxData.length; i += 10)
 	{

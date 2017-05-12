@@ -400,11 +400,14 @@ export default connect(
 
 function adjustTrails(trails)
 {
-	var i;
+	var i, j;
+	
 	for(i = 0; i < trails.length; i++)
 	{
 		trails[i].image = CMS_BASE + trails[i].image;
 		trails[i].graph = CMS_BASE + trails[i].graph;
+		
+		for(j = 0; j < trails[i].images.length; j++) trails[i].images[j] = CMS_BASE + trails[i].images[j];
 	}
 	
 	return trails;
