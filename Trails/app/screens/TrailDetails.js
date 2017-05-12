@@ -131,9 +131,7 @@ class TrailDetails extends Component {
 		this.storeMarkers(markers);
         this.setState({ markers });
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch((error) => console.error(error));
   }
   
   storeMarkers(markers)
@@ -406,7 +404,6 @@ class TrailDetails extends Component {
             <Text style={{fontSize: 14}}>{trail.description}</Text>
           </View>
         </Row>
-      
       </ScrollView>
     );
   }
@@ -419,7 +416,6 @@ export default connect(
 
 function parseXMLData(gpxData)
 {
-	return [];
 	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
 	
 	if(!gpxData) return [];
