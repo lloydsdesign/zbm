@@ -140,10 +140,7 @@ class TrailDetails extends Component
 	{
 		return fetch(xmlUrl)
 			.then((response) => response.text())
-			.then((responseXML) => {
-				console.log('ok');
-				return parseXMLData(responseXML);
-			})
+			.then((responseXML) => parseXMLData(responseXML))
 			.catch((error) => console.error(error));
 	}
   
