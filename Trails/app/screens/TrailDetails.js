@@ -29,6 +29,7 @@ import { connect } from 'react-redux';
 import { InlineMap } from '@shoutem/ui-addons';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
+const DOMParser = require('xmldom').DOMParser;
 
 import {
 	ext,
@@ -48,10 +49,9 @@ const techIcons = [
 	require('../assets/icons/tech-3.png')
 ];
 
-const DOMParser = require('xmldom').DOMParser;
 
-
-class TrailDetails extends Component {
+class TrailDetails extends Component
+{
   constructor(props)
   {
     super(props);
@@ -124,12 +124,13 @@ class TrailDetails extends Component {
     });
   }
 
-  componentWillUnmount() {
-    this.offlineProgressSubscription.remove();
-    this.offlineMaxTilesSubscription.remove();
-    this.offlineErrorSubscription.remove();
-	NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
-  }
+	componentWillUnmount()
+	{
+		this.offlineProgressSubscription.remove();
+		this.offlineMaxTilesSubscription.remove();
+		this.offlineErrorSubscription.remove();
+		NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange);
+	}
   
 	handleConnectivityChange = (isConnected) => {
 		this.setState({ isConnected });
@@ -146,49 +147,52 @@ class TrailDetails extends Component {
 			.catch((error) => console.error(error));
 	}
   
-  storeMarkers(markers)
-  {
+	storeMarkers(markers)
+	{
 	  const { trail } = this.props;
 	  const key = 'trail_'+ trail.id;
 	  
 	  AsyncStorage.removeItem(key).then(() => {
 		  AsyncStorage.setItem(key, JSON.stringify(markers));
 	  });
-  }
-  
-  getMarkers()
-  {
-	  const { trail } = this.props;
-	  const key = 'trail_'+ trail.id;
-	  
-	  return AsyncStorage.getItem(key).then((markers) => {
-		  if(markers) markers = JSON.parse(markers);
-		  if(!markers) markers = [];
-		  return markers;
-	  });
-  }
+	}
 
-  getOfflinePack() {
-    return Mapbox.getOfflinePacks()
-      .then((packs) => {
-        this.setState({ offlinePacks: packs });
-      });
-  }
+	getMarkers()
+	{
+		const { trail } = this.props;
+		const key = 'trail_'+ trail.id;
 
-  saveOfflinePack() {
-	return this.deleteOfflinePack().then(() => {
-		Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
-		  this.setState({ packDownloading: true });
+		return AsyncStorage.getItem(key).then((markers) => {
+			if(markers) markers = JSON.parse(markers);
+			if(!markers) markers = [];
+			return markers;
 		});
-	});
-  }
+	}
 
-  deleteOfflinePack() {
-    return Mapbox.removeOfflinePack('MainMap')
-      .then((info) => {
-        this.setState({ packDownloading: false });
-      });
-  }
+	getOfflinePack()
+	{
+		return Mapbox.getOfflinePacks()
+			.then((packs) => {
+				this.setState({ offlinePacks: packs });
+			});
+	}
+
+	saveOfflinePack()
+	{
+		return this.deleteOfflinePack().then(() => {
+			Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
+			  this.setState({ packDownloading: true });
+			});
+		});
+	}
+
+	deleteOfflinePack()
+	{
+		return Mapbox.removeOfflinePack('MainMap')
+			.then((info) => {
+				this.setState({ packDownloading: false });
+			});
+	}
   
 	renderOfflineButton()
 	{
