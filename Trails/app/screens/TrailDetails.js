@@ -285,8 +285,8 @@ class TrailDetails extends Component
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
-          <View styleName="horizontal h-center" style={{bottom: 35, paddingTop: 12, paddingBottom: 12, backgroundColor: '#e60005'}}>
-            <Subtitle style={{color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center'}}>{trail.header}</Subtitle>
+          <View styleName="horizontal h-center" style={{ bottom: 35, paddingTop: 12, paddingBottom: 12, backgroundColor: '#e60005' }}>
+            <Subtitle style={{ color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{trail.header}</Subtitle>
           </View>
         </Row>
 
@@ -321,7 +321,7 @@ class TrailDetails extends Component
             <View style={{ flex: 0.5 }}>
               <Subtitle>Length</Subtitle>
             </View>
-            <View style={{ paddingRight: 10,flex: 0.4 }}>
+            <View style={{ paddingRight: 10, flex: 0.4 }}>
               <Text styleName="h-right">{trail.length} km</Text>
             </View>
              <View style={{ flex: 0.1 }}>
@@ -368,7 +368,7 @@ class TrailDetails extends Component
         
         <Divider styleName="line" />
 
-        <Row style={{paddingTop: 10}}>
+        <Row style={{ paddingTop: 10 }}>
           <View styleName="horizontal">
             <View style={{ flex: 0.5 }}>
               <Subtitle>Elevation</Subtitle>
@@ -376,8 +376,8 @@ class TrailDetails extends Component
             <View style={{ paddingRight: 10, flex: 0.4 }}>
               <Text styleName="h-right">{trail.altitude} m</Text>
             </View>
-            <View style={{flex: 0.1 }}>
-             <Image source={require('../assets/icons/elev.png')} style={{width: 24, height: 24}} />
+            <View style={{ flex: 0.1 }}>
+             <Image source={require('../assets/icons/elev.png')} style={{ width: 24, height: 24 }} />
             </View>
           </View>
         </Row>
@@ -388,14 +388,14 @@ class TrailDetails extends Component
 		
 		<Row>{this.renderOfflineButton()}</Row>
 
-		<Row style={{paddingTop: 0}}>
+		<Row style={{ paddingTop: 0 }}>
           <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
             <Icon name="down-arrow" style={{color: '#FF0000'}} />
             <Text style={{color: '#FF0000'}}>MAP DOWNLOAD</Text>
           </Button>
         </Row>
 
-        <Row style={{paddingTop: 0}}>
+        <Row style={{ paddingTop: 0 }}>
           <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
             <Icon name="down-arrow" />
             <Text>DOWNLOAD GPS DATA</Text>
@@ -408,7 +408,7 @@ class TrailDetails extends Component
           </View>
         </Row>
         
-        <Image styleName="large-banner" style={{height: 100}} source={{ uri: trail.graph }} />
+        <Image styleName="large-banner" style={{ height: 100 }} source={{ uri: trail.graph }} />
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
