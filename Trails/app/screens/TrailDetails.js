@@ -71,6 +71,8 @@ class TrailDetails extends Component {
 
   componentWillMount()
   {
+	const { trail } = this.props;
+	  
     Mapbox.setAccessToken(MGL_TOKEN);
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 	
@@ -78,15 +80,25 @@ class TrailDetails extends Component {
 	
 	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 	NetInfo.isConnected.fetch().done((isConnected) => {
-		const { trail } = this.props;
-		
 		this.getMarkers().then((markers) => {
-			if(isConnected && !markers.length) this.fetchMarkers(trail.gps);
-			
-			this.setState({
-				markers,
-				isConnected
-			});
+			if(isConnected && !markers.length)
+			{
+				this.fetchMarkers(trail.gps).then((markers) => {
+					this.storeMarkers(markers);
+					
+					this.setState({
+						markers,
+						isConnected
+					});
+				});
+			}
+			else
+			{
+				this.setState({
+					markers,
+					isConnected
+				});
+			}
 		});
 	});
 
@@ -123,16 +135,16 @@ class TrailDetails extends Component {
 		this.setState({ isConnected });
 	};
   
-  fetchMarkers(xmlUrl) {
-    return fetch(xmlUrl)
-      .then((response) => response.text())
-      .then((responseXML) => {
-		const markers = parseXMLData(responseXML);
-		this.storeMarkers(markers);
-        this.setState({ markers });
-      })
-      .catch((error) => console.error(error));
-  }
+	fetchMarkers(xmlUrl)
+	{
+		return fetch(xmlUrl)
+			.then((response) => response.text())
+			.then((responseXML) => {
+				console.log('ok');
+				return parseXMLData(responseXML);
+			})
+			.catch((error) => console.error(error));
+	}
   
   storeMarkers(markers)
   {
@@ -416,12 +428,12 @@ export default connect(
 
 function parseXMLData(gpxData)
 {
-	gpxData = new DOMParser().parseFromString(gpxData).getElementsByTagName('trkpt');
+	gpxData = new DOMParser().parseFromString(gpxData, 'text/xml').getElementsByTagName('trkpt');
 	
 	if(!gpxData) return [];
 	var i, markers = [];
 
-	for (i = 0; i < gpxData.length; i += 10)
+	for(i = 0; i < gpxData.length; i += 10)
 	{
 		markers[markers.length] = [
 			parseFloat(gpxData[i].getAttribute('lat')),
