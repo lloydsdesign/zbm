@@ -172,8 +172,7 @@ class TrailsList extends Component
 		navigator.geolocation.getCurrentPosition((position) => {
 				trails.sort(function(a, b)
 				{
-					if(!("startlocation" in a) || !("startlocation" in b)) return 0;
-					else return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
+					return haversine(position.coords, a.startlocation) - haversine(position.coords, b.startlocation);
 				});
 				
 				var i;
@@ -288,15 +287,17 @@ class TrailsList extends Component
 					<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.phydiff}/3</Subtitle>
 				</View>
 				
-				{isMTB > -1 &&
-					<View style={{flex: 0.08}}>
-						<Image source={tech_icon} style={{width: 18, height: 18}} />
+				{isMTB > -1 && (
+					<View style={{flex: 0.08 + flexValue}} styleName="horizontal">
+						<View style={{flex: 0.08}}>
+							<Image source={tech_icon} style={{width: 18, height: 18}} />
+						</View>
+						
+						<View style={{flex: flexValue, marginBottom: -4}}>
+							<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.techdiff}/3</Subtitle>
+						</View>
 					</View>
-					&&
-					<View style={{flex: flexValue, marginBottom: -4}}>
-						<Subtitle style={{fontSize: 14, color: '#fff'}}>{trail.techdiff}/3</Subtitle>
-					</View>
-				}
+				)}
 			</View>
 		</Row>
 		</TouchableOpacity>
