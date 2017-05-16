@@ -273,10 +273,14 @@ class TrailDetails extends Component
 	}
 
 
-  render() {
+  render()
+  {
     const { trail } = this.props;
+	
 	const batt_icon = battIcons[trail.phydiff - 1];
-	const tech_icon = techIcons[trail.techdiff - 1];
+	var tech_icon = null;
+	
+	if(trail.techdiff && trail.techdiff != "") tech_icon = techIcons[trail.techdiff - 1];
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
@@ -345,8 +349,6 @@ class TrailDetails extends Component
               </View>
           </View>
         </Row>
-
-		<Divider styleName="line" />
 
         {trail.techdiff && trail.techdiff != "" &&
           <Divider styleName="line" />
