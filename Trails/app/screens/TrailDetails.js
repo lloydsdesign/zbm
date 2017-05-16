@@ -350,23 +350,25 @@ class TrailDetails extends Component
           </View>
         </Row>
 
-        {trail.techdiff && trail.techdiff != "" &&
-          <Divider styleName="line" />
-          &&
-          <Row>
-            <View styleName="horizontal">
-              <View style={{ flex: 0.5 }}>
-                <Subtitle>Technical difficulty</Subtitle>
-              </View>
-              <View style={{ flex: 0.4 }}>
-                <Text styleName="h-right">{trail.techdiff}/3</Text>
-              </View>
-              <View style={{ paddingLeft: 10, flex: 0.1 }}>
-              	<Image source={tech_icon} style={{width: 24, height: 24}} />
-              </View>
-            </View>
-          </Row>
-        }
+        {tech_icon && (
+			<View styleName="vertical">
+				<Divider styleName="line" />
+
+				<Row>
+					<View styleName="horizontal">
+						<View style={{ flex: 0.5 }}>
+							<Subtitle>Technical difficulty</Subtitle>
+						</View>
+						<View style={{ flex: 0.4 }}>
+							<Text styleName="h-right">{trail.techdiff}/3</Text>
+						</View>
+						<View style={{ paddingLeft: 10, flex: 0.1 }}>
+							<Image source={tech_icon} style={{width: 24, height: 24}} />
+						</View>
+					</View>
+				</Row>
+			</View>
+        )}
         
         <Divider styleName="line" />
 
