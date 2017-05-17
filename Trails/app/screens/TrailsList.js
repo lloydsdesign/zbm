@@ -259,7 +259,7 @@ class TrailsList extends Component
 		  <Image styleName="large-banner" source={{ uri: trail.image }} />
 		  
 		  <Row style={{padding: 0, marginBottom: 0, backgroundColor: '#000'}}>		
-			<View styleName="horizontal h-center" style={{marginLeft: 20, marginRight: 20, paddingTop: 10, paddingBottom: 10, bottom: 20, backgroundColor: trailTypeColor, marginTop: 0}}>
+			<View styleName="horizontal h-center" style={{marginLeft: 20, marginRight: 20, paddingTop: 15, paddingBottom: 12, bottom: 8, backgroundColor: trailTypeColor, marginTop: 0}}>
 			  <Title style={{color: '#FFF'}}>{trail.type} {trail.number} - {trail.title.toUpperCase()}</Title>
 			</View>
 		  </Row>

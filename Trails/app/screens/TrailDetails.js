@@ -79,7 +79,7 @@ class TrailDetails extends Component
 	this.getOfflinePack();
 	
 	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
-	NetInfo.isConnected.fetch().done((isConnected) => {
+	/*NetInfo.isConnected.fetch().done((isConnected) => {
 		this.getMarkers().then((markers) => {
 			if(isConnected && !markers.length)
 			{
@@ -100,7 +100,7 @@ class TrailDetails extends Component
 				});
 			}
 		});
-	});
+	});*/
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
 		const resourcesLeft = progress.maximumResourcesExpected - progress.countOfResourcesCompleted;
@@ -289,7 +289,7 @@ class TrailDetails extends Component
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
-          <View styleName="horizontal h-center" style={{ bottom: 35, paddingTop: 12, paddingBottom: 12, backgroundColor: '#e60005' }}>
+          <View styleName="horizontal h-center" style={{ bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: '#e60005' }}> 
             <Subtitle style={{ color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{trail.header}</Subtitle>
           </View>
         </Row>
