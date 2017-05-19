@@ -1,0 +1,9 @@
+{
+  "name": "crle.news-ext",
+  "version": "0.9.15",
+  "private": true,
+  "main": "index.js",
+  "peerDependencies": {
+    "@shoutem/core": "*"
+  }
+}
