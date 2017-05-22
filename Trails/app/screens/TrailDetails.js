@@ -208,8 +208,8 @@ class TrailDetails extends Component
 		{
 			return (
 				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.saveOfflinePack()}>
-					<Icon name="down-arrow" />
-					<Text>DOWNLOAD OFFLINE MAPS</Text>
+					<Image source={require('../assets/icons/download.png')} style={{ width: 24, height: 24, marginRight: 10}} />
+					<Text>RIDE IN OFFLINE MODE</Text>
 				</Button>
 			);
 		}
@@ -394,15 +394,15 @@ class TrailDetails extends Component
 
 		<Row style={{ paddingTop: 0 }}>
           <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
-            <Icon name="down-arrow" style={{color: '#FF0000'}} />
-            <Text style={{color: '#FF0000'}}>MAP DOWNLOAD</Text>
+            <Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+            <Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
           </Button>
         </Row>
 
         <Row style={{ paddingTop: 0 }}>
           <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
-            <Icon name="down-arrow" />
-            <Text>DOWNLOAD GPS DATA</Text>
+            <Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+            <Text>USE GPS DATA IN 3RD PARTY APP</Text>
           </Button>
         </Row>
         
