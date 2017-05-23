@@ -74,7 +74,7 @@ class MediumPlaceDetails extends PlaceDetails {
   	else textColor = "#fff";
   	
   	return (
-		<View style={{flex: 0.3, backgroundColor: backColor,  margin: 5}}>
+		<View style={{flex: 0.22, backgroundColor: backColor,  margin: 5}}>
         	<Text style={{textAlign: 'center', color: textColor, fontWeight: 'bold', fontSize: 12, padding: 5}}>
         		{string}
         	</Text>
@@ -95,9 +95,10 @@ class MediumPlaceDetails extends PlaceDetails {
           {this.renderPlaceInfo(place)}
         
         <Row style={{backgroundColor: '#000', paddingTop: 0}}>
-        	{this.renderBoolean(place.shop, "SHOP", '#009245')}
-        	{this.renderBoolean(place.rent, "RENT", '#29ABE2')}
-        	{this.renderBoolean(place.service, "SERVICE", '#FBB03B')}
+        		{this.renderBoolean(place.repair, "REPAIR", '#009245')}
+        		{this.renderBoolean(place.rent, "RENT", '#29ABE2')}
+        		{this.renderBoolean(place.shuttle, "SHUTTLE", '#FBB03B')}
+        		{this.renderBoolean(place.guide, "GUIDE", '#FF0022')}
         </Row>
           {this.renderInlineMap(place)}
           {this.renderOpeningHours(place)}

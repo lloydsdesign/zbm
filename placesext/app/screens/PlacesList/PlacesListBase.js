@@ -235,16 +235,17 @@ renderBoolean(value, string, backColor)
         >
         
         </Image>
-        <View styleName="vertical v-center h-center" style={{marginLeft:20, marginRight:20, backgroundColor: '#00E8C3', padding: 10, bottom: 20}}>
-        	<Title styleName="text-centric" style={{color: '#FFF', marginTop: 0, marginBottom: 0}} numberOfLines={2}>{place.name.toUpperCase()}</Title>
+        <View styleName="vertical v-center h-center" style={{marginLeft:20, marginRight:20, backgroundColor: '#00E8C3', padding: 12, bottom: 6}}>
+        	<Title styleName="text-centric" style={{color: '#FFF', marginTop: 0, marginBottom: 0, fontWeight: 'bold'}} numberOfLines={2}>{place.name.toUpperCase()}</Title>
         </View>
         <View styleName="text-centric" style={{backgroundColor: '#000'}}>
             <Caption styleName="vertical v-center h-center" style={{marginTop: 0, color: '#BBB'}}>{formattedAddress}</Caption>
         </View>
         <View styleName="horizontal v-end" style={{backgroundColor: '#000', padding: 5}}>
-        		{this.renderBoolean(place.shop, "SHOP", '#009245')}
+        		{this.renderBoolean(place.repair, "REPAIR", '#009245')}
         		{this.renderBoolean(place.rent, "RENT", '#29ABE2')}
-        		{this.renderBoolean(place.service, "SERVICE", '#FBB03B')}
+        		{this.renderBoolean(place.shuttle, "SHUTTLE", '#FBB03B')}
+        		{this.renderBoolean(place.guide, "GUIDE", '#FF0022')}
        	</View>
        
         
