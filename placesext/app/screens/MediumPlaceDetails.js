@@ -94,7 +94,7 @@ class MediumPlaceDetails extends PlaceDetails {
           {this.renderLeadImage(place)}
           {this.renderPlaceInfo(place)}
         
-        <Row style={{backgroundColor: '#000', paddingTop: 0}}>
+        <Row style={{backgroundColor: '#000', padding: 5, margin: 0}}>
         		{this.renderBoolean(place.repair, "REPAIR", '#009245')}
         		{this.renderBoolean(place.rent, "RENT", '#29ABE2')}
         		{this.renderBoolean(place.shuttle, "SHUTTLE", '#FBB03B')}

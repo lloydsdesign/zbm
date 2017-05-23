@@ -6,14 +6,8 @@
       "format": "single-line",
       "title": "Place name",
       "type": "string",
-      "required": true,
+      "required":true,
       "displayPriority": 1
-    },
-	"location": {
-      "format": "geolocation",
-      "title": "Location",
-      "type": "object",
-      "displayPriority": 2
     },
     "description": {
       "format": "html",
@@ -52,35 +46,40 @@
       "type": "string",
       "displayPriority": 8
     },
-	"type": {
-      "format": "single-line",
-      "title": "Type (ACCOMODATION, AGENCY, RENT POINT, SHOP)",
-      "type": "string",
-      "required": true,
-      "displayPriority": 9
+    "location": {
+      "format": "geolocation",
+      "title": "Location",
+      "type": "object",
+      "displayPriority": 2
     },
     "repair": {
       "format": "boolean",
       "title": "Repair",
       "type": "boolean",
-      "displayPriority": 10
+      "displayPriority": 9
     },
     "rent": {
       "format": "boolean",
       "title": "Rent",
       "type": "boolean",
-      "displayPriority": 11
+      "displayPriority": 10
     },
     "shuttle": {
       "format": "boolean",
       "title": "Shuttle",
       "type": "boolean",
-      "displayPriority": 12
+      "displayPriority": 11
     },
-	"guide": {
+    "guide": {
       "format": "boolean",
       "title": "Guide",
       "type": "boolean",
+      "displayPriority": 12
+    },
+    "type": {
+      "format": "single-line",
+      "title": "Type: ACCOMODATION / AGENCY / RENT POINT / SHOP",
+      "type": "string",
       "displayPriority": 13
     }
   },
