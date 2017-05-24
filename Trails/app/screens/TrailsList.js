@@ -343,7 +343,7 @@ class TrailsList extends Component
 			}
 		</View>
 		
-		<View styleName="h-center" style={{backgroundColor: '#ddd'}}>
+		<View styleName="h-center" style={{backgroundColor: '#fff'}}>
 			<Button styleName="h-center" style={{backgroundColor: '#FF2222', borderWidth: 0, marginTop: 0, marginLeft: 10, marginRight: 10, marginBottom: 10}} onPress={() => this.sortByNearestTrail()}>
 				<Icon name="search" style={{color: '#FFF'}} />
 				<Text style={{color: '#FFF'}}>SORT BY NEAREST TRAIL START</Text>
