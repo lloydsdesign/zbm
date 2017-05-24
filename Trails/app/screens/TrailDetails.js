@@ -258,7 +258,7 @@ class TrailDetails extends Component
 		);
 	}
 	
-	renderExtraButtons()
+	renderExtraElements()
 	{
 		const { isConnected } = this.state;
 		if(!isConnected) return null;
@@ -280,6 +280,13 @@ class TrailDetails extends Component
 					<Text>USE GPS DATA IN 3RD PARTY APP</Text>
 				  </Button>
 				</Row>
+				
+				<Row>
+					<View style={{ flex: 1, paddingTop: 20}}>
+						<Subtitle>ROUTE DESCRIPTION</Subtitle>
+					</View>
+				</Row>
+				<Image styleName="large-banner" style={{ height: 100 }} source={{ uri: trail.graph }} />
 			</View>
 		);
 	}
@@ -473,15 +480,7 @@ class TrailDetails extends Component
 
 		{this.renderInlineMap()}
 		{this.renderOfflineButton()}
-		{this.renderExtraButtons()}
-        
-        <Row>
-          <View style={{ flex: 1, paddingTop: 20}}>
-            <Subtitle>ROUTE DESCRIPTION</Subtitle>
-          </View>
-        </Row>
-        
-        <Image styleName="large-banner" style={{ height: 100 }} source={{ uri: trail.graph }} />
+		{this.renderExtraElements()}
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
