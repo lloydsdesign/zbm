@@ -266,19 +266,21 @@ class TrailDetails extends Component
 		const { trail } = this.props;
 		
 		return (
-			<Row style={{ paddingTop: 0 }}>
-			  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
-				<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-				<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
-			  </Button>
-			</Row>
-			&&
-			<Row style={{ paddingTop: 0 }}>
-			  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
-				<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-				<Text>USE GPS DATA IN 3RD PARTY APP</Text>
-			  </Button>
-			</Row>
+			<View>
+				<Row style={{ paddingTop: 0 }}>
+				  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
+					<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+					<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
+				  </Button>
+				</Row>
+				
+				<Row style={{ paddingTop: 0 }}>
+				  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
+					<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+					<Text>USE GPS DATA IN 3RD PARTY APP</Text>
+				  </Button>
+				</Row>
+			</View>
 		);
 	}
 	
