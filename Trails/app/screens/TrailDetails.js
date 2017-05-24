@@ -217,7 +217,8 @@ class TrailDetails extends Component
   
 	renderOfflineButton()
 	{
-		const { offlinePacks, packDownloading } = this.state;
+		const { offlinePacks, packDownloading, isConnected } = this.state;
+		if(!isConnected) return null;
 		
 		if(offlinePacks.length)
 		{
@@ -231,10 +232,12 @@ class TrailDetails extends Component
 		if(!packDownloading)
 		{
 			return (
-				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.saveOfflinePack()}>
-					<Image source={require('../assets/icons/download.png')} style={{ width: 24, height: 24, marginRight: 10}} />
-					<Text>RIDE IN OFFLINE MODE</Text>
-				</Button>
+				<Row>
+					<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.saveOfflinePack()}>
+						<Image source={require('../assets/icons/download.png')} style={{ width: 24, height: 24, marginRight: 10}} />
+						<Text>RIDE IN OFFLINE MODE</Text>
+					</Button>
+				</Row>
 			);
 		}
 		
@@ -245,11 +248,37 @@ class TrailDetails extends Component
 		packProgress = '('+ packProgress +'% - '+ packBytesCompleted +' MB)';
 		
 		return (
-			<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
-				<Icon name="close" />
-				<Text>CANCEL {packProgress}</Text>
-				<Spinner style={{color: '#fff'}} />
-			</Button>
+			<Row>
+				<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.deleteOfflinePack()}>
+					<Icon name="close" />
+					<Text>CANCEL {packProgress}</Text>
+					<Spinner style={{color: '#fff'}} />
+				</Button>
+			</Row>
+		);
+	}
+	
+	renderExtraButtons()
+	{
+		const { isConnected } = this.state;
+		if(!isConnected) return null;
+		
+		const { trail } = this.props;
+		
+		return (
+			<Row style={{ paddingTop: 0 }}>
+			  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
+				<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+				<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
+			  </Button>
+			</Row>
+			&&
+			<Row style={{ paddingTop: 0 }}>
+			  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
+				<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+				<Text>USE GPS DATA IN 3RD PARTY APP</Text>
+			  </Button>
+			</Row>
 		);
 	}
 	
@@ -441,22 +470,8 @@ class TrailDetails extends Component
         </Row>
 
 		{this.renderInlineMap()}
-		
-		<Row>{this.renderOfflineButton()}</Row>
-
-		<Row style={{ paddingTop: 0 }}>
-          <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
-            <Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-            <Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
-          </Button>
-        </Row>
-
-        <Row style={{ paddingTop: 0 }}>
-          <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
-            <Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-            <Text>USE GPS DATA IN 3RD PARTY APP</Text>
-          </Button>
-        </Row>
+		{this.renderOfflineButton()}
+		{this.renderExtraButtons()}
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
