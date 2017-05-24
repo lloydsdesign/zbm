@@ -37,6 +37,9 @@ import {
 	OFFLINE_PACK_CONFIG
 } from '../const';
 
+const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
+const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
+
 const battIcons = [
 	require('../assets/icons/batt-1.png'),
 	require('../assets/icons/batt-2.png'),
@@ -331,6 +334,7 @@ class TrailDetails extends Component
 	var tech_icon = null;
 	
 	if(trail.techdiff && trail.techdiff != "") tech_icon = techIcons[trail.techdiff - 1];
+	const headerColor = trailTypeColors[trailTypes.indexOf(trail.type)];
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
@@ -339,7 +343,7 @@ class TrailDetails extends Component
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
-          <View styleName="horizontal h-center" style={{ bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: '#e60005' }}> 
+          <View styleName="horizontal h-center" style={{ bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: headerColor }}>
             <Subtitle style={{ color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{trail.header}</Subtitle>
           </View>
         </Row>
