@@ -69,10 +69,8 @@ class TrailDetails extends Component
 	};
   }
 
-  componentWillMount()
+  componentDidMount()
   {
-	const { trail } = this.props;
-	  
     Mapbox.setAccessToken(MGL_TOKEN);
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 	
@@ -80,6 +78,8 @@ class TrailDetails extends Component
 	
 	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 	NetInfo.isConnected.fetch().done((isConnected) => {
+		const { trail } = this.props;
+		
 		this.getMarkers().then((markers) => {
 			if(isConnected && !markers.length)
 			{
@@ -133,7 +133,28 @@ class TrailDetails extends Component
 	}
   
 	handleConnectivityChange = (isConnected) => {
-		this.setState({ isConnected });
+		const { trail } = this.props;
+		
+		this.getMarkers().then((markers) => {
+			if(isConnected && !markers.length)
+			{
+				this.fetchMarkers(trail.gps).then((markers) => {
+					this.storeMarkers(markers);
+					
+					this.setState({
+						markers,
+						isConnected
+					});
+				});
+			}
+			else
+			{
+				this.setState({
+					markers,
+					isConnected
+				});
+			}
+		});
 	};
   
 	fetchMarkers(xmlUrl)
@@ -198,8 +219,8 @@ class TrailDetails extends Component
 		if(offlinePacks.length)
 		{
 			return (
-				<View styleName="h-center v-center">
-					<Text>OFFLINE MAPS UP TO DATE</Text>
+				<View styleName="vertical h-center v-center" style={{ height: 24 }}>
+					<Text style={{ color: '#fff' }}>OFFLINE MAPS UP TO DATE</Text>
 				</View>
 			);
 		}
@@ -231,44 +252,73 @@ class TrailDetails extends Component
 	
 	renderInlineMap()
 	{
-		const { markers } = this.state;
-		if(!markers.length)
+		const { navigateTo, trail } = this.props;
+		const { markers, isConnected } = this.state;
+		
+		if(isConnected)
 		{
+			if(!markers.length)
+			{
+				return (
+					<View styleName="vertical h-center v-center" style={{ height: 300 }}>
+						<Spinner style={{ size: 'large', color: '#fff' }} />
+					</View>
+				);
+			}
+			
+			const marker = {
+				latitude: markers[0][0],
+				longitude: markers[0][1]
+			};
+			
 			return (
-				<Tile styleName="clear text-centric">
-					<Spinner style={{ size: 'large', color: '#fff' }} />
-				</Tile>
+				<View style={{ height: 300 }}>
+					<TouchableOpacity
+						onPress={() => navigateTo({
+							screen: ext('Map'),
+							props: {
+								title: trail.title,
+								markers: markers
+							}
+					})}>
+						<InlineMap
+							initialRegion={{
+								latitude: marker.latitude,
+								longitude: marker.longitude,
+								latitudeDelta: 0.03,
+								longitudeDelta: 0.03
+							}}
+							markers={[marker]}
+							selectedMarker={marker}
+							style={{ height: 300 }}
+						/>
+					</TouchableOpacity>
+				</View>
 			);
 		}
 		
-		const { navigateTo, trail } = this.props;
-		
-		const marker = {
-			latitude: markers[0][0],
-			longitude: markers[0][1]
-		};
+		if(!markers.length)
+		{
+			return (
+				<View styleName="vertical h-center v-center" style={{ height: 24 }}>
+					<Text style={{ color: '#fff' }}>OFFLINE MAP NOT PRESENT</Text>
+				</View>
+			);
+		}
 		
 		return (
-			<TouchableOpacity
-				onPress={() => navigateTo({
+			<Row style={{ paddingTop: 0 }}>
+				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('Map'),
 					props: {
 						title: trail.title,
 						markers: markers
 					}
-			})}>
-				<InlineMap
-					initialRegion={{
-						latitude: marker.latitude,
-						longitude: marker.longitude,
-						latitudeDelta: 0.03,
-						longitudeDelta: 0.03
-					}}
-					markers={[marker]}
-					selectedMarker={marker}
-					style={{ height: 300 }}
-				/>
-			</TouchableOpacity>
+				})}>
+					<Icon name="pin" />
+					<Text>OPEN TRAIL MAP</Text>
+				</Button>
+			</Row>
 		);
 	}
 
@@ -386,9 +436,7 @@ class TrailDetails extends Component
           </View>
         </Row>
 
-        <View styleName="h-center v-center" style={{ height: 300 }}>
-			{this.renderInlineMap()}
-        </View>
+		{this.renderInlineMap()}
 		
 		<Row>{this.renderOfflineButton()}</Row>
 

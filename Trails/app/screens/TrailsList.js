@@ -70,7 +70,7 @@ class TrailsList extends Component
 		};
 	}
 	
-	componentWillMount()
+	componentDidMount()
 	{
 		this.setTrailType();
 		
