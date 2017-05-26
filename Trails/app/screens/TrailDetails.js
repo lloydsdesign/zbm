@@ -381,7 +381,7 @@ class TrailDetails extends Component
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
-          <View styleName="horizontal h-center" style={{ elevation: 3, bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: headerColor }}>
+          <View styleName="horizontal h-center" style={{ bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: headerColor }}>
             <Subtitle style={{ color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{trail.header}</Subtitle>
           </View>
         </Row>

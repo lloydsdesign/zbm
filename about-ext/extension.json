@@ -1,6 +1,6 @@
 {
   "name": "aboutext",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "title": "About (extended)",
   "description": "Show info about your app or your business",
   "platform": "1.0.*",

@@ -97,7 +97,7 @@ export class AboutScreen extends BaseAboutScreen {
 
     return (
       <View styleName={extraSpace}>
-        <Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 10, fontWeight: 'bold'}}>
+        <Title styleName="h-center" style={{color: '#FFF', backgroundColor: '#000', padding: 20, fontWeight: 'bold', bottom: 15}}>
           {profile.name.toUpperCase()}
         </Title>
       </View>
