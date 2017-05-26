@@ -277,7 +277,7 @@ class TrailDetails extends Component
 				<Row style={{ paddingTop: 0 }}>
 				  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
 					<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-					<Text>USE GPS DATA IN 3RD PARTY APP</Text>
+					<Text>DOWNLOAD GPS DATA</Text>
 				  </Button>
 				</Row>
 				
@@ -381,7 +381,7 @@ class TrailDetails extends Component
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
         <Row>
-          <View styleName="horizontal h-center" style={{ bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: headerColor }}>
+          <View styleName="horizontal h-center" style={{ elevation: 3, bottom: 20, paddingTop: 20, paddingBottom: 15, backgroundColor: headerColor }}>
             <Subtitle style={{ color: '#FFF', fontSize: 16, paddingLeft: 20, paddingRight: 20, textAlign: 'center' }}>{trail.header}</Subtitle>
           </View>
         </Row>
@@ -421,7 +421,7 @@ class TrailDetails extends Component
               <Text styleName="h-right">{trail.length} km</Text>
             </View>
              <View style={{ flex: 0.1 }}>
-              <Image source={require('../assets/icons/arrow.png')} style={{width: 24, height: 24}} />
+              <Image source={require('../assets/icons/arrow.png')} style={{width: 24, height: 24, marginBottom: 2}} />
             </View>
           </View>
         </Row>
@@ -437,7 +437,7 @@ class TrailDetails extends Component
               <Text styleName="h-right">{trail.phydiff}/3</Text>
             </View>
               <View style={{ paddingLeft: 10, flex: 0.1 }}>
-              	<Image source={batt_icon} style={{width: 24, height: 24}} />
+              	<Image source={batt_icon} style={{width: 24, height: 24, marginBottom: 2}} />
               </View>
           </View>
         </Row>
@@ -455,7 +455,7 @@ class TrailDetails extends Component
 							<Text styleName="h-right">{trail.techdiff}/3</Text>
 						</View>
 						<View style={{ paddingLeft: 10, flex: 0.1 }}>
-							<Image source={tech_icon} style={{width: 24, height: 24}} />
+							<Image source={tech_icon} style={{width: 24, height: 24, marginBottom: 2}} />
 						</View>
 					</View>
 				</Row>
@@ -473,7 +473,7 @@ class TrailDetails extends Component
               <Text styleName="h-right">{trail.altitude} m</Text>
             </View>
             <View style={{ flex: 0.1 }}>
-             <Image source={require('../assets/icons/elev.png')} style={{ width: 24, height: 24 }} />
+             <Image source={require('../assets/icons/elev.png')} style={{ width: 24, height: 24, marginBottom: 2 }} />
             </View>
           </View>
         </Row>
