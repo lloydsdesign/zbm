@@ -62,6 +62,7 @@ class TrailsList extends Component
 		
 		this.state = {
 			trails: [],
+			hasLoaded: false,
 			trailType: '',
 			trailTypeColor: '#fff',
 			isConnected: null,
@@ -70,10 +71,13 @@ class TrailsList extends Component
 		};
 	}
 	
-	componentDidMount()
+	componentWillMount()
 	{
 		this.setTrailType();
-		
+	}
+	
+	componentDidMount()
+	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 		NetInfo.isConnected.fetch().done((isConnected) => {
 			if(isConnected) this.fetchTrails();
@@ -109,7 +113,7 @@ class TrailsList extends Component
 			response = parseJSON(response);
 			response.trails = adjustTrails(response.trails);
 			
-			this.setState({ trails: response.trails });
+			this.setState({ trails: response.trails, hasLoaded: true });
 			this.storeTrails();
 		});
 	}
@@ -219,8 +223,8 @@ class TrailsList extends Component
 	
 	renderListView()
 	{
-		const { trails } = this.state;
-		if(!trails.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
+		const { trails, hasLoaded } = this.state;
+		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		
