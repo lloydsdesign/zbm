@@ -217,7 +217,7 @@ class TrailsList extends Component
 			if(trails) trails = JSON.parse(trails);
 			
 			if(!trails) trails = [];
-			this.setState({ trails });
+			this.setState({ trails, hasLoaded: true });
 		});
 	}
 	
