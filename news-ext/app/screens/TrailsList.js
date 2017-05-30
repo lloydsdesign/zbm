@@ -61,6 +61,7 @@ class TrailsList extends Component
 
 		this.state = {
 			trails: [],
+			hasLoaded: false,
 			isConnected: null,
 			sortOrders: [1, 1, 1, 1],
 			sortIcons: [sortAsc, sortAsc, sortAsc, sortAsc]
@@ -103,7 +104,7 @@ class TrailsList extends Component
 			response = parseJSON(response);
 			response.trails = adjustTrails(response.trails);
 
-			this.setState({ trails: response.trails });
+			this.setState({ trails: response.trails, hasLoaded: true });
 		});
 	}
 
@@ -172,11 +173,12 @@ class TrailsList extends Component
 
 	renderListView()
 	{
-		const { trails } = this.state;
-		if(!trails.length) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
-
+		const { trails, hasLoaded } = this.state;
+		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
+		
+		if(!trails.length) return null;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
+		
 		return (
 			<ListView
 			  dataSource={ds.cloneWithRows(trails)}
