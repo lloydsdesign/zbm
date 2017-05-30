@@ -226,6 +226,7 @@ class TrailsList extends Component
 		const { trails, hasLoaded } = this.state;
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
+		if(!trails.length) return null;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		
 		return (
