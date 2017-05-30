@@ -102,7 +102,7 @@ class TrailsList extends Component
 		
 		var data = new FormData();
 		data.append('get_trails', '');
-		data.append('type', trailType);
+		if(trailType != '') data.append('type', trailType);
 		
 		fetch(CMS_REST, {
 			method: 'POST',
