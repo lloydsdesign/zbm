@@ -80,7 +80,6 @@ class TrailsList extends Component
 	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 /*		NetInfo.isConnected.fetch().then((isConnected) => {
-			console.log('conn', isConnected);
 			if(isConnected) this.fetchTrails();
 			else this.getTrails();
 			
@@ -114,9 +113,7 @@ class TrailsList extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			console.log('response', response);
 			response.trails = adjustTrails(response.trails);
-			console.log('response', response);
 			this.setState({ trails: response.trails, hasLoaded: true });
 			this.storeTrails();
 		});
@@ -216,7 +213,6 @@ class TrailsList extends Component
 	getTrails()
 	{
 		const { trailType } = this.state;
-		console.log('getam trails');
 		AsyncStorage.getItem('TrailsDB_'+ trailType).then((trails) => {
 			if(trails) trails = JSON.parse(trails);
 			
@@ -227,8 +223,7 @@ class TrailsList extends Component
 	
 	renderListView()
 	{
-		const { trails, hasLoaded } = this.state;
-		console.log('trails+hasLoaded', trails, hasLoaded);
+		const { trails, hasLoaded } = this.state;s
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		if(!trails.length) return null;
