@@ -79,12 +79,13 @@ class TrailsList extends Component
 	componentDidMount()
 	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
-		NetInfo.isConnected.fetch().done((isConnected) => {
+/*		NetInfo.isConnected.fetch().then((isConnected) => {
+			console.log('conn', isConnected);
 			if(isConnected) this.fetchTrails();
 			else this.getTrails();
 			
 			this.setState({ isConnected });
-		});
+		});*/
 	}
 	
 	componentWillUnmount()
@@ -94,6 +95,8 @@ class TrailsList extends Component
 	
 	handleConnectivityChange = (isConnected) => {
 		this.setState({ isConnected });
+		if(isConnected) this.fetchTrails();
+		else this.getTrails();
 	};
 	
 	fetchTrails()
@@ -111,8 +114,9 @@ class TrailsList extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
+			console.log('response', response);
 			response.trails = adjustTrails(response.trails);
-			
+			console.log('response', response);
 			this.setState({ trails: response.trails, hasLoaded: true });
 			this.storeTrails();
 		});
@@ -212,7 +216,7 @@ class TrailsList extends Component
 	getTrails()
 	{
 		const { trailType } = this.state;
-		
+		console.log('getam trails');
 		AsyncStorage.getItem('TrailsDB_'+ trailType).then((trails) => {
 			if(trails) trails = JSON.parse(trails);
 			
@@ -224,6 +228,7 @@ class TrailsList extends Component
 	renderListView()
 	{
 		const { trails, hasLoaded } = this.state;
+		console.log('trails+hasLoaded', trails, hasLoaded);
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		if(!trails.length) return null;
