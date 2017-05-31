@@ -71,11 +71,6 @@ class TrailsList extends Component
 	componentWillMount()
 	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
-		NetInfo.isConnected.fetch().done((isConnected) => {
-			if(isConnected) this.fetchTrails();
-
-			this.setState({ isConnected });
-		});
 	}
 
 	componentWillUnmount()
@@ -84,6 +79,7 @@ class TrailsList extends Component
 	}
 
 	handleConnectivityChange = (isConnected) => {
+		if(isConnected) this.fetchTrails();
 		this.setState({ isConnected });
 	};
 

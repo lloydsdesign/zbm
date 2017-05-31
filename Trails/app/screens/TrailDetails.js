@@ -78,32 +78,7 @@ class TrailDetails extends Component
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 	
 	this.getOfflinePack();
-	
 	NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
-	NetInfo.isConnected.fetch().done((isConnected) => {
-		const { trail } = this.props;
-		
-		this.getMarkers().then((markers) => {
-			if(isConnected && !markers.length)
-			{
-				this.fetchMarkers(trail.gps).then((markers) => {
-					this.storeMarkers(markers);
-					
-					this.setState({
-						markers,
-						isConnected
-					});
-				});
-			}
-			else
-			{
-				this.setState({
-					markers,
-					isConnected
-				});
-			}
-		});
-	});
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
 		const resourcesLeft = progress.maximumResourcesExpected - progress.countOfResourcesCompleted;
