@@ -214,7 +214,7 @@ class TrailsList extends Component
 	
 	renderListView()
 	{
-		const { trails, hasLoaded } = this.state;s
+		const { trails, hasLoaded } = this.state;
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		if(!trails.length) return null;
