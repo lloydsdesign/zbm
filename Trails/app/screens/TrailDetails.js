@@ -71,6 +71,11 @@ class TrailDetails extends Component
 		packBytesCompleted: 0
 	};
   }
+  
+  componentWillMount()
+  {
+	  NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+  }
 
   componentDidMount()
   {
