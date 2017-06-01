@@ -67,8 +67,13 @@ class TrailsList extends Component
 			sortIcons: [sortAsc, sortAsc, sortAsc, sortAsc]
 		};
 	}
-
+	
 	componentWillMount()
+	{
+		NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+	}
+
+	componentDidMount()
 	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 	}

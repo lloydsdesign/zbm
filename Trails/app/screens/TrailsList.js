@@ -74,6 +74,11 @@ class TrailsList extends Component
 	componentWillMount()
 	{
 		this.setTrailType();
+		NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+	}
+	
+	componentDidMount()
+	{
 		NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange);
 	}
 	
