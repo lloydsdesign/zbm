@@ -142,10 +142,7 @@ class TrailDetails extends Component
   
 	fetchMarkers(xmlUrl)
 	{
-		return fetch(xmlUrl)
-			.then((response) => response.text())
-			.then((responseXML) => parseXMLData(responseXML))
-			.catch((error) => console.error(error));
+		return fetch(xmlUrl).then((response) => response.text()).then((responseXML) => parseXMLData(responseXML));
 	}
   
 	storeMarkers(markers)
@@ -273,8 +270,14 @@ class TrailDetails extends Component
 	
 	renderInlineMap()
 	{
-		const { navigateTo, trail } = this.props;
+		const { navigateTo } = this.props;
+		var { trail } = this.props;
 		const { markers, isConnected } = this.state;
+		
+		trail.number = parseInt(trail.number, 10);
+		if(trail.number < 10) trail.number = '0'+ trail.number;
+		
+		const navTitle = trail.type +' '+ trail.number +' - '+ trail.title.toUpperCase();
 		
 		if(isConnected)
 		{
@@ -298,7 +301,7 @@ class TrailDetails extends Component
 						onPress={() => navigateTo({
 							screen: ext('Map'),
 							props: {
-								title: trail.title,
+								title: navTitle,
 								markers: markers
 							}
 					})}>
@@ -322,7 +325,7 @@ class TrailDetails extends Component
 		{
 			return (
 				<View styleName="vertical h-center v-center" style={{ height: 24 }}>
-					<Text style={{ color: '#fff' }}>OFFLINE MAP NOT PRESENT</Text>
+					<Text style={{ color: '#fff' }}>OFFLINE MAPS NOT PRESENT</Text>
 				</View>
 			);
 		}
@@ -332,7 +335,7 @@ class TrailDetails extends Component
 				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('Map'),
 					props: {
-						title: trail.title,
+						title: navTitle,
 						markers: markers
 					}
 				})}>
@@ -346,17 +349,22 @@ class TrailDetails extends Component
 
   render()
   {
-    const { trail } = this.props;
+    var { trail } = this.props;
 	
 	const batt_icon = battIcons[trail.phydiff - 1];
 	var tech_icon = null;
 	
 	if(trail.techdiff && trail.techdiff != "") tech_icon = techIcons[trail.techdiff - 1];
 	const headerColor = trailTypeColors[trailTypes.indexOf(trail.type)];
+	
+	trail.number = parseInt(trail.number, 10);
+	if(trail.number < 10) trail.number = '0'+ trail.number;
+	
+	const navTitle = trail.type +' '+ trail.number +' - '+ trail.title.toUpperCase();
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
-        <NavigationBar title={trail.title.toUpperCase()} />
+        <NavigationBar title={navTitle} />
 
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 

@@ -37,13 +37,18 @@ export default class TrailDetails extends Component
 {
   render()
   {
-    const { trail } = this.props;
+    var { trail } = this.props;
 	
 	const batt_icon = battIcons[trail.phydiff - 1];
 	var tech_icon = null;
 	
 	if(trail.techdiff && trail.techdiff != "") tech_icon = techIcons[trail.techdiff - 1];
 	const headerColor = trailTypeColors[trailTypes.indexOf(trail.type)];
+	
+	trail.number = parseInt(trail.number, 10);
+	if(trail.number < 10) trail.number = '0'+ trail.number;
+	
+	const navTitle = trail.type +' '+ trail.number +' - '+ trail.title.toUpperCase();
 	
 	const marker = {
 		latitude: trail.startlocation.latitude,
@@ -52,7 +57,7 @@ export default class TrailDetails extends Component
 
     return (
       <ScrollView style={{ marginTop: -1 }}>
-        <NavigationBar title={trail.title.toUpperCase()} />
+        <NavigationBar title={navTitle} />
 
         <Image styleName="large-banner" source={{ uri: trail.image }} />
 
