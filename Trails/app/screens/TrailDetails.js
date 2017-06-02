@@ -6,8 +6,7 @@ import {
   ScrollView,
   Linking,
   NetInfo,
-  AsyncStorage,
-  Platform
+  AsyncStorage
 } from 'react-native';
 
 import {
@@ -75,7 +74,7 @@ class TrailDetails extends Component
   
   componentWillMount()
   {
-	  if(Platform.OS != 'ios') NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+	  NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
   }
 
   componentDidMount()

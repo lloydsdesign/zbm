@@ -20,8 +20,7 @@ import {
 
 import {
 	ListView,
-	NetInfo,
-	Platform
+	NetInfo
 } from 'react-native';
 
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -68,10 +67,10 @@ class TrailsList extends Component
 			sortIcons: [sortAsc, sortAsc, sortAsc, sortAsc]
 		};
 	}
-	
+
 	componentWillMount()
 	{
-		if(Platform.OS != 'ios') NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+		NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
 	}
 
 	componentDidMount()
@@ -177,10 +176,10 @@ class TrailsList extends Component
 	{
 		const { trails, hasLoaded } = this.state;
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
-		
+
 		if(!trails.length) return null;
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		
+
 		return (
 			<ListView
 			  dataSource={ds.cloneWithRows(trails)}
