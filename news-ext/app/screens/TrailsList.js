@@ -20,7 +20,8 @@ import {
 
 import {
 	ListView,
-	NetInfo
+	NetInfo,
+	Platform
 } from 'react-native';
 
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -70,7 +71,7 @@ class TrailsList extends Component
 	
 	componentWillMount()
 	{
-		NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+		if(Platform.OS != 'ios') NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
 	}
 
 	componentDidMount()

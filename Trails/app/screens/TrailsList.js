@@ -21,7 +21,8 @@ import {
 import {
 	ListView,
 	NetInfo,
-	AsyncStorage
+	AsyncStorage,
+	Platform
 } from 'react-native';
 
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -74,7 +75,7 @@ class TrailsList extends Component
 	componentWillMount()
 	{
 		this.setTrailType();
-		NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
+		if(Platform.OS != 'ios') NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
 	}
 	
 	componentDidMount()
