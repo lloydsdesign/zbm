@@ -194,8 +194,7 @@ class TrailDetails extends Component
   
 	renderOfflineButton()
 	{
-		const { offlinePacks, packDownloading, isConnected } = this.state;
-		if(!isConnected) return null;
+		const { offlinePacks, packDownloading } = this.state;
 		
 		if(offlinePacks.length)
 		{
@@ -232,39 +231,6 @@ class TrailDetails extends Component
 					<Spinner style={{color: '#fff'}} />
 				</Button>
 			</Row>
-		);
-	}
-	
-	renderExtraElements()
-	{
-		const { isConnected } = this.state;
-		if(!isConnected) return null;
-		
-		const { trail } = this.props;
-		
-		return (
-			<View>
-				<Row style={{ paddingTop: 0 }}>
-				  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
-					<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-					<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
-				  </Button>
-				</Row>
-				
-				<Row style={{ paddingTop: 0 }}>
-				  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
-					<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
-					<Text>DOWNLOAD GPS DATA</Text>
-				  </Button>
-				</Row>
-				
-				<Row>
-					<View style={{ flex: 1, paddingTop: 20}}>
-						<Subtitle>ROUTE DESCRIPTION</Subtitle>
-					</View>
-				</Row>
-				<Image styleName="large-banner" style={{ height: 100 }} source={{ uri: trail.graph }} />
-			</View>
 		);
 	}
 	
@@ -468,7 +434,27 @@ class TrailDetails extends Component
 
 		{this.renderInlineMap()}
 		{this.renderOfflineButton()}
-		{this.renderExtraElements()}
+		
+		<Row style={{ paddingTop: 0 }}>
+		  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
+			<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+			<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
+		  </Button>
+		</Row>
+		
+		<Row style={{ paddingTop: 0 }}>
+		  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
+			<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+			<Text>DOWNLOAD GPS DATA</Text>
+		  </Button>
+		</Row>
+		
+		<Row>
+			<View style={{ flex: 1, paddingTop: 20}}>
+				<Subtitle>ROUTE DESCRIPTION</Subtitle>
+			</View>
+		</Row>
+		<Image styleName="large-banner" style={{ height: 100 }} source={{ uri: trail.graph }} />
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
