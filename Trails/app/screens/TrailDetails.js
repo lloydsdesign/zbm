@@ -199,9 +199,11 @@ class TrailDetails extends Component
 		if(offlinePacks.length)
 		{
 			return (
-				<View styleName="vertical h-center v-center" style={{ height: 24 }}>
-					<Text style={{ color: '#fff' }}>OFFLINE MAPS UP TO DATE</Text>
-				</View>
+				<Row>
+					<View styleName="vertical h-center v-center" style={{ height: 24 }}>
+						<Text style={{ color: '#fff' }}>OFFLINE MAPS UP TO DATE</Text>
+					</View>
+				</Row>
 			);
 		}
 		
