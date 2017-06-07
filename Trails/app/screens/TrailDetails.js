@@ -282,8 +282,8 @@ class TrailDetails extends Component
 		{
 			return (
 				<View styleName="vertical h-center v-center">
-					<Text style={{ color: '#fff' }}>OFFLINE MAPS NOT PRESENT</Text>
-					<Text style={{ color: '#fff' }}>CONNECT TO DOWNLOAD MAPS</Text>
+					<Text style={{ color: '#fff' }}>OFFLINE ROUTE NOT PRESENT</Text>
+					<Text style={{ color: '#fff' }}>CONNECT TO DOWNLOAD ROUTE</Text>
 				</View>
 			);
 		}
