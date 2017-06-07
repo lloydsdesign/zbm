@@ -52,8 +52,6 @@ const techIcons = [
 	require('../assets/icons/tech-3.png')
 ];
 
-Mapbox.setAccessToken(MGL_TOKEN);
-
 
 class TrailDetails extends Component
 {
@@ -73,6 +71,7 @@ class TrailDetails extends Component
   
   componentWillMount()
   {
+	  Mapbox.setAccessToken(MGL_TOKEN);
 	  NetInfo.isConnected.fetch().then(isConnected => this.handleConnectivityChange(isConnected));
   }
 
@@ -184,7 +183,18 @@ class TrailDetails extends Component
 	renderOfflineButton()
 	{
 		const { offlinePacks, packDownloading } = this.state;
-		if(offlinePacks.length) return null;
+		
+		if(offlinePacks.length)
+		{
+			return (
+				<Row>
+					<View styleName="vertical h-center v-center">
+						<Text>OFFLINE MAPS SUCCESSFULLY DOWNLOADED</Text>
+						<Text>NOW ENTER EACH TRAIL THAT YOU WANT TO VISIT TO AQUIRE TRAIL ROUTE</Text>
+					</View>
+				</Row>
+			);
+		}
 		
 		if(!packDownloading)
 		{
@@ -271,14 +281,15 @@ class TrailDetails extends Component
 		if(!markers.length)
 		{
 			return (
-				<View styleName="vertical h-center v-center" style={{ height: 24 }}>
+				<View styleName="vertical h-center v-center">
 					<Text style={{ color: '#fff' }}>OFFLINE MAPS NOT PRESENT</Text>
+					<Text style={{ color: '#fff' }}>CONNECT TO DOWNLOAD MAPS</Text>
 				</View>
 			);
 		}
 		
 		return (
-			<Row style={{ paddingTop: 0 }}>
+			<Row>
 				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('Map'),
 					props: {

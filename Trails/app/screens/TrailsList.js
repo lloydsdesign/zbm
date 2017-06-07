@@ -297,7 +297,7 @@ class TrailsList extends Component
 
   render()
   {
-	const { sortIcons, trailType } = this.state;
+	const { sortIcons, trailType, trails } = this.state;
 	
 	var flexValue = 0.33;
 	const techDiff = trailType.indexOf('MTB');
@@ -306,7 +306,7 @@ class TrailsList extends Component
 	  
     return (
       <Screen>
-        <NavigationBar title={trailType +' TRAILS'} />
+        <NavigationBar title={trailType +' TRAILS ('+ trails.length +')'} />
 		
 		<View styleName="vertical h-center v-center" style={{ flex: 1 }}>
 			{this.renderListView()}

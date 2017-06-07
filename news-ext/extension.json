@@ -1,6 +1,6 @@
 {
   "name": "news-ext",
-  "version": "0.9.21",
+  "version": "0.9.22",
   "title": "News",
   "description": "Show news articles (extended)",
   "platform": "1.0.*",
