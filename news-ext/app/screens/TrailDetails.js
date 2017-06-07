@@ -172,6 +172,20 @@ export default class TrailDetails extends Component
 				style={{ height: 150 }}
 			/>
 		</View>
+		
+		<Row>
+		  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
+			<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+			<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF VERSION)</Text>
+		  </Button>
+		</Row>
+		
+		<Row>
+		  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
+			<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
+			<Text>DOWNLOAD GPS DATA</Text>
+		  </Button>
+		</Row>
         
         <Row>
           <View style={{ flex: 1, paddingTop: 20}}>
