@@ -52,15 +52,14 @@ const techIcons = [
 	require('../assets/icons/tech-3.png')
 ];
 
+Mapbox.setAccessToken(MGL_TOKEN);
+
 
 class TrailDetails extends Component
 {
   constructor(props)
   {
     super(props);
-    this.saveOfflinePack = this.saveOfflinePack.bind(this);
-    this.getOfflinePack = this.getOfflinePack.bind(this);
-    this.deleteOfflinePack = this.deleteOfflinePack.bind(this);
 	
 	this.state = {
 		isConnected: null,
@@ -79,7 +78,7 @@ class TrailDetails extends Component
 
   componentDidMount()
   {
-    Mapbox.setAccessToken(MGL_TOKEN);
+	Mapbox.setMetricsEnabled(false);
 	Mapbox.setOfflinePackProgressThrottleInterval(1000);
 	
 	this.getOfflinePack();
@@ -169,43 +168,23 @@ class TrailDetails extends Component
 
 	getOfflinePack()
 	{
-		return Mapbox.getOfflinePacks()
-			.then((packs) => {
-				this.setState({ offlinePacks: packs });
-			});
+		return Mapbox.getOfflinePacks().then((packs) => this.setState({ offlinePacks: packs }));
 	}
 
 	saveOfflinePack()
 	{
-		return this.deleteOfflinePack().then(() => {
-			Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => {
-			  this.setState({ packDownloading: true });
-			});
-		});
+		return this.deleteOfflinePack().then(() => Mapbox.addOfflinePack(OFFLINE_PACK_CONFIG).then(() => this.setState({ packDownloading: true })));
 	}
 
 	deleteOfflinePack()
 	{
-		return Mapbox.removeOfflinePack('MainMap')
-			.then((info) => {
-				this.setState({ packDownloading: false });
-			});
+		return Mapbox.removeOfflinePack('MainMap').then((info) => this.setState({ packDownloading: false }));
 	}
   
 	renderOfflineButton()
 	{
 		const { offlinePacks, packDownloading } = this.state;
-		
-		if(offlinePacks.length)
-		{
-			return (
-				<Row>
-					<View styleName="vertical h-center v-center" style={{ height: 24 }}>
-						<Text style={{ color: '#fff' }}>OFFLINE MAPS UP TO DATE</Text>
-					</View>
-				</Row>
-			);
-		}
+		if(offlinePacks.length) return null;
 		
 		if(!packDownloading)
 		{
@@ -437,14 +416,14 @@ class TrailDetails extends Component
 		{this.renderInlineMap()}
 		{this.renderOfflineButton()}
 		
-		<Row style={{ paddingTop: 0 }}>
+		<Row>
 		  <Button styleName="full-width" style={{ backgroundColor: '#FFF', borderWidth: 2, borderColor: '#FF0000' }} onPress={() => Linking.openURL(trail.pdf)}>
 			<Image source={require('../assets/icons/pdf.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
 			<Text style={{color: '#FF0000'}}>DOWNLOAD MAP (PDF)</Text>
 		  </Button>
 		</Row>
 		
-		<Row style={{ paddingTop: 0 }}>
+		<Row>
 		  <Button styleName="full-width" style={{ backgroundColor: '#000' }} onPress={() => Linking.openURL(trail.gps)}>
 			<Image source={require('../assets/icons/compass.png')} style={{ width: 24, height: 24, marginRight: 10 }} />
 			<Text>DOWNLOAD GPS DATA</Text>

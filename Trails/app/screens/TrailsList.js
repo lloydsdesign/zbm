@@ -209,6 +209,7 @@ class TrailsList extends Component
 	getTrails()
 	{
 		const { trailType } = this.state;
+		
 		AsyncStorage.getItem('TrailsDB_'+ trailType).then((trails) => {
 			if(trails) trails = JSON.parse(trails);
 			
