@@ -33,6 +33,7 @@ const DOMParser = require('xmldom').DOMParser;
 
 import {
 	ext,
+	showAlert,
 	MGL_TOKEN,
 	OFFLINE_PACK_CONFIG
 } from '../const';
@@ -85,7 +86,12 @@ class TrailDetails extends Component
 
     this.offlineProgressSubscription = Mapbox.addOfflinePackProgressListener((progress) => {
 		const resourcesLeft = progress.maximumResourcesExpected - progress.countOfResourcesCompleted;
-		if(!resourcesLeft) this.getOfflinePack();
+		
+		if(!resourcesLeft)
+		{
+			showAlert('OFFLINE MAPS DOWNLOADED SUCCESSFULLY.\nEnter each trail while online to get route data for offline usage.');
+			this.getOfflinePack();
+		}
 		
 		this.setState({
 			packDownloading: resourcesLeft,
@@ -189,8 +195,7 @@ class TrailDetails extends Component
 			return (
 				<Row>
 					<View styleName="vertical h-center v-center">
-						<Text>OFFLINE MAPS SUCCESSFULLY DOWNLOADED</Text>
-						<Text>NOW ENTER EACH TRAIL THAT YOU WANT TO VISIT TO AQUIRE TRAIL ROUTE</Text>
+						<Text>OFFLINE MAPS DOWNLOADED SUCCESSFULLY</Text>
 					</View>
 				</Row>
 			);
@@ -202,7 +207,7 @@ class TrailDetails extends Component
 				<Row>
 					<Button styleName="full-width" style={{ backgroundColor: '#FF2222' }} onPress={() => this.saveOfflinePack()}>
 						<Image source={require('../assets/icons/download.png')} style={{ width: 24, height: 24, marginRight: 10}} />
-						<Text>RIDE IN OFFLINE MODE</Text>
+						<Text>DOWNLOAD OFFLINE MAP</Text>
 					</Button>
 				</Row>
 			);
@@ -282,8 +287,8 @@ class TrailDetails extends Component
 		{
 			return (
 				<View styleName="vertical h-center v-center">
-					<Text style={{ color: '#fff' }}>OFFLINE ROUTE NOT PRESENT</Text>
-					<Text style={{ color: '#fff' }}>CONNECT TO DOWNLOAD ROUTE</Text>
+					<Text style={{ color: '#fff' }}>ROUTE DATA NOT PRESENT</Text>
+					<Text style={{ color: '#fff' }}>Go online to activate map</Text>
 				</View>
 			);
 		}
