@@ -1,7 +1,7 @@
 {
   "name": "trails",
   "title": "Trails",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Trails information",
   "platform": "1.0.*",
   "shortcuts": [
