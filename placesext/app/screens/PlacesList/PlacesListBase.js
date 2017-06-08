@@ -237,6 +237,7 @@ renderBoolean(value, string, backColor)
         </Image>
         <View styleName="vertical v-center h-center" style={{marginLeft:20, marginRight:20, backgroundColor: '#00E8C3', padding: 12, bottom: 6}}>
         	<Title styleName="text-centric" style={{color: '#FFF', marginTop: 0, marginBottom: 0, fontWeight: 'bold'}} numberOfLines={2}>{place.name.toUpperCase()}</Title>
+        	<Caption styleName="vertical v-center h-center" style={{marginTop: 0, color: '#FFF'}}>{place.type}</Caption>
         </View>
         <View styleName="text-centric" style={{backgroundColor: '#000'}}>
             <Caption styleName="vertical v-center h-center" style={{marginTop: 0, color: '#BBB'}}>{formattedAddress}</Caption>

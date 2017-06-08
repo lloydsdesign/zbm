@@ -1,6 +1,6 @@
 {
   "name": "placesext",
-  "version": "0.9.16",
+  "version": "0.9.17",
   "title": "Places (extended)",
   "description": "Show items with location on list or map",
   "icon": "./server/assets/images/add-places-image.png",

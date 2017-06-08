@@ -59,6 +59,7 @@ class MediumPlaceDetails extends PlaceDetails {
         >
           {place.name.toUpperCase()}
         </Title>
+        <Caption style={{marginTop: 0, marginLeft: 50, marginRight: 50, padding: 6, backgroundColor: '#FFF', color: '#222'}}>{place.type}</Caption>
         <Caption style={{color: '#ddd', padding: 0}} styleName="centered sm-gutter-top lg-gutter-bottom">{formattedAddress}</Caption>
       </Tile>
     );
