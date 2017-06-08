@@ -194,8 +194,8 @@ class TrailDetails extends Component
 		{
 			return (
 				<Row>
-					<View styleName="vertical h-center v-center">
-						<Text>OFFLINE MAPS DOWNLOADED SUCCESSFULLY</Text>
+					<View style={{margin: 0, paddingTop: 8, paddingBottom: 8, paddingLeft: 36, paddingRight: 36, borderWidth: 2, borderColor: '#999'}}>
+						<Text style={{textAlign: 'center'}}>OFFLINE MAPS DOWNLOADED SUCCESSFULLY</Text> 
 					</View>
 				</Row>
 			);
@@ -286,23 +286,23 @@ class TrailDetails extends Component
 		if(!markers.length)
 		{
 			return (
-				<View styleName="vertical h-center v-center">
-					<Text style={{ color: '#fff' }}>ROUTE DATA NOT PRESENT</Text>
-					<Text style={{ color: '#fff' }}>Go online to activate map</Text>
+				<View styleName="vertical h-center v-center" style={{backgroundColor: '#FF0000', padding: 8}}>
+						<Text style={{ color: '#fff' }}>WARNING: ROUTE DATA NOT PRESENT</Text>
+						<Text style={{ color: '#fff' }}>Go online to activate trail map</Text>
 				</View>
 			);
 		}
 		
 		return (
 			<Row>
-				<Button styleName="full-width" onPress={() => navigateTo({
+				<Button styleName="full-width" style={{backgroundColor: '#FF0000' }} onPress={() => navigateTo({
 					screen: ext('Map'),
 					props: {
 						title: navTitle,
 						markers: markers
 					}
 				})}>
-					<Icon name="pin" />
+					<Image source={require('../assets/icons/length.png')} style={{ width: 24, height: 24, marginRight: 10, marginBottom: 8 }} />
 					<Text>OPEN TRAIL MAP</Text>
 				</Button>
 			</Row>
