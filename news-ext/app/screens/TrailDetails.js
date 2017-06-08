@@ -10,7 +10,8 @@ import {
   Title,
   View,
   Image,
-  Divider
+  Divider,
+  Button
 } from '@shoutem/ui';
 
 import {
