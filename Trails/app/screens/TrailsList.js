@@ -36,6 +36,7 @@ import {
 	showAlert
 } from '../const';
 
+const offlineImage = require('../assets/icons/offline-mode.png');
 const sortAsc = require('../assets/icons/sort-asc.png');
 const sortDesc = require('../assets/icons/sort-desc.png');
 const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
@@ -62,6 +63,7 @@ class TrailsList extends Component
 		
 		this.state = {
 			trails: [],
+			offlineTrails: [],
 			hasLoaded: false,
 			trailType: '',
 			trailTypeColor: '#fff',
@@ -109,9 +111,32 @@ class TrailsList extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			response.trails = adjustTrails(response.trails);
-			this.setState({ trails: response.trails, hasLoaded: true });
-			this.storeTrails();
+			return adjustTrails(response.trails);
+		})
+		.then((trails) => {
+			this.storeTrails(trails);
+			this.getOfflineTrails(trails);
+			
+			this.setState({ trails, hasLoaded: true });
+		});
+	}
+	
+	getOfflineTrails(trails)
+	{
+		var i;
+		for(i = 0; i < trails.length; i++) this.checkOfflineTrail(trails[i]);
+	}
+	
+	checkOfflineTrail(trail)
+	{
+		var { offlineTrails } = this.state;
+		const key = 'trail_'+ trail.id;
+		
+		AsyncStorage.getItem(key).then((markers) => {
+			if(!markers) return;
+			
+			offlineTrails[offlineTrails.length] = trail;
+			this.setState({ offlineTrails });
 		});
 	}
 	
@@ -197,9 +222,9 @@ class TrailsList extends Component
 		);
 	}
 	
-	storeTrails()
+	storeTrails(trails)
 	{
-		const { trails, trailType } = this.state;
+		const { trailType } = this.state;
 		
 		AsyncStorage.removeItem('TrailsDB_'+ trailType).then(() => {
 			if(trails && trails.length) AsyncStorage.setItem('TrailsDB_'+ trailType, JSON.stringify(trails));
@@ -214,6 +239,8 @@ class TrailsList extends Component
 			if(trails) trails = JSON.parse(trails);
 			
 			if(!trails) trails = [];
+			else this.getOfflineTrails(trails);
+			
 			this.setState({ trails, hasLoaded: true });
 		});
 	}
@@ -231,6 +258,18 @@ class TrailsList extends Component
 			  dataSource={ds.cloneWithRows(trails)}
 			  renderRow={trail => this.renderRow(trail)}
 			/>
+		);
+	}
+	
+	isOfflineReady(trail)
+	{
+		const { offlineTrails } = this.state;
+		if(offlineTrails.indexOf(trail) == -1) return null;
+		
+		return (
+			<View styleName="fill-parent horizontal h-end v-start">
+				<Image source={offlineImage} />
+			</View>
 		);
 	}
   
@@ -258,7 +297,9 @@ class TrailsList extends Component
 			screen: ext('TrailDetails'),
 			props: { trail }
 		})}>
-		  <Image styleName="large-banner" source={{ uri: trail.image }} />
+		  <Image styleName="large-banner" source={{ uri: trail.image }}>
+			  {this.isOfflineReady(trail)}
+		  </Image>
 		  
 		  <Row style={{padding: 0, marginBottom: 0, backgroundColor: '#000'}}>		
 			<View styleName="horizontal h-center" style={{marginLeft: 20, marginRight: 20, paddingTop: 15, paddingBottom: 12, bottom: 8, backgroundColor: trailTypeColor, marginTop: 0}}>

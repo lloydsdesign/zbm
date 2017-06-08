@@ -13,9 +13,13 @@ import {
   Divider
 } from '@shoutem/ui';
 
+import {
+	ScrollView,
+	Linking
+} from 'react-native';
+
 import { InlineMap } from '@shoutem/ui-addons';
 import { NavigationBar } from '@shoutem/ui/navigation';
-import { ScrollView } from 'react-native';
 
 const trailTypes = ['MTB', 'ROAD', 'FAMILY'];
 const trailTypeColors = ['#e60005', '#3d99d5', '#37a829'];
