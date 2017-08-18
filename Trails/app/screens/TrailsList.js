@@ -19,7 +19,7 @@ import {
 } from '@shoutem/ui';
 
 import {
-	ListView,
+	FlatList,
 	NetInfo,
 	AsyncStorage
 } from 'react-native';
@@ -115,28 +115,17 @@ class TrailsList extends Component
 		})
 		.then((trails) => {
 			this.storeTrails(trails);
-			this.getOfflineTrails(trails);
-			
-			this.setState({ trails, hasLoaded: true });
+			this.getOfflineTrails(trails).then((offlineTrails) => this.setState({ trails, offlineTrails, hasLoaded: true }));
 		});
 	}
 	
 	getOfflineTrails(trails)
 	{
-		var i;
-		for(i = 0; i < trails.length; i++) this.checkOfflineTrail(trails[i]);
-	}
-	
-	checkOfflineTrail(trail)
-	{
-		var { offlineTrails } = this.state;
-		const key = 'trail_'+ trail.id;
-		
-		AsyncStorage.getItem(key).then((markers) => {
-			if(!markers) return;
+		return AsyncStorage.getItem('cached_markers').then((cachedMarkers) => {
+			if(!cachedMarkers) return [];
 			
-			offlineTrails[offlineTrails.length] = trail;
-			this.setState({ offlineTrails });
+			cachedMarkers = JSON.parse(cachedMarkers);
+			return cachedMarkers;
 		});
 	}
 	
@@ -251,20 +240,20 @@ class TrailsList extends Component
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 		
 		if(!trails.length) return null;
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		
 		return (
-			<ListView
-			  dataSource={ds.cloneWithRows(trails)}
-			  renderRow={trail => this.renderRow(trail)}
+			<FlatList
+			  data={trails}
+			  keyExtractor={trail => trail.id}
+			  renderItem={trail => this.renderRow(trail)}
 			/>
 		);
 	}
 	
-	isOfflineReady(trail)
+	isOfflineReady(trailID)
 	{
 		const { offlineTrails } = this.state;
-		if(offlineTrails.indexOf(trail) == -1) return null;
+		if(offlineTrails.indexOf(trailID) == -1) return null;
 		
 		return (
 			<View styleName="fill-parent horizontal h-end v-start">
@@ -275,6 +264,7 @@ class TrailsList extends Component
   
   renderRow(trail)
   {
+	trail = trail.item;
 	const { trailType, trailTypeColor } = this.state;
 	const { navigateTo } = this.props;
 	
@@ -298,7 +288,7 @@ class TrailsList extends Component
 			props: { trail }
 		})}>
 		  <Image styleName="large-banner" source={{ uri: trail.image }}>
-			  {this.isOfflineReady(trail)}
+			  {this.isOfflineReady(trail.id)}
 		  </Image>
 		  
 		  <Row style={{padding: 0, marginBottom: 0, backgroundColor: '#000'}}>		

@@ -157,6 +157,18 @@ class TrailDetails extends Component
 	  AsyncStorage.removeItem(key).then(() => {
 		  AsyncStorage.setItem(key, JSON.stringify(markers));
 	  });
+	  
+	  AsyncStorage.getItem('cached_markers').then((cachedMarkers) => {
+			if(!cachedMarkers) cachedMarkers = [];
+			else cachedMarkers = JSON.parse(cachedMarkers);
+			
+			if(cachedMarkers.indexOf(trail.id) > -1) return;
+			cachedMarkers[cachedMarkers.length] = trail.id;
+			
+			AsyncStorage.removeItem('cached_markers').then(() => {
+				AsyncStorage.setItem('cached_markers', JSON.stringify(cachedMarkers));
+			});
+		});
 	}
 
 	getMarkers()

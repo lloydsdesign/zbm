@@ -19,7 +19,7 @@ import {
 } from '@shoutem/ui';
 
 import {
-	ListView,
+	FlatList,
 	NetInfo
 } from 'react-native';
 
@@ -178,18 +178,19 @@ class TrailsList extends Component
 		if(!hasLoaded) return (<Spinner style={{ size: 'large', color: '#fff' }} />);
 
 		if(!trails.length) return null;
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 		return (
-			<ListView
-			  dataSource={ds.cloneWithRows(trails)}
-			  renderRow={trail => this.renderRow(trail)}
+			<FlatList
+			  data={trails}
+			  keyExtractor={trail => trail.id}
+			  renderItem={trail => this.renderRow(trail)}
 			/>
 		);
 	}
 
   renderRow(trail)
   {
+	trail = trail.item;
 	const { trailTypeColor } = this.state;
 	const { navigateTo } = this.props;
 
