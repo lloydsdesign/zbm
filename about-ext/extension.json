@@ -1,9 +1,9 @@
 {
   "name": "aboutext",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "title": "About (extended)",
   "description": "Show info about your app or your business",
-  "platform": "1.0.*",
+  "platform": "1.1.*",
   "icon": "server/assets/add-about-image.png",
   "categories": ["content"],
   "repository": {

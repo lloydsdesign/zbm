@@ -1,9 +1,9 @@
 {
   "name": "news-ext",
-  "version": "0.9.27",
+  "version": "0.9.28",
   "title": "News",
   "description": "Show news articles (extended)",
-  "platform": "1.0.*",
+  "platform": "1.1.*",
   "icon": "server/assets/add-news-image.png",
   "categories": [
     "content"

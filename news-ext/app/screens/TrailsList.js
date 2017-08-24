@@ -182,7 +182,7 @@ class TrailsList extends Component
 		return (
 			<FlatList
 			  data={trails}
-			  keyExtractor={trail => trail.id}
+			  keyExtractor={(item, index) => index}
 			  renderItem={trail => this.renderRow(trail)}
 			/>
 		);

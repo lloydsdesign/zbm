@@ -1,6 +1,6 @@
 {
   "name": "placesext",
-  "version": "0.9.17",
+  "version": "0.9.18",
   "title": "Places (extended)",
   "description": "Show items with location on list or map",
   "icon": "./server/assets/images/add-places-image.png",
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/shoutem/extensions"
   },
-  "platform": "1.0.*",
+  "platform": "1.1.*",
   "shortcuts": [
     {
       "name": "places-shortcut",
